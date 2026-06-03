@@ -1,5 +1,7 @@
 import {
   ArtifactEventType,
+  cloneArtifactEvent,
+  createArtifactEvent,
   type ArtifactEvent
 } from "../events/artifact-event.js";
 import { validateArtifact } from "../schemas/artifact-schema.js";
@@ -27,7 +29,11 @@ export class ArtifactRegistry {
     }
 
     await this.storage.save(artifact);
-    this.recordEvent(ArtifactEventType.REGISTERED, artifact, artifact.createdBy);
+    this.recordEvent(
+      ArtifactEventType.ARTIFACT_CREATED,
+      artifact,
+      artifact.createdBy
+    );
     return artifact;
   }
 
@@ -57,7 +63,10 @@ export class ArtifactRegistry {
 
     validateArtifact(next);
     await this.storage.update(next);
-    this.recordEvent(ArtifactEventType.UPDATED, next, actorId);
+    this.recordEvent(ArtifactEventType.ARTIFACT_UPDATED, next, actorId, {
+      previousArtifact: current,
+      changes: updates
+    });
     return next;
   }
 
@@ -66,32 +75,29 @@ export class ArtifactRegistry {
   }
 
   listEvents(): ArtifactEvent[] {
-    return this.events.map((event) => ({
-      ...event,
-      artifact: {
-        ...event.artifact,
-        parentIds: [...event.artifact.parentIds],
-        metadata: { ...event.artifact.metadata }
-      }
-    }));
+    return this.events.map(cloneArtifactEvent);
   }
 
   private recordEvent(
     type: ArtifactEventType,
     artifact: BaseArtifact,
-    actorId: string
+    actorId: string,
+    options: {
+      previousArtifact?: BaseArtifact;
+      changes?: UpdateArtifactInput;
+      reason?: string;
+    } = {}
   ): void {
-    this.events.push({
-      id: `${artifact.id}:${type}:${this.events.length + 1}`,
+    this.events.push(createArtifactEvent({
       artifactId: artifact.id,
       type,
-      occurredAt: new Date().toISOString(),
       actorId,
-      artifact: {
-        ...artifact,
-        parentIds: [...artifact.parentIds],
-        metadata: { ...artifact.metadata }
+      payload: {
+        artifact,
+        previousArtifact: options.previousArtifact,
+        changes: options.changes,
+        reason: options.reason
       }
-    });
+    }, this.events.length + 1));
   }
 }

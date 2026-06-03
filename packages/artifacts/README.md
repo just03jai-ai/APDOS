@@ -13,7 +13,7 @@ packages/artifacts/
     registry/   Artifact registry service
     lineage/    Parent/child traversal helpers
     storage/    Persistence interface and in-memory adapter
-    events/     Artifact registry event types
+    events/     Artifact event contracts and in-memory event bus
     types/      Artifact enums and interfaces
   tests/        Unit tests
 ```
@@ -64,13 +64,59 @@ interface BaseArtifact {
 
 The registry depends on the `ArtifactStorage` interface. The package includes `InMemoryArtifactStorage` for local use and tests. Production persistence should be added as a storage adapter without changing registry callers.
 
+## Event Bus
+
+The Artifact Engine defines these event contracts:
+
+- `ArtifactCreated`
+- `ArtifactUpdated`
+- `ArtifactApproved`
+- `ArtifactRejected`
+- `ArtifactArchived`
+
+`InMemoryArtifactEventBus` provides the first publisher/subscriber implementation:
+
+- `publish(event)` emits an artifact event.
+- `subscribe(subscriber)` receives all artifact events.
+- `subscribeTo(eventType, subscriber)` receives only a specific event type.
+- `listEvents()` returns emitted event history.
+
+Subscribers implement:
+
+```ts
+interface ArtifactEventSubscriber {
+  handle(event: ArtifactEvent): void | Promise<void>;
+}
+```
+
+The in-memory bus is intended for local execution, tests, and future orchestration integration. It does not perform workflow routing or durable delivery.
+
 ## Lineage
 
 Artifacts can point to parents through `parentIds`. The lineage helpers support basic graph traversal:
 
+- `ArtifactLineageGraph`
+- `linkParentToChild(parentId, childId)`
+- `getParents(artifactId)`
 - `getChildren(artifactId, artifacts)`
+- `getAncestors(artifactId)`
 - `getAncestorIds(artifactId, artifacts)`
+- `getDescendants(artifactId)`
 - `getDescendantIds(artifactId, artifacts)`
+
+The graph model is directional from parent to child:
+
+```text
+Idea
+  -> Discovery Report
+  -> PRD
+  -> Tech Spec
+  -> Release Package
+```
+
+This allows a `RELEASE_PACKAGE` artifact to trace its ancestors back to the originating `IDEA`. The graph is built from artifact `parentIds` and can also be updated in memory with `linkParentToChild` when a new relationship is created.
+
+`ArtifactLineageGraph.toModel()` returns a serializable model containing each artifact node with its `parentIds` and `childIds`. Storage and orchestration remain outside the lineage graph; callers are responsible for persisting updated artifacts through the registry or storage adapter.
 
 ## Testing
 
