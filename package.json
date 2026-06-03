@@ -8,6 +8,6 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "npm --workspace @apdos/artifacts test"
+    "test": "npm --workspaces test"
   }
 }
