@@ -1,0 +1,15 @@
+export enum WorkflowStatus {
+  PENDING = "PENDING",
+  RUNNING = "RUNNING",
+  COMPLETED = "COMPLETED",
+  FAILED = "FAILED",
+  BLOCKED = "BLOCKED"
+}
+
+export enum StageStatus {
+  PENDING = "PENDING",
+  RUNNING = "RUNNING",
+  COMPLETED = "COMPLETED",
+  FAILED = "FAILED",
+  BLOCKED = "BLOCKED"
+}
