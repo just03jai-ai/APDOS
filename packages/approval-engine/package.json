@@ -1,0 +1,19 @@
+{
+  "name": "@apdos/approval-engine",
+  "version": "0.1.0",
+  "description": "Human Approval Gates foundation for APDOS.",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
+  },
+  "dependencies": {
+    "@apdos/workflow-engine": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}
