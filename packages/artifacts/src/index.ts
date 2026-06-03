@@ -17,12 +17,34 @@ export {
 } from "./types/base-artifact.js";
 export {
   type ArtifactEvent,
-  ArtifactEventType
+  type ArtifactDomainEvent,
+  type ArtifactCreatedEvent,
+  type ArtifactUpdatedEvent,
+  type ArtifactApprovedEvent,
+  type ArtifactRejectedEvent,
+  type ArtifactArchivedEvent,
+  type ArtifactEventPayload,
+  type CreateArtifactEventInput,
+  ArtifactEventType,
+  cloneArtifactEvent,
+  createArtifactEvent
 } from "./events/artifact-event.js";
 export {
+  InMemoryArtifactEventBus,
+  type ArtifactEventBus,
+  type ArtifactEventPublisher,
+  type ArtifactEventSubscriber
+} from "./events/artifact-event-bus.js";
+export {
+  ArtifactLineageGraph,
+  type ArtifactLineageGraphModel,
+  type ArtifactLineageNode,
   getAncestorIds,
+  getAncestors,
   getChildren,
-  getDescendantIds
+  getDescendantIds,
+  getDescendants,
+  getParents
 } from "./lineage/artifact-lineage.js";
 export {
   ArtifactValidationError,

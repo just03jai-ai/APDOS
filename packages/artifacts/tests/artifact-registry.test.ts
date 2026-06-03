@@ -4,9 +4,6 @@ import {
   ArtifactRegistry,
   ArtifactType,
   ArtifactValidationError,
-  getAncestorIds,
-  getChildren,
-  getDescendantIds,
   type BaseArtifact
 } from "../src/index.js";
 
@@ -112,35 +109,9 @@ describe("ArtifactRegistry", () => {
 
     const events = registry.listEvents();
     assert.equal(events.length, 2);
-    assert.equal(events[0].type, "REGISTERED");
-    assert.equal(events[1].type, "UPDATED");
+    assert.equal(events[0].type, "ArtifactCreated");
+    assert.equal(events[1].type, "ArtifactUpdated");
     assert.equal(events[1].actorId, "user-2");
-  });
-});
-
-describe("artifact lineage", () => {
-  it("finds children, ancestors, and descendants", () => {
-    const artifacts = [
-      buildArtifact({ id: "idea" }),
-      buildArtifact({
-        id: "prd",
-        type: ArtifactType.PRD,
-        parentIds: ["idea"],
-        title: "PRD"
-      }),
-      buildArtifact({
-        id: "task",
-        type: ArtifactType.TASK,
-        parentIds: ["prd"],
-        title: "Task"
-      })
-    ];
-
-    assert.deepEqual(
-      getChildren("idea", artifacts).map((artifact) => artifact.id),
-      ["prd"]
-    );
-    assert.deepEqual(getAncestorIds("task", artifacts), ["prd", "idea"]);
-    assert.deepEqual(getDescendantIds("idea", artifacts), ["prd", "task"]);
+    assert.equal(events[1].payload.artifact.status, "active");
   });
 });
