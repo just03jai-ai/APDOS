@@ -2,6 +2,7 @@ import {
   ApprovalService,
   ApprovalType
 } from "@apdos/approval-engine";
+import { ArchitectureAgentService } from "@apdos/architecture-agent";
 import {
   ArtifactLineageGraph,
   ArtifactRegistry,
@@ -29,7 +30,6 @@ import {
   createIdeaArtifact,
   createPrdArtifact,
   createReleasePackageArtifact,
-  createTechSpecArtifact,
   createTestResultArtifact,
   type StageOutputInput
 } from "../stages/mock-stage-outputs.js";
@@ -43,6 +43,7 @@ export interface DeliveryWorkflowServiceDependencies {
   artifacts?: ArtifactRegistry;
   workflows?: WorkflowExecutionService;
   approvals?: ApprovalService;
+  architectureAgent?: ArchitectureAgentService;
   discoveryAgent?: DiscoveryAgentService;
   validators?: ValidatorRegistry;
 }
@@ -51,6 +52,7 @@ export class DeliveryWorkflowService {
   private readonly artifacts: ArtifactRegistry;
   private readonly workflows: WorkflowExecutionService;
   private readonly approvals: ApprovalService;
+  private readonly architectureAgent: ArchitectureAgentService;
   private readonly discoveryAgent: DiscoveryAgentService;
   private readonly validators: ValidatorRegistry;
   private readonly context: ContextRetrievalService;
@@ -68,6 +70,12 @@ export class DeliveryWorkflowService {
     });
     this.discoveryAgent = dependencies.discoveryAgent ??
       new DiscoveryAgentService({
+        artifacts: this.artifacts,
+        context: this.context,
+        workflows: this.workflows
+      });
+    this.architectureAgent = dependencies.architectureAgent ??
+      new ArchitectureAgentService({
         artifacts: this.artifacts,
         context: this.context,
         workflows: this.workflows
@@ -127,13 +135,13 @@ export class DeliveryWorkflowService {
     });
     validationResults.push(this.validateRequiredArtifact(prd, artifacts));
 
-    const techSpec = await this.runStage({
+    const { techSpec, implementationPlan } = await this.runArchitectureStage({
       workflowId,
-      stageId: DELIVERY_STAGE_IDS.techSpec,
-      artifact: createTechSpecArtifact(stageInput, prd),
+      actorId,
+      createdAt,
+      prd,
       artifacts,
-      contextPackages,
-      contextArtifactIds: [prd.id]
+      contextPackages
     });
 
     const architectureApproval = this.approvals.createApprovalRequest({
@@ -154,7 +162,7 @@ export class DeliveryWorkflowService {
 
     await this.captureContext({
       workflowId,
-      artifactIds: [techSpec.id],
+      artifactIds: [techSpec.id, implementationPlan.id],
       contextPackages
     });
     this.workflows.advanceStage({
@@ -163,7 +171,7 @@ export class DeliveryWorkflowService {
       occurredAt: createdAt
     });
     const codeChange = await this.registerArtifact({
-      artifact: createCodeChangeArtifact(stageInput, techSpec),
+      artifact: createCodeChangeArtifact(stageInput, techSpec, implementationPlan),
       artifacts
     });
     const testResult = await this.registerArtifact({
@@ -295,6 +303,54 @@ export class DeliveryWorkflowService {
     });
 
     return artifact;
+  }
+
+  private async runArchitectureStage(input: {
+    workflowId: string;
+    actorId: string;
+    createdAt: string;
+    prd: BaseArtifact;
+    artifacts: BaseArtifact[];
+    contextPackages: DeliveryWorkflowRunResult["contextPackages"];
+  }): Promise<{
+    techSpec: BaseArtifact;
+    implementationPlan: BaseArtifact;
+  }> {
+    await this.captureContext({
+      workflowId: input.workflowId,
+      artifactIds: [input.prd.id],
+      contextPackages: input.contextPackages
+    });
+
+    this.workflows.advanceStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.techSpec,
+      occurredAt: input.createdAt
+    });
+
+    const { techSpecArtifact, implementationPlanArtifact } =
+      await this.architectureAgent.createTechSpecArtifact({
+        request: {
+          workflowId: input.workflowId,
+          prdArtifactId: input.prd.id
+        },
+        actorId: input.actorId,
+        createdAt: input.createdAt,
+        stageId: DELIVERY_STAGE_IDS.techSpec
+      });
+    input.artifacts.push(techSpecArtifact, implementationPlanArtifact);
+
+    this.workflows.completeStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.techSpec,
+      artifactIds: [techSpecArtifact.id, implementationPlanArtifact.id],
+      occurredAt: input.createdAt
+    });
+
+    return {
+      techSpec: techSpecArtifact,
+      implementationPlan: implementationPlanArtifact
+    };
   }
 
   private async registerArtifact(input: {
