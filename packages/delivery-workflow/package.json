@@ -1,0 +1,23 @@
+{
+  "name": "@apdos/delivery-workflow",
+  "version": "0.1.0",
+  "description": "Delivery Workflow V1 for APDOS.",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
+  },
+  "dependencies": {
+    "@apdos/approval-engine": "0.1.0",
+    "@apdos/artifacts": "0.1.0",
+    "@apdos/context-engine": "0.1.0",
+    "@apdos/validation-engine": "0.1.0",
+    "@apdos/workflow-engine": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}
