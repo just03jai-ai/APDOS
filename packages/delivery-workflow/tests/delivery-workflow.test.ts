@@ -74,6 +74,47 @@ describe("DeliveryWorkflowService", () => {
       result.approvals.map((approval) => approval.stageId),
       [DELIVERY_STAGE_IDS.techSpec, DELIVERY_STAGE_IDS.releasePackage]
     );
+
+    const approvalStageStartedIndex = result.workflow.history.findIndex(
+      (event) => event.stageId === DELIVERY_STAGE_IDS.approval && event.type === "STAGE_STARTED"
+    );
+    const approvalStageCompletedIndex = result.workflow.history.findIndex(
+      (event) => event.stageId === DELIVERY_STAGE_IDS.approval && event.type === "STAGE_COMPLETED"
+    );
+
+    assert.ok(approvalStageStartedIndex > -1);
+    assert.ok(approvalStageCompletedIndex > approvalStageStartedIndex);
+  });
+
+  it("maintains complete artifact traceability for the release package", async () => {
+    const service = new DeliveryWorkflowService();
+
+    const result = await service.run({
+      workflowId: "workflow-traceability-1",
+      goal: "Build supplier payment approval workflow",
+      createdAt: "2026-01-01T00:00:00.000Z"
+    });
+
+    const releaseTrace = result.traceability.records.find(
+      (record) => record.artifactId === "workflow-traceability-1:release-package"
+    );
+
+    assert.equal(result.traceability.releasePackageId, "workflow-traceability-1:release-package");
+    assert.deepEqual(releaseTrace?.parentIds, [
+      "workflow-traceability-1:code-change",
+      "workflow-traceability-1:test-result"
+    ]);
+    assert.deepEqual(
+      releaseTrace?.ancestorIds.sort(),
+      [
+        "workflow-traceability-1:code-change",
+        "workflow-traceability-1:discovery",
+        "workflow-traceability-1:idea",
+        "workflow-traceability-1:prd",
+        "workflow-traceability-1:tech-spec",
+        "workflow-traceability-1:test-result"
+      ].sort()
+    );
   });
 
   it("retrieves context between stages", async () => {

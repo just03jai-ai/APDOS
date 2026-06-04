@@ -3,6 +3,7 @@ import {
   ApprovalType
 } from "@apdos/approval-engine";
 import {
+  ArtifactLineageGraph,
   ArtifactRegistry,
   ArtifactType,
   type BaseArtifact
@@ -34,7 +35,8 @@ import {
 } from "../stages/mock-stage-outputs.js";
 import type {
   DeliveryWorkflowRunInput,
-  DeliveryWorkflowRunResult
+  DeliveryWorkflowRunResult,
+  DeliveryWorkflowTraceability
 } from "../services/delivery-workflow-result.js";
 
 export interface DeliveryWorkflowServiceDependencies {
@@ -204,7 +206,8 @@ export class DeliveryWorkflowService {
       releasePackage: registeredReleasePackage,
       approvals: this.approvals.listApprovals(),
       validationResults,
-      contextPackages
+      contextPackages,
+      traceability: createTraceability(registeredReleasePackage, artifacts)
     };
   }
 
@@ -344,4 +347,20 @@ function assertValidValidationResult(result: ValidationResult): void {
         .join("; ")}`
     );
   }
+}
+
+function createTraceability(
+  releasePackage: BaseArtifact,
+  artifacts: BaseArtifact[]
+): DeliveryWorkflowTraceability {
+  const lineage = new ArtifactLineageGraph(artifacts);
+
+  return {
+    releasePackageId: releasePackage.id,
+    records: artifacts.map((artifact) => ({
+      artifactId: artifact.id,
+      parentIds: [...artifact.parentIds],
+      ancestorIds: lineage.getAncestors(artifact.id).map((ancestor) => ancestor.id)
+    }))
+  };
 }

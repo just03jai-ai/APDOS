@@ -36,6 +36,28 @@ The workflow uses:
 
 The package intentionally uses deterministic mock outputs. It does not implement real agents, LLM generation, or AI reasoning.
 
+## Stage Responsibilities
+
+- Idea: captures the original business goal as an `IDEA` artifact.
+- Discovery: creates a deterministic `DISCOVERY_REPORT` from the idea.
+- PRD: creates and validates a `PRD` with required product metadata.
+- Tech Spec: creates a `TECH_SPEC`, grants deterministic architecture approval, and validates it.
+- Validation: creates deterministic `CODE_CHANGE` and `TEST_RESULT` evidence.
+- Approval: opens the approval stage, creates and grants production approval, then completes the stage.
+- Release Package: validates and creates the governed `RELEASE_PACKAGE`.
+
+## Integration Architecture
+
+The delivery workflow composes APDOS systems directly:
+
+- `WorkflowExecutionService` owns workflow and stage status transitions.
+- `ArtifactRegistry` owns artifact creation and event recording.
+- `ContextRetrievalService` retrieves workflow context before stage work.
+- `ValidatorRegistry` validates PRD, Tech Spec, and Release Package artifacts.
+- `ApprovalService` records architecture and production approval gates.
+
+The service returns the completed workflow, artifacts, validation results, approvals, context packages, and traceability records.
+
 ## Artifacts Created
 
 The V1 workflow creates:
@@ -59,6 +81,12 @@ The workflow validates:
 - Release Package required fields, code/test dependencies, and production approval
 
 The release package is created only after the production approval is granted.
+
+The workflow does not put the workflow engine into terminal `BLOCKED` status because APDOS-005 currently treats `BLOCKED` as terminal. Instead, the approval stage stays running while the deterministic approval gate is created and granted, then the workflow progresses to release package creation.
+
+## Traceability
+
+Every generated artifact includes `parentIds`. The result includes `traceability.records`, which list each artifact's direct parents and ancestors. The release package traces back through code/test evidence, tech spec, PRD, discovery, and the original idea.
 
 ## Boundaries
 

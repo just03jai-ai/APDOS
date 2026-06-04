@@ -8,6 +8,8 @@ export {
   type DeliveryWorkflowServiceDependencies
 } from "./orchestration/delivery-workflow-service.js";
 export {
+  type ArtifactTraceabilityRecord,
   type DeliveryWorkflowRunInput,
-  type DeliveryWorkflowRunResult
-} from "./services/delivery-workflow-result.js";
+  type DeliveryWorkflowRunResult,
+  type DeliveryWorkflowTraceability
+} from "./contracts/delivery-workflow-contracts.js";
