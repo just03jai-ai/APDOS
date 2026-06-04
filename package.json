@@ -11,6 +11,7 @@
     "packages/approval-engine",
     "packages/validation-engine",
     "packages/context-engine",
+    "packages/architecture-agent",
     "packages/discovery-agent",
     "packages/delivery-workflow",
     "packages/agent-registry",

@@ -45,34 +45,17 @@ export function createPrdArtifact(
   });
 }
 
-export function createTechSpecArtifact(
-  input: StageOutputInput,
-  prd: BaseArtifact
-): BaseArtifact {
-  return createArtifact(input, {
-    id: `${input.workflowId}:tech-spec`,
-    type: ArtifactType.TECH_SPEC,
-    title: "Technical Specification",
-    description: `Technical specification for ${input.goal}.`,
-    parentIds: [prd.id],
-    stageId: DELIVERY_STAGE_IDS.techSpec,
-    metadata: {
-      architecture: "Sequential APDOS service orchestration with deterministic stage outputs.",
-      interfaces: "ArtifactRegistry, WorkflowExecutionService, ContextRetrievalService, ApprovalService, ValidatorRegistry."
-    }
-  });
-}
-
 export function createCodeChangeArtifact(
   input: StageOutputInput,
-  techSpec: BaseArtifact
+  techSpec: BaseArtifact,
+  implementationPlan?: BaseArtifact
 ): BaseArtifact {
   return createArtifact(input, {
     id: `${input.workflowId}:code-change`,
     type: ArtifactType.CODE_CHANGE,
     title: "Mock Code Change",
     description: `Deterministic implementation placeholder for ${input.goal}.`,
-    parentIds: [techSpec.id],
+    parentIds: implementationPlan ? [techSpec.id, implementationPlan.id] : [techSpec.id],
     stageId: DELIVERY_STAGE_IDS.validation,
     metadata: {
       changeSet: "mock-delivery-workflow-v1"

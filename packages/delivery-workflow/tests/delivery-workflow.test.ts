@@ -31,6 +31,7 @@ describe("DeliveryWorkflowService", () => {
         ArtifactType.DISCOVERY_REPORT,
         ArtifactType.PRD,
         ArtifactType.TECH_SPEC,
+        ArtifactType.IMPLEMENTATION_PLAN,
         ArtifactType.CODE_CHANGE,
         ArtifactType.TEST_RESULT,
         ArtifactType.RELEASE_PACKAGE
@@ -52,6 +53,18 @@ describe("DeliveryWorkflowService", () => {
         .includes("Create a PRD from this discovery report."),
       true
     );
+    const techSpec = result.artifacts.find((artifact) => artifact.type === ArtifactType.TECH_SPEC);
+    const implementationPlan = result.artifacts.find(
+      (artifact) => artifact.type === ArtifactType.IMPLEMENTATION_PLAN
+    );
+
+    assert.equal(techSpec?.createdBy, "apdos-test");
+    assert.deepEqual(techSpec?.parentIds, ["workflow-delivery-1:prd"]);
+    assert.equal(typeof techSpec?.metadata.architectureOverview, "string");
+    assert.ok(Array.isArray(techSpec?.metadata.apiContracts));
+    assert.equal(implementationPlan?.createdBy, "apdos-test");
+    assert.deepEqual(implementationPlan?.parentIds, ["workflow-delivery-1:tech-spec"]);
+    assert.ok(Array.isArray(implementationPlan?.metadata.tasks));
   });
 
   it("validates PRD, TECH_SPEC, and RELEASE_PACKAGE before completion", async () => {
@@ -126,6 +139,7 @@ describe("DeliveryWorkflowService", () => {
         "workflow-traceability-1:code-change",
         "workflow-traceability-1:discovery",
         "workflow-traceability-1:idea",
+        "workflow-traceability-1:implementation-plan",
         "workflow-traceability-1:prd",
         "workflow-traceability-1:tech-spec",
         "workflow-traceability-1:test-result"
@@ -152,6 +166,13 @@ describe("DeliveryWorkflowService", () => {
     assert.ok(
       result.contextPackages.some((contextPackage) =>
         contextPackage.metadata.includedArtifactIds.includes("workflow-context-1:prd")
+      )
+    );
+    assert.ok(
+      result.contextPackages.some((contextPackage) =>
+        contextPackage.metadata.includedArtifactIds.includes(
+          "workflow-context-1:implementation-plan"
+        )
       )
     );
   });

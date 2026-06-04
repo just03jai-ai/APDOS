@@ -28,21 +28,22 @@ The workflow uses:
 - Workflow Engine to track stage transitions
 - Context Engine to retrieve relevant context between stages
 - Discovery Agent to generate the `DISCOVERY_REPORT` artifact
+- Architecture Agent to generate `TECH_SPEC` and `IMPLEMENTATION_PLAN` artifacts
 - Validation Engine to validate PRD, Tech Spec, and Release Package artifacts
 - Approval Engine to require approvals before governed release output
 
 ## Execution Model
 
-`DeliveryWorkflowService.run()` starts a workflow, creates deterministic stage outputs, calls the Discovery Agent for the discovery report, validates required artifacts, creates required approvals, and completes the workflow when the release package is created.
+`DeliveryWorkflowService.run()` starts a workflow, creates deterministic stage outputs, calls the Discovery Agent for the discovery report, calls the Architecture Agent for architecture artifacts, validates required artifacts, creates required approvals, and completes the workflow when the release package is created.
 
-The package intentionally uses deterministic outputs. Discovery is handled by `@apdos/discovery-agent`; later stages are still deterministic V1 outputs. It does not implement LLM generation or AI reasoning.
+The package intentionally uses deterministic outputs. Discovery is handled by `@apdos/discovery-agent`; architecture is handled by `@apdos/architecture-agent`; later implementation and release evidence remain deterministic V1 outputs. It does not implement LLM generation or AI reasoning.
 
 ## Stage Responsibilities
 
 - Idea: captures the original business goal as an `IDEA` artifact.
 - Discovery: calls `DiscoveryAgentService` to analyze the goal and create a `DISCOVERY_REPORT` from the idea.
 - PRD: creates and validates a `PRD` with required product metadata.
-- Tech Spec: creates a `TECH_SPEC`, grants deterministic architecture approval, and validates it.
+- Tech Spec: calls `ArchitectureAgentService` to create `TECH_SPEC` and `IMPLEMENTATION_PLAN` artifacts, grants deterministic architecture approval, and validates the Tech Spec.
 - Validation: creates deterministic `CODE_CHANGE` and `TEST_RESULT` evidence.
 - Approval: opens the approval stage, creates and grants production approval, then completes the stage.
 - Release Package: validates and creates the governed `RELEASE_PACKAGE`.
@@ -55,6 +56,7 @@ The delivery workflow composes APDOS systems directly:
 - `ArtifactRegistry` owns artifact creation and event recording.
 - `ContextRetrievalService` retrieves workflow context before stage work.
 - `DiscoveryAgentService` owns deterministic discovery analysis and report artifact creation.
+- `ArchitectureAgentService` owns deterministic technical specification and implementation plan artifact creation.
 - `ValidatorRegistry` validates PRD, Tech Spec, and Release Package artifacts.
 - `ApprovalService` records architecture and production approval gates.
 
@@ -68,6 +70,7 @@ The V1 workflow creates:
 - `DISCOVERY_REPORT`
 - `PRD`
 - `TECH_SPEC`
+- `IMPLEMENTATION_PLAN`
 - `CODE_CHANGE`
 - `TEST_RESULT`
 - `RELEASE_PACKAGE`
