@@ -27,19 +27,20 @@ The workflow uses:
 - Artifact Engine to create artifacts at every stage
 - Workflow Engine to track stage transitions
 - Context Engine to retrieve relevant context between stages
+- Discovery Agent to generate the `DISCOVERY_REPORT` artifact
 - Validation Engine to validate PRD, Tech Spec, and Release Package artifacts
 - Approval Engine to require approvals before governed release output
 
 ## Execution Model
 
-`DeliveryWorkflowService.run()` starts a workflow, creates deterministic mock stage outputs, validates required artifacts, creates required approvals, and completes the workflow when the release package is created.
+`DeliveryWorkflowService.run()` starts a workflow, creates deterministic stage outputs, calls the Discovery Agent for the discovery report, validates required artifacts, creates required approvals, and completes the workflow when the release package is created.
 
-The package intentionally uses deterministic mock outputs. It does not implement real agents, LLM generation, or AI reasoning.
+The package intentionally uses deterministic outputs. Discovery is handled by `@apdos/discovery-agent`; later stages are still deterministic V1 outputs. It does not implement LLM generation or AI reasoning.
 
 ## Stage Responsibilities
 
 - Idea: captures the original business goal as an `IDEA` artifact.
-- Discovery: creates a deterministic `DISCOVERY_REPORT` from the idea.
+- Discovery: calls `DiscoveryAgentService` to analyze the goal and create a `DISCOVERY_REPORT` from the idea.
 - PRD: creates and validates a `PRD` with required product metadata.
 - Tech Spec: creates a `TECH_SPEC`, grants deterministic architecture approval, and validates it.
 - Validation: creates deterministic `CODE_CHANGE` and `TEST_RESULT` evidence.
@@ -53,6 +54,7 @@ The delivery workflow composes APDOS systems directly:
 - `WorkflowExecutionService` owns workflow and stage status transitions.
 - `ArtifactRegistry` owns artifact creation and event recording.
 - `ContextRetrievalService` retrieves workflow context before stage work.
+- `DiscoveryAgentService` owns deterministic discovery analysis and report artifact creation.
 - `ValidatorRegistry` validates PRD, Tech Spec, and Release Package artifacts.
 - `ApprovalService` records architecture and production approval gates.
 
@@ -93,7 +95,6 @@ Every generated artifact includes `parentIds`. The result includes `traceability
 This package does not implement:
 
 - AI generation
-- real Discovery Agent execution
 - real Product Agent execution
 - real Architecture Agent execution
 - OpenAI

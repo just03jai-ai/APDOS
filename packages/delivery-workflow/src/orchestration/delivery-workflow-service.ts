@@ -9,6 +9,7 @@ import {
   type BaseArtifact
 } from "@apdos/artifacts";
 import { ContextRetrievalService } from "@apdos/context-engine";
+import { DiscoveryAgentService } from "@apdos/discovery-agent";
 import {
   ValidatorRegistry,
   createBuiltInValidators,
@@ -25,7 +26,6 @@ import {
 } from "../stages/delivery-stages.js";
 import {
   createCodeChangeArtifact,
-  createDiscoveryArtifact,
   createIdeaArtifact,
   createPrdArtifact,
   createReleasePackageArtifact,
@@ -43,6 +43,7 @@ export interface DeliveryWorkflowServiceDependencies {
   artifacts?: ArtifactRegistry;
   workflows?: WorkflowExecutionService;
   approvals?: ApprovalService;
+  discoveryAgent?: DiscoveryAgentService;
   validators?: ValidatorRegistry;
 }
 
@@ -50,6 +51,7 @@ export class DeliveryWorkflowService {
   private readonly artifacts: ArtifactRegistry;
   private readonly workflows: WorkflowExecutionService;
   private readonly approvals: ApprovalService;
+  private readonly discoveryAgent: DiscoveryAgentService;
   private readonly validators: ValidatorRegistry;
   private readonly context: ContextRetrievalService;
 
@@ -64,6 +66,12 @@ export class DeliveryWorkflowService {
       workflows: this.workflows,
       approvals: this.approvals
     });
+    this.discoveryAgent = dependencies.discoveryAgent ??
+      new DiscoveryAgentService({
+        artifacts: this.artifacts,
+        context: this.context,
+        workflows: this.workflows
+      });
   }
 
   async run(input: DeliveryWorkflowRunInput): Promise<DeliveryWorkflowRunResult> {
@@ -99,13 +107,14 @@ export class DeliveryWorkflowService {
       contextArtifactIds: []
     });
 
-    const discovery = await this.runStage({
+    const discovery = await this.runDiscoveryStage({
       workflowId,
-      stageId: DELIVERY_STAGE_IDS.discovery,
-      artifact: createDiscoveryArtifact(stageInput, idea),
+      goal: input.goal,
+      actorId,
+      createdAt,
+      idea,
       artifacts,
-      contextPackages,
-      contextArtifactIds: [idea.id]
+      contextPackages
     });
 
     const prd = await this.runStage({
@@ -239,6 +248,50 @@ export class DeliveryWorkflowService {
       stageId: input.stageId,
       artifactIds: [artifact.id],
       occurredAt: input.artifact.createdAt
+    });
+
+    return artifact;
+  }
+
+  private async runDiscoveryStage(input: {
+    workflowId: string;
+    goal: string;
+    actorId: string;
+    createdAt: string;
+    idea: BaseArtifact;
+    artifacts: BaseArtifact[];
+    contextPackages: DeliveryWorkflowRunResult["contextPackages"];
+  }): Promise<BaseArtifact> {
+    await this.captureContext({
+      workflowId: input.workflowId,
+      artifactIds: [input.idea.id],
+      contextPackages: input.contextPackages
+    });
+
+    this.workflows.advanceStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.discovery,
+      occurredAt: input.createdAt
+    });
+
+    const { artifact } = await this.discoveryAgent.generateDiscoveryReport({
+      request: {
+        goal: input.goal,
+        workflowId: input.workflowId,
+        contextIds: [input.idea.id]
+      },
+      parentArtifactIds: [input.idea.id],
+      actorId: input.actorId,
+      createdAt: input.createdAt,
+      stageId: DELIVERY_STAGE_IDS.discovery
+    });
+    input.artifacts.push(artifact);
+
+    this.workflows.completeStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.discovery,
+      artifactIds: [artifact.id],
+      occurredAt: input.createdAt
     });
 
     return artifact;

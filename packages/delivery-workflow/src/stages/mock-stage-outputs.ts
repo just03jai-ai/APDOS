@@ -25,25 +25,6 @@ export function createIdeaArtifact(input: StageOutputInput): BaseArtifact {
   });
 }
 
-export function createDiscoveryArtifact(
-  input: StageOutputInput,
-  idea: BaseArtifact
-): BaseArtifact {
-  return createArtifact(input, {
-    id: `${input.workflowId}:discovery`,
-    type: ArtifactType.DISCOVERY_REPORT,
-    title: "Discovery Report",
-    description: `Deterministic discovery summary for ${input.goal}.`,
-    parentIds: [idea.id],
-    stageId: DELIVERY_STAGE_IDS.discovery,
-    metadata: {
-      audience: "APDOS operators",
-      opportunity: input.goal,
-      assumptions: ["Mock discovery output for workflow V1."]
-    }
-  });
-}
-
 export function createPrdArtifact(
   input: StageOutputInput,
   idea: BaseArtifact,

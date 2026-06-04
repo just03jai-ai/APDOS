@@ -36,6 +36,22 @@ describe("DeliveryWorkflowService", () => {
         ArtifactType.RELEASE_PACKAGE
       ]
     );
+    const discovery = result.artifacts.find(
+      (artifact) => artifact.type === ArtifactType.DISCOVERY_REPORT
+    );
+
+    assert.equal(
+      (discovery?.metadata.report as { affectedSystems: string[] }).affectedSystems.includes(
+        "payment-operations"
+      ),
+      true
+    );
+    assert.equal(
+      (discovery?.metadata.report as { recommendedNextSteps: string[] })
+        .recommendedNextSteps
+        .includes("Create a PRD from this discovery report."),
+      true
+    );
   });
 
   it("validates PRD, TECH_SPEC, and RELEASE_PACKAGE before completion", async () => {
