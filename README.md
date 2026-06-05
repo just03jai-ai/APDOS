@@ -14,7 +14,7 @@ The current implementation is a TypeScript monorepo focused on deterministic run
 - Knowledge Engine for deterministic graph memory, decisions, outcomes, and project history
 - Agent Registry for APDOS agent definitions and capabilities
 - Discovery Agent and Architecture Agent deterministic services
-- Skill Registry, Skill Runtime, and Skill Adapter for loading and executing registered skills
+- Skill Registry, Skill Runtime, Skill Adapter, and Skill Governance for loading, executing, mapping, and recommending registered skills
 - Delivery Workflow for end-to-end APDOS delivery orchestration
 
 ## Repository Layout
@@ -78,9 +78,10 @@ Agent packages contain registry definitions and deterministic agent services. Th
 packages/skills/skill-registry
 packages/skills/skill-runtime
 packages/skills/skill-adapter
+packages/skills/skill-governance
 ```
 
-Skill packages discover external skills, register them, resolve versions, and execute deterministic mock skill runs.
+Skill packages discover external skills, register them, resolve versions, map ownership and workflow usage, validate dependencies, recommend next steps, and execute deterministic mock skill runs.
 
 ### Workflows
 
@@ -179,4 +180,3 @@ External skill documentation lives under each skill folder in:
 ```text
 skills/<skill-id>/
 ```
-
