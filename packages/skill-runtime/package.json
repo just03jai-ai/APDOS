@@ -1,19 +1,23 @@
 {
-  "name": "@apdos/discovery-agent",
+  "name": "@apdos/skill-runtime",
   "version": "0.1.0",
-  "description": "Deterministic Discovery Agent for APDOS.",
+  "description": "Skill Runtime for loading and executing APDOS skills.",
   "type": "module",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    }
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
   },
   "dependencies": {
     "@apdos/artifacts": "0.1.0",
-    "@apdos/context-engine": "0.1.0",
-    "@apdos/skill-runtime": "0.1.0",
-    "@apdos/workflow-engine": "0.1.0"
+    "@apdos/skill-registry": "0.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

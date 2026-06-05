@@ -14,7 +14,8 @@
     "packages/discovery-agent",
     "packages/delivery-workflow",
     "packages/agent-registry",
-    "packages/skill-registry"
+    "packages/skill-registry",
+    "packages/skill-runtime"
   ],
   "scripts": {
     "test": "npm --workspaces test"

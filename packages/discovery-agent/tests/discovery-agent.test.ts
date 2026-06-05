@@ -6,6 +6,7 @@ import {
   type BaseArtifact
 } from "@apdos/artifacts";
 import { ContextRetrievalService } from "@apdos/context-engine";
+import { SkillRuntimeService } from "@apdos/skill-runtime";
 import { WorkflowExecutionService } from "@apdos/workflow-engine";
 import {
   DiscoveryAgentService,
@@ -89,6 +90,28 @@ describe("DiscoveryAgentService", () => {
       (result.artifact.metadata.report as { problemSummary: string }).problemSummary,
       result.report.problemSummary
     );
+    assert.deepEqual(result.skillResults, []);
+  });
+
+  it("requests skill execution through the Skill Runtime", async () => {
+    const service = new DiscoveryAgentService({
+      skillRuntime: new SkillRuntimeService()
+    });
+
+    const result = await service.executeSkill({
+      skillId: "knowledge",
+      version: "1.0",
+      inputArtifacts: [createIdeaArtifact()],
+      context: {
+        workflowId: "workflow-1",
+        requestedAt: "2026-01-01T00:00:00.000Z"
+      }
+    });
+
+    assert.equal(result.metadata.skillId, "knowledge@1.0");
+    assert.equal(result.metadata.agentId, "discovery-agent");
+    assert.equal(result.artifacts[0].type, ArtifactType.TASK);
+    assert.deepEqual(result.artifacts[0].parentIds, ["workflow-1:idea"]);
   });
 
   it("integrates with Artifact, Context, and Workflow engines", async () => {
@@ -138,6 +161,7 @@ describe("DiscoveryAgentService", () => {
 
     assert.equal(stored?.type, ArtifactType.DISCOVERY_REPORT);
     assert.deepEqual(stored?.parentIds, ["workflow-1:idea"]);
+    assert.deepEqual(result.skillResults, []);
   });
 });
 
