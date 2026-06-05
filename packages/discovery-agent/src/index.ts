@@ -14,6 +14,7 @@ export {
 } from "./reports/discovery-report-artifact.js";
 export {
   DiscoveryAgentService,
+  type AgentSkillExecutionRequest,
   type DiscoveryAgentServiceDependencies,
   type DiscoveryReportGenerationResult,
   type GenerateDiscoveryReportInput
