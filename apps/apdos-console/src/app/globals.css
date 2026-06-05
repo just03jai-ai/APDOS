@@ -1,0 +1,45 @@
+@import "@xyflow/react/dist/style.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 220 23% 97%;
+  --foreground: 222 30% 12%;
+  --muted: 218 18% 91%;
+  --muted-foreground: 218 10% 39%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 30% 12%;
+  --border: 217 16% 84%;
+  --primary: 174 72% 27%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 35 91% 52%;
+  --accent-foreground: 222 30% 12%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(244, 247, 249, 0.92)),
+    hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.react-flow__node {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
