@@ -14,6 +14,7 @@ It allows a workflow stage to determine:
 ```text
 Workflow Engine
   -> Runtime Stage Resolution
+  -> Runtime Health Validation
   -> Skill Governance
   -> Skill Runtime
   -> Artifact Generation
@@ -55,6 +56,18 @@ Supports:
 
 It executes resolved skills through the Skill Runtime using deterministic execution.
 
+Within a stage, artifacts are propagated between skills in execution order:
+
+```text
+currentArtifacts = stageInputArtifacts
+
+for skill in governedSkills:
+  result = executeSkill(skill, currentArtifacts)
+  currentArtifacts += result.artifacts
+```
+
+This lets later skills consume artifacts generated earlier in the same stage.
+
 ### RuntimeArtifactGenerator
 
 Supports:
@@ -72,6 +85,22 @@ The facade service coordinates all runtime steps and returns:
 - `generatedArtifacts`
 - `nextStage`
 
+If skill execution or artifact creation fails after a stage has started, the orchestrator marks the workflow stage as failed so the workflow does not remain running.
+
+### RuntimeHealthService
+
+Supports:
+
+- `validateRuntime()`
+- `validate()`
+
+It checks:
+
+- governed skills are present in the Skill Runtime registry
+- the runtime registry has no extra ungoverned skill names
+- Skill Governance dependencies are valid
+- governed skills can be loaded by the Skill Runtime
+
 ## Example
 
 ```ts
@@ -88,5 +117,4 @@ console.log(result.nextStage);
 
 ## Current Limits
 
-The orchestrator requires the Skill Runtime registry to contain the skills selected by Skill Governance. Imported external skills should be synchronized before orchestration if a stage uses skills beyond the seeded Skill Registry.
-
+The orchestrator uses deterministic mock Skill Runtime execution. It does not execute real prompts or external LLM calls.

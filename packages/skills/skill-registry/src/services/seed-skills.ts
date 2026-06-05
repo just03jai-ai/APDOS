@@ -142,6 +142,29 @@ export const techSpecWriterSkill: SkillDefinition = {
   }
 };
 
+export const implementPlanSkill: SkillDefinition = {
+  id: "implement-plan@1.0",
+  name: "implement-plan",
+  description: "Creates implementation planning artifacts from technical specifications.",
+  version: "1.0",
+  category: "architecture",
+  status: "available",
+  inputArtifacts: [ArtifactType.PRD, ArtifactType.TECH_SPEC],
+  outputArtifacts: [ArtifactType.IMPLEMENTATION_PLAN],
+  templates: [],
+  rules: [
+    {
+      id: "rule:implement-plan-task-breakdown-required",
+      description: "Implementation plans must include clear task breakdowns and milestones.",
+      severity: "error"
+    }
+  ],
+  constraints: {
+    requiresHumanApproval: false,
+    maxInputArtifacts: 8
+  }
+};
+
 export const testPlanWriterSkill: SkillDefinition = {
   id: "test-plan-writer@1.0",
   name: "test-plan-writer",
@@ -234,6 +257,167 @@ export const frontendContributorSkill: SkillDefinition = {
   }
 };
 
+export const monoWebContributorSkill: SkillDefinition = {
+  id: "mono-web-contributor@1.0",
+  name: "mono-web-contributor",
+  description: "Contributes monorepo web implementation artifacts.",
+  version: "1.0",
+  category: "frontend",
+  status: "available",
+  inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
+  outputArtifacts: [ArtifactType.CODE_CHANGE],
+  templates: [],
+  rules: [
+    {
+      id: "rule:mono-web-package-boundary-required",
+      description: "Monorepo web changes must identify affected packages and boundaries.",
+      severity: "warning"
+    }
+  ],
+  constraints: {
+    requiresHumanApproval: true,
+    maxInputArtifacts: 8
+  }
+};
+
+export const cronsContributorSkill: SkillDefinition = {
+  id: "crons-contributor@1.0",
+  name: "crons-contributor",
+  description: "Contributes scheduled job and cron implementation artifacts.",
+  version: "1.0",
+  category: "backend",
+  status: "available",
+  inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
+  outputArtifacts: [ArtifactType.CODE_CHANGE],
+  templates: [],
+  rules: [
+    {
+      id: "rule:cron-schedule-impact-required",
+      description: "Cron changes must describe schedule, retry, and operational impact.",
+      severity: "error"
+    }
+  ],
+  constraints: {
+    requiresHumanApproval: true,
+    maxInputArtifacts: 8
+  }
+};
+
+export const dataScienceMonorepoContributorSkill: SkillDefinition = {
+  id: "data-science-monorepo-contributor@1.0",
+  name: "data-science-monorepo-contributor",
+  description: "Contributes data science monorepo implementation artifacts.",
+  version: "1.0",
+  category: "backend",
+  status: "available",
+  inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
+  outputArtifacts: [ArtifactType.CODE_CHANGE],
+  templates: [],
+  rules: [
+    {
+      id: "rule:data-science-data-contract-required",
+      description: "Data science changes must identify data contracts and model or metric impact.",
+      severity: "warning"
+    }
+  ],
+  constraints: {
+    requiresHumanApproval: true,
+    maxInputArtifacts: 8
+  }
+};
+
+export const aiDataAnalystSkill: SkillDefinition = {
+  id: "ai-data-analyst@1.0",
+  name: "ai-data-analyst",
+  description: "Analyzes delivery artifacts and data outputs for validation findings.",
+  version: "1.0",
+  category: "quality",
+  status: "available",
+  inputArtifacts: [ArtifactType.CODE_CHANGE, ArtifactType.TEST_RESULT],
+  outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
+  templates: [],
+  rules: [
+    {
+      id: "rule:ai-data-analysis-evidence-required",
+      description: "Analysis findings must include evidence and impacted metric context.",
+      severity: "warning"
+    }
+  ],
+  constraints: {
+    requiresHumanApproval: false,
+    maxInputArtifacts: 10
+  }
+};
+
+export const gitGuardianSkill: SkillDefinition = {
+  id: "git-guardian@1.0",
+  name: "git-guardian",
+  description: "Reviews code changes for git safety, secrets, and release readiness.",
+  version: "1.0",
+  category: "governance",
+  status: "available",
+  inputArtifacts: [ArtifactType.CODE_CHANGE, ArtifactType.TEST_RESULT],
+  outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
+  templates: [governanceTemplate],
+  rules: [
+    {
+      id: "rule:git-guardian-no-secret-regression",
+      description: "Git governance findings must identify secret, branch, and risky diff issues.",
+      severity: "error"
+    }
+  ],
+  constraints: {
+    requiresHumanApproval: true,
+    maxInputArtifacts: 10
+  }
+};
+
+export const conventionsSkill: SkillDefinition = {
+  id: "conventions@1.0",
+  name: "conventions",
+  description: "Applies repository conventions and review standards to delivery artifacts.",
+  version: "1.0",
+  category: "governance",
+  status: "available",
+  inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.CODE_CHANGE],
+  outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
+  templates: [governanceTemplate],
+  rules: [
+    {
+      id: "rule:conventions-deviation-required",
+      description: "Convention findings must identify deviations or confirm compliance.",
+      severity: "warning"
+    }
+  ],
+  constraints: {
+    requiresHumanApproval: true,
+    maxInputArtifacts: 10
+  }
+};
+
+export const chronologLoggingSkill: SkillDefinition = {
+  id: "chronolog-logging@1.0",
+  name: "chronolog-logging",
+  description: "Creates release logging and chronology artifacts for governed delivery.",
+  version: "1.0",
+  category: "release",
+  status: "available",
+  inputArtifacts: [ArtifactType.GOVERNANCE_FINDING, ArtifactType.CODE_CHANGE, ArtifactType.TEST_RESULT],
+  outputArtifacts: [ArtifactType.RELEASE_PACKAGE],
+  templates: [releaseTemplate],
+  rules: [
+    {
+      id: "rule:chronolog-release-evidence-required",
+      description: "Release logs must include chronology and governance evidence.",
+      severity: "error"
+    }
+  ],
+  constraints: {
+    requiresHumanApproval: true,
+    maxInputArtifacts: 12
+  }
+};
+
 export const governanceSkill: SkillDefinition = {
   id: "governance@1.0",
   name: "governance",
@@ -284,15 +468,21 @@ export const releaseSkill: SkillDefinition = {
 
 export const INITIAL_SKILL_DEFINITIONS = [
   repoRouterSkill,
-  codebaseResearchSkill,
   knowledgeSkill,
+  codebaseResearchSkill,
   prdWriterV1Skill,
   prdWriterV2Skill,
   techSpecWriterSkill,
-  testPlanWriterSkill,
+  implementPlanSkill,
   designSystemSkill,
   backendContributorSkill,
   frontendContributorSkill,
-  governanceSkill,
-  releaseSkill
+  monoWebContributorSkill,
+  cronsContributorSkill,
+  dataScienceMonorepoContributorSkill,
+  aiDataAnalystSkill,
+  testPlanWriterSkill,
+  gitGuardianSkill,
+  conventionsSkill,
+  chronologLoggingSkill
 ] as const;

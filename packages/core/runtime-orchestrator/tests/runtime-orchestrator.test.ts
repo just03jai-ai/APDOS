@@ -7,12 +7,20 @@ import {
 } from "@apdos/artifacts";
 import {
   RuntimeArtifactGenerator,
+  RuntimeExecutionError,
+  RuntimeHealthService,
   RuntimeOrchestratorService,
   RuntimeSkillExecutor,
-  RuntimeStageResolver
+  RuntimeStageResolver,
+  RuntimeValidationError
 } from "../src/index.js";
 import { SkillGovernanceService } from "@apdos/skill-governance";
 import { SkillRuntimeService } from "@apdos/skill-runtime";
+import {
+  SkillRegistry,
+  createSeededSkillRegistry,
+  type SkillDefinition
+} from "@apdos/skill-registry";
 import { StageStatus, WorkflowExecutionService } from "@apdos/workflow-engine";
 
 const TEST_TIME = "2026-06-05T00:00:00.000Z";
@@ -94,6 +102,60 @@ describe("RuntimeSkillExecutor", () => {
     assert.equal(executions[0].result.metadata.agentId, "agent:product");
     assert.equal(executions[0].result.artifacts[0].type, ArtifactType.PRD);
   });
+
+  it("propagates artifacts through a two-skill stage chain", async () => {
+    const governance = new SkillGovernanceService();
+    const executor = new RuntimeSkillExecutor(new SkillRuntimeService());
+    const [techSpecWriter, implementPlan] = governance.mapping
+      .getSkillsForWorkflowStage("tech-spec")
+      .filter((skill) => ["tech-spec-writer", "implement-plan"].includes(skill.skillId));
+
+    const executions = await executor.executeSkills({
+      workflowId: "workflow:two-skill-chain",
+      stageId: "tech-spec",
+      selectedAgent: "agent:architecture",
+      skills: [techSpecWriter, implementPlan],
+      inputArtifacts: [createArtifact("artifact:prd", ArtifactType.PRD)],
+      requestedAt: TEST_TIME
+    });
+
+    const techSpecArtifact = executions[0].result.artifacts[0];
+    const implementationPlanArtifact = executions[1].result.artifacts[0];
+
+    assert.equal(techSpecArtifact.type, ArtifactType.TECH_SPEC);
+    assert.equal(implementationPlanArtifact.type, ArtifactType.IMPLEMENTATION_PLAN);
+    assert.ok(implementationPlanArtifact.parentIds.includes(techSpecArtifact.id));
+    assert.deepEqual(
+      executions[1].result.metadata.inputArtifactIds,
+      ["artifact:prd", techSpecArtifact.id]
+    );
+  });
+
+  it("propagates artifacts through a three-skill stage chain", async () => {
+    const governance = new SkillGovernanceService();
+    const executor = new RuntimeSkillExecutor(new SkillRuntimeService());
+    const skills = governance.mapping.getSkillsForWorkflowStage("tech-spec");
+
+    const executions = await executor.executeSkills({
+      workflowId: "workflow:three-skill-chain",
+      stageId: "tech-spec",
+      selectedAgent: "agent:architecture",
+      skills,
+      inputArtifacts: [createArtifact("artifact:prd", ArtifactType.PRD)],
+      requestedAt: TEST_TIME
+    });
+
+    const techSpecArtifact = executions[0].result.artifacts[0];
+    const implementationPlanArtifact = executions[1].result.artifacts[0];
+    const designReviewArtifact = executions[2].result.artifacts[0];
+
+    assert.deepEqual(
+      executions.map((execution) => execution.skill.skillId),
+      ["tech-spec-writer", "implement-plan", "design-system"]
+    );
+    assert.ok(designReviewArtifact.parentIds.includes(techSpecArtifact.id));
+    assert.ok(designReviewArtifact.parentIds.includes(implementationPlanArtifact.id));
+  });
 });
 
 describe("RuntimeArtifactGenerator", () => {
@@ -151,6 +213,126 @@ describe("RuntimeOrchestratorService", () => {
     assert.equal(completedWorkflow?.stages[0].artifactIds.length, 1);
     assert.equal((await artifactRegistry.list()).length, 1);
   });
+
+  it("fails a running stage when skill execution fails", async () => {
+    const workflowExecutionService = createWorkflowExecutionService(["prd", "tech-spec"]);
+    const workflow = workflowExecutionService.startWorkflow({
+      id: "workflow:skill-failure",
+      workflowType: "runtime-test",
+      goal: "Build supplier payment approval workflow",
+      definition: createDefinition(["prd", "tech-spec"]),
+      createdAt: TEST_TIME
+    });
+    const service = new RuntimeOrchestratorService({
+      workflowExecutionService,
+      skillRuntime: new SkillRuntimeService({
+        executor: {
+          execute: async () => {
+            throw new Error("simulated skill failure");
+          }
+        }
+      })
+    });
+
+    await assert.rejects(
+      () =>
+        service.executeSkills({
+          workflowId: workflow.id,
+          inputArtifacts: [createArtifact("artifact:discovery", ArtifactType.DISCOVERY_REPORT)],
+          requestedAt: TEST_TIME
+        }),
+      RuntimeExecutionError
+    );
+
+    const failedWorkflow = workflowExecutionService.getWorkflow(workflow.id);
+    assert.equal(failedWorkflow?.stages[0].status, StageStatus.FAILED);
+    assert.match(failedWorkflow?.stages[0].statusReason ?? "", /Skill execution failed: prd-writer/);
+  });
+
+  it("fails a running stage when artifact creation fails", async () => {
+    const workflowExecutionService = createWorkflowExecutionService(["prd", "tech-spec"]);
+    const workflow = workflowExecutionService.startWorkflow({
+      id: "workflow:artifact-failure",
+      workflowType: "runtime-test",
+      goal: "Build supplier payment approval workflow",
+      definition: createDefinition(["prd", "tech-spec"]),
+      createdAt: TEST_TIME
+    });
+    const artifactRegistry = new ArtifactRegistry();
+    await artifactRegistry.register({
+      ...createArtifact("workflow:artifact-failure:prd-writer:1.0:prd", ArtifactType.PRD),
+      parentIds: ["artifact:discovery"],
+      createdBy: "agent:product"
+    });
+    const service = new RuntimeOrchestratorService({
+      workflowExecutionService,
+      artifactRegistry
+    });
+
+    await assert.rejects(
+      () =>
+        service.executeSkills({
+          workflowId: workflow.id,
+          inputArtifacts: [createArtifact("artifact:discovery", ArtifactType.DISCOVERY_REPORT)],
+          requestedAt: TEST_TIME
+        }),
+      RuntimeExecutionError
+    );
+
+    const failedWorkflow = workflowExecutionService.getWorkflow(workflow.id);
+    assert.equal(failedWorkflow?.stages[0].status, StageStatus.FAILED);
+    assert.match(failedWorkflow?.stages[0].statusReason ?? "", /Artifact creation failed/);
+  });
+});
+
+describe("RuntimeHealthService", () => {
+  it("validates successful runtime synchronization", () => {
+    const service = new RuntimeHealthService(
+      new SkillGovernanceService(),
+      new SkillRuntimeService()
+    );
+
+    const result = service.validate();
+
+    assert.equal(result.valid, true);
+    assert.equal(result.governedSkillNames.length, 17);
+    assert.equal(result.runtimeSkillNames.length, 17);
+    assert.deepEqual(result.missingSkillNames, []);
+    assert.deepEqual(result.extraSkillNames, []);
+  });
+
+  it("reports missing governed runtime skills", () => {
+    const registry = createSeededSkillRegistry();
+    registry.unregisterSkill("prd-writer@1.0");
+    registry.unregisterSkill("prd-writer@2.0");
+    const service = new RuntimeHealthService(
+      new SkillGovernanceService(),
+      new SkillRuntimeService({ registry })
+    );
+
+    assert.throws(
+      () => service.validate(),
+      (error) =>
+        error instanceof RuntimeValidationError &&
+        error.result?.missingSkillNames.includes("prd-writer") === true
+    );
+  });
+
+  it("reports extra runtime skills not governed by Skill Governance", () => {
+    const registry = createSeededSkillRegistry();
+    registry.registerSkill(buildExtraSkill());
+    const service = new RuntimeHealthService(
+      new SkillGovernanceService(),
+      new SkillRuntimeService({ registry })
+    );
+
+    assert.throws(
+      () => service.validate(),
+      (error) =>
+        error instanceof RuntimeValidationError &&
+        error.result?.extraSkillNames.includes("extra-skill") === true
+    );
+  });
 });
 
 function createWorkflowExecutionService(_stageIds: string[]): WorkflowExecutionService {
@@ -179,5 +361,24 @@ function createArtifact(id: string, type: ArtifactType): BaseArtifact {
     version: 1,
     status: "draft",
     metadata: {}
+  };
+}
+
+function buildExtraSkill(): SkillDefinition {
+  return {
+    id: "extra-skill@1.0",
+    name: "extra-skill",
+    description: "Extra skill not governed by Skill Governance.",
+    version: "1.0",
+    category: "research",
+    status: "available",
+    inputArtifacts: [ArtifactType.IDEA],
+    outputArtifacts: [ArtifactType.TASK],
+    templates: [],
+    rules: [],
+    constraints: {
+      requiresHumanApproval: false,
+      maxInputArtifacts: 2
+    }
   };
 }

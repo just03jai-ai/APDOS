@@ -33,6 +33,10 @@ export class SkillRuntimeService {
     return this.loader.loadSkill(skillId, version);
   }
 
+  listSkills(): SkillDefinition[] {
+    return this.loader.listAvailableSkills();
+  }
+
   resolveVersion(skillId: string, version?: string): ResolvedSkillVersion {
     return this.loader.resolveVersion(skillId, version);
   }

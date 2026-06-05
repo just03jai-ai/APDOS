@@ -13,16 +13,16 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
+    "test": "npm --workspace @apdos/skill-registry run build && npm --workspace @apdos/skill-runtime run build && tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
   },
   "dependencies": {
     "@apdos/artifacts": "0.1.0",
     "@apdos/skill-governance": "0.1.0",
+    "@apdos/skill-registry": "0.1.0",
     "@apdos/skill-runtime": "0.1.0",
     "@apdos/workflow-engine": "0.1.0"
   },
   "devDependencies": {
-    "@apdos/skill-registry": "0.1.0",
     "@types/node": "^22.0.0",
     "typescript": "^5.5.0"
   }

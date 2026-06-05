@@ -1,5 +1,6 @@
 import type { ArtifactRegistry, BaseArtifact } from "@apdos/artifacts";
 import type { SkillGovernanceService, SkillGovernanceMetadata } from "@apdos/skill-governance";
+import type { SkillDefinition } from "@apdos/skill-registry";
 import type { SkillResult, SkillRuntimeService } from "@apdos/skill-runtime";
 import type {
   WorkflowExecutionService,
@@ -12,6 +13,21 @@ export interface RuntimeOrchestratorDependencies {
   skillGovernance?: SkillGovernanceService;
   skillRuntime?: SkillRuntimeService;
   artifactRegistry?: ArtifactRegistry;
+}
+
+export interface RuntimeHealthCheckResult {
+  valid: boolean;
+  governedSkillNames: string[];
+  runtimeSkillNames: string[];
+  missingSkillNames: string[];
+  extraSkillNames: string[];
+  dependencyIssues: string[];
+  executableSkillNames: string[];
+}
+
+export interface RuntimeSkillRegistrySnapshot {
+  governedSkills: SkillGovernanceMetadata[];
+  runtimeSkills: SkillDefinition[];
 }
 
 export interface RuntimeStageResolution {
@@ -36,4 +52,34 @@ export interface RuntimeExecutionResult {
   executedSkills: RuntimeSkillExecution[];
   generatedArtifacts: BaseArtifact[];
   nextStage?: WorkflowStage;
+}
+
+export class RuntimeValidationError extends Error {
+  constructor(
+    message: string,
+    readonly result?: RuntimeHealthCheckResult
+  ) {
+    super(message);
+    this.name = "RuntimeValidationError";
+  }
+}
+
+export class RuntimeExecutionError extends Error {
+  constructor(
+    message: string,
+    readonly cause?: unknown
+  ) {
+    super(message);
+    this.name = "RuntimeExecutionError";
+  }
+}
+
+export class WorkflowExecutionError extends Error {
+  constructor(
+    message: string,
+    readonly cause?: unknown
+  ) {
+    super(message);
+    this.name = "WorkflowExecutionError";
+  }
 }

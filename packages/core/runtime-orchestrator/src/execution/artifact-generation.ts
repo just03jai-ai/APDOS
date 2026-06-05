@@ -1,5 +1,8 @@
 import type { ArtifactRegistry, BaseArtifact } from "@apdos/artifacts";
-import type { RuntimeSkillExecution } from "../contracts/runtime-orchestration.js";
+import {
+  RuntimeExecutionError,
+  type RuntimeSkillExecution
+} from "../contracts/runtime-orchestration.js";
 
 export class RuntimeArtifactGenerator {
   constructor(private readonly artifactRegistry?: ArtifactRegistry) {}
@@ -9,7 +12,11 @@ export class RuntimeArtifactGenerator {
 
     for (const execution of executions) {
       for (const artifact of execution.result.artifacts) {
-        artifactsById.set(artifact.id, { ...artifact, parentIds: [...artifact.parentIds], metadata: { ...artifact.metadata } });
+        artifactsById.set(artifact.id, {
+          ...artifact,
+          parentIds: [...artifact.parentIds],
+          metadata: { ...artifact.metadata }
+        });
       }
     }
 
@@ -22,7 +29,11 @@ export class RuntimeArtifactGenerator {
     const registeredArtifacts: BaseArtifact[] = [];
 
     for (const artifact of artifacts) {
-      registeredArtifacts.push(await this.artifactRegistry.register(artifact));
+      try {
+        registeredArtifacts.push(await this.artifactRegistry.register(artifact));
+      } catch (error) {
+        throw new RuntimeExecutionError(`Artifact creation failed: ${artifact.id}`, error);
+      }
     }
 
     return registeredArtifacts;

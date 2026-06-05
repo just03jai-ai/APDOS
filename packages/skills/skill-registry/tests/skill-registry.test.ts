@@ -91,9 +91,9 @@ describe("SkillRegistry", () => {
         "repo-router",
         "knowledge",
         "tech-spec-writer",
+        "implement-plan",
         "design-system",
-        "frontend-contributor",
-        "governance"
+        "frontend-contributor"
       ]
     );
   });
@@ -129,17 +129,23 @@ describe("SkillRegistry", () => {
       registry.listSkills().map((skill) => skill.name),
       [
         "repo-router",
-        "codebase-research",
         "knowledge",
+        "codebase-research",
         "prd-writer",
         "prd-writer",
         "tech-spec-writer",
-        "test-plan-writer",
+        "implement-plan",
         "design-system",
         "backend-contributor",
         "frontend-contributor",
-        "governance",
-        "release"
+        "mono-web-contributor",
+        "crons-contributor",
+        "data-science-monorepo-contributor",
+        "ai-data-analyst",
+        "test-plan-writer",
+        "git-guardian",
+        "conventions",
+        "chronolog-logging"
       ]
     );
   });
