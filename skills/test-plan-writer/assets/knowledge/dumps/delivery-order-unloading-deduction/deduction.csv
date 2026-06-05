@@ -1,0 +1,106 @@
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-01,Deduction,General,PRO,Verify deduction screen loads for valid DO-SO,Screen loads successfully
+TC-03,Deduction,General,PRO,Verify only SA can edit deduction fields before approval from SHP,Fields editable only for SA
+TC-04,Deduction,General,PRO,Verify non-SA users have read-only access,Fields disabled
+TC-06,Deduction,General,PRO,Verify values persist after save & refresh,Values retained
+TC-08,Deduction,General,PRO,Verify negative values are not allowed,Validation error
+Cash Discount,,,,,
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-09,Deduction,Cash Discount,PRO,Verify auto-calculation using Invoice × Accepted Qty × CD%,Correct value pre-filled
+TC-10,Deduction,Cash Discount,PRO,Verify recalculation when Accepted Qty changes,Value updates
+TC-11,Deduction,Cash Discount,PRO,Verify CD = 0 when CD% = 0,Amount = 0
+TC-12,Deduction,Cash Discount,PRO,Verify SA can edit CD before approval,Value editable
+TC-12,Deduction,Cash Discount,OS,Verify SA can edit CD after approval by SHP,Error shown or field disabled
+TC-13,Deduction,Cash Discount,PRO/OS,Verify edited CD reflects in Total,Total updates
+TC-14,Deduction,Cash Discount,PRO/OS,Verify negative CD not allowed,Error shown
+Bag Discount,,,,,
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-15,Deduction,Bag Discount,PRO,Verify auto-calculation using Invoice × Accepted Qty × BD%,Correct value
+TC-16,Deduction,Bag Discount,PRO,Verify BD recalculation on qty change,Value updates
+TC-17,Deduction,Bag Discount,PRO,Verify SA can edit BD before approval,Editable
+TC-17,Deduction,Bag Discount,OS,Verify SA can edit BD after approval by SHP,Error shown or field disabled
+TC-18,Deduction,Bag Discount,PRO/OS,Verify negative BD not allowed,Validation error
+Rejection Deduction,,,,,
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-19,Deduction,Rejection,PRO,Verify auto-calculation using Invoice × Rejected Qty,Correct value
+TC-20,Deduction,Rejection,PRO,Verify rejection = 0 when Rejected Qty = 0,Amount = 0
+TC-21,Deduction,Rejection,PRO,Verify SA can edit rejection amount,Editable
+TC-21,Deduction,Rejection,OS,Verify SA can edit rejection amount after approval,Error shown or field disabled
+TC-22,Deduction,Rejection,PRO/OS,Verify edited value updates Total,Total recalculated
+Weight loss,,,,,
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-23,Deduction,Weight Loss,PRO,Verify auto-calculation using Invoice × Shortage Qty,Correct value
+TC-24,Deduction,Weight Loss,PRO,Verify SA can edit weight loss,Editable
+TC-24,Deduction,Weight Loss,OS,Verify SA can edit weight loss after approval,Error shown or field disabled
+TC-25,Deduction,Weight Loss,PRO/OS,Verify weight loss = 0 when Shortage Qty = 0,Amount = 0
+Quality Deduction,,,,,
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-26,Deduction,Quality,PRO,Verify AI pre-filled value from report,Correct value
+TC-27,Deduction,Quality,PRO,Verify mismatch with report allowed,Save allowed
+TC-28,Deduction,Quality,PRO,Verify SA can edit quality deduction,Editable
+TC-28,Deduction,Quality,OS,Verify SA can edit quality deduction after approval,Error shown or field disabled
+TC-29,Deduction,Quality,PRO/OS,Verify remark mandatory when amount > 0,Error if empty
+TC-30,Deduction,Quality,PRO/OS,Verify save succeeds with remark,Saved successfully
+Weightinmg changes,,,,,
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-31,Deduction,Weighing,PRO,Verify auto-fill from report,Correct value
+TC-32,Deduction,Weighing,PRO,Verify SA can edit weighing charges,Editable
+TC-32,Deduction,Weighing,OS,Verify SA can edit weighing charges after approval,Error shown or field disabled
+TC-33,Deduction,Weighing,PRO/OS,Verify negative value not allowed,Validation error
+Bank Processing Charges,,,,,
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-34,Deduction,Bank Charges,PRO,Verify auto-fill from report,Correct value
+TC-35,Deduction,Bank Charges,PRO,Verify SA can edit bank charges,Editable
+TC-36,Deduction,Bank Charges,PRO,Verify decimal values allowed,Accepted
+Rate Difference,,,,,
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-37,Deduction,Rate Difference,PRO,Verify no auto-fill,Field empty
+TC-38,Deduction,Rate Difference,PRO,Verify SA can enter value,Editable
+TC-39,Deduction,Rate Difference,PRO,Verify negative value not allowed,Error
+Other Deduction,,,,,
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-40,Deduction,Other,PRO,Verify SA can enter other deduction,Editable
+TC-41,Deduction,Other,PRO,Verify used to balance report total,Total matches report
+TC-42,Deduction,Other,PRO,Verify remark mandatory when amount > 0,Error if missing
+Total Amount,,,,,
+TC ID,Module,Deduction Type,Platform,Scenario Description,Expected Result
+TC-43,Deduction,Total,PRO,Verify dynamic total calculation,Correct sum
+TC-44,Deduction,Total,PRO,Verify total updates on edit,Auto-updated
+TC-45,Deduction,Total,PRO,Verify total is non-editable,Read-only
+TC-46,Deduction,Total,PRO,Verify total never negative,Validation enforced
+Approval and after approval flow,,,,,
+TC ID,Module,Role,Action,Scenario Description,Expected Result
+TC-47,Deduction,SH,Review,Verify SH can view document uploaded by SA,Document visible
+TC-48,Deduction,SH,Approve,Verify SH can approve correct document,Document approved
+TC-49,Deduction,SH,Reject,Verify SH can reject incorrect document,Status set to Rejected
+TC-50,Deduction,SH,Reject,Verify rejection requires SA re-upload,SA prompted to re-upload
+TC-51,Deduction,SH,Reject,Verify all deduction values reset after rejection,All fields cleared
+TC-52,Deduction,SH,Upload,Verify SH can replace uploaded document,New document uploaded
+TC-53,Deduction,SH,Upload,Verify replaced document overwrites old one,Old doc removed
+TC-54,Deduction,SH,Upload,Verify deduction values remain editable after doc replacement,Fields editable
+TC-55,Deduction,SH,Review,Verify SH can view deduction amounts & remarks,Data visible
+TC-56,Deduction,SH,Edit,Verify SH can edit any deduction amount,All fields editable
+TC-57,Deduction,SH,Edit,Verify SH can edit deduction remarks,Remarks editable
+TC-58,Deduction,SH,Edit,Verify total updates after SH edit,Total recalculated
+TC-59,Deduction,SH,Submit,Verify submit terminates SH flow,Flow terminated
+TC-60,Deduction,SH,Submit,Verify DO moves to “Deduction Submitted”,Status updated
+TC-61,Deduction,SH,Submit,Verify submit disabled if validations fail,Error shown
+TC-62,Deduction,SA,Re-upload,Verify SA can re-upload document after rejection,Upload allowed
+TC-63,Deduction,SA,Refill,Verify SA must re-enter all deduction values,All fields mandatory
+TC-64,Deduction,SA,Refill,Verify previous rejected values are not retained,Fields empty
+TC-65,Deduction,SA,Submit,Verify SA can resubmit after refill,Submission successful
+TC-66,Deduction,ZH,Edit,Verify ZH can edit deduction amounts,Editable
+TC-67,Deduction,ZH,Edit,Verify ZH can edit deduction remarks,Editable
+TC-68,Deduction,ZH,Submit,Verify ZH submit moves DO to Deduction Submitted,Status updated
+TC-69,Deduction,ZH,Complete,Verify ZH can mark PO complete post deduction,PO marked complete
+TC-70,Deduction,ZH,Edit,Verify ZH cannot edit when DO is completed,Edit blocked
+TC-71,Deduction,ZH,Incomplete,Verify DO must be marked incomplete before edit,Incomplete allowed
+TC-72,Deduction,ZH,Edit,Verify edit allowed after DO marked incomplete,Edit enabled
+TC-73,Deduction,System,Validation,Verify edit blocked if invoice is in completed tab,Action disabled
+TC-74,Deduction,System,Validation,Verify edit allowed if invoice not completed,Edit allowed
+TC-75,Deduction,System,CN,Verify CN present within 24 hours,CN cancellation mandatory
+TC-76,Deduction,System,CN,Verify CN auto-cancellation within 24 hours,CN cancelled
+TC-77,Deduction,System,CN,Verify no action allowed after 24 hours,Edit blocked
+TC-78,Deduction,System,Time,Verify 24-hour time calculation accuracy,Correct enforcement
+TC-79,Deduction,SA→SH→ZH,E2E,Verify full flow from SA upload to ZH completion,Flow successful
+TC-80,Deduction,System,Status,Verify DO status transitions are correct,Correct statuses

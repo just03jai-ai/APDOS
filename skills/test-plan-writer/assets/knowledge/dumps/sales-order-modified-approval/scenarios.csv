@@ -1,0 +1,292 @@
+Test_Scenario_ID,Scenario_Name,Module,Description,Priority,Preconditions,Test_Steps,Expected_Result,,,,,,,,,,,,,,,,
+TS_FMOS-7720_01,New Permission for SO Modified Approval,SO Approval,Verify new permission is required to approve SOs in SO Modified status,High,SO exists in SO Modified status and user has existing approve:so permission,"1. Request SO and modify it to reach SO Modified status
+  2. Login as user with only 'approve:so' permission (old permission)
+  3. Navigate to SO Modified SO
+  4. Verify user cannot approve the SO
+  5. Login as user with new permission for SO Modified approval
+  6. Navigate to same SO Modified SO
+  7. Verify user can see Approve button
+  8. Click Approve button
+  9. Verify SO status changes to SO Created
+  10. Confirm approval is successful",New permission is required and working correctly. Users with only old permission cannot approve SO Modified status. Users with new permission can approve successfully.,,,,,,,,,,,,,,,,
+TS_FMOS-7720_02,SO Modified Visibility in Margin Approval Tab,SO Approval,Verify SOs in SO Modified status are visible in Margin Approval tab,High,SO exists in SO Modified status,"1. Request SO and modify it to reach SO Modified status
+  2. Login as user with permission
+  3. Navigate to Margin Approval tab
+  4. Verify SO Modified SO is visible in the list
+  5. Check SO details are displayed correctly
+  6. Verify status shows as 'SO Modified'
+  7. Verify user can take actions on the SO
+  8. Check sorting and filtering works for SO Modified status
+  9. Verify count includes SO Modified SOs",SO Modified status SOs are visible in Margin Approval tab with correct status and details,,,,,,,,,,,,,,,,
+TS_FMOS-7720_03,SO Modified Visibility in Risk Approval Tab,SO Approval,Verify SOs in SO Modified status are visible in Risk Approval tab,High,SO exists in SO Modified status,"1. Request SO and modify it to reach SO Modified status
+  2. Login as user with permission
+  3. Navigate to Risk Approval tab
+  4. Verify SO Modified SO is visible in the list
+  5. Check SO details are displayed correctly
+  6. Verify status shows as 'SO Modified'
+  7. Verify user can take actions on the SO
+  8. Check sorting and filtering works for SO Modified status
+  9. Verify count includes SO Modified SOs",SO Modified status SOs are visible in Risk Approval tab with correct status and details,,,,,,,,,,,,,,,,
+TS_FMOS-7720_04,Auto-Approval for Quantity Modification - 105% Threshold,SO Approval,Verify quantity modification up to 105% is auto-approved on first time,High,SO exists in SO Created status with approved quantity,"1. SO with approved quantity of 100 MT
+  2. Login as Sales Associate
+  3. Navigate to SO details
+  4. Modify quantity to 105 MT (105% of 100 MT)
+  5. Submit the modification
+  6. Verify SO is auto-approved without requiring VP/Risk approval
+  7. Check status changes directly to SO Created
+  8. Verify no approval workflow is triggered
+  9. Verify modification is logged
+  10. Test that this works only for first-time modification","Quantity modification up to 105% is auto-approved on first time without requiring approval workflow
+
+Note: Quantity modifications initiated by the SA, if done upto 105% or 5 MT (whichever is higher) of the approved SO quantity, can be auto-approved, and should not need any approvals if it happens for the first time",,,,,,,,,,,,,,,,
+TS_FMOS-7720_05,Auto-Approval for Quantity Modification - 5 MT Threshold,SO Approval,Verify quantity modification up to 5 MT is auto-approved on first time,High,SO exists in SO Created status with approved quantity less than 100 MT,"1. SO with approved quantity of 10 MT
+  2. Login as Sales Associate
+  3. Navigate to SO details
+  4. Modify quantity to 15 MT (5 MT increase)
+  5. Submit the modification
+  6. Verify SO is auto-approved without requiring VP/Risk approval
+  7. Check status changes directly to SO Created
+  8. Verify no approval workflow is triggered
+  9. Verify modification is logged
+  10. Test that 5 MT threshold takes precedence when 105% is less than 5 MT","Quantity modification up to 5 MT is auto-approved on first time when 5 MT is higher than 105%
+Note: Quantity modifications initiated by the SA, if done upto 105% or 5 MT (whichever is higher) of the approved SO quantity, can be auto-approved, and should not need any approvals if it happens for the first time",,,,,,,,,,,,,,,,
+TS_FMOS-7720_06,Auto-Approval Only for First Time Modification,SO Approval,Verify auto-approval works only for first-time quantity modification,High,SO exists in SO Created status,"1. SO with approved quantity of 100 MT
+  2. Login as Sales Associate
+  3. Modify quantity to 105 MT (first modification - within threshold)
+  4. Verify auto-approval works
+  5. Wait for SO to be auto-approved
+  6. Modify quantity again to 110 MT (second modification)
+  7. Verify second modification requires approval workflow
+  8. Check SO moves to SO Modified status requiring approval
+  9. Verify VP/Risk approval is needed for second modification",Auto-approval works only for first-time modification. Subsequent modifications require approval workflow,,,,,,,,,,,,,,,,
+TS_FMOS-7720_07,Quantity Modification Exceeding Threshold Requires Approval,SO Approval,Verify quantity modification exceeding 105% or 5 MT requires approval,High,SO exists in SO Created status,"1. Request SO with approved quantity of 100 MT
+  2. Login as Sales Associate
+  3. Navigate to SO details
+  4. Modify quantity to 110 MT (110% - exceeds 105% threshold)
+  5. Submit the modification
+  6. Verify SO moves to SO Modified status
+  7. Check approval workflow is triggered
+  8. Verify VP/Risk approval is required
+  9. Verify SO is visible in Margin Approval and Risk Approval tabs
+  10. Test approval process works correctly",Quantity modification exceeding 105% or 5 MT threshold requires approval workflow,,,,,,,,,,,,,,,,
+TS_FMOS-7720_08,PO Price Selection - SO Gross Price Option,SO Approval,Verify option to select PO price from SO Gross Price is available,High,SO exists in SO Requested or Margin Added status,"1. Login as State Head (Booked By)
+  2. Navigate to SO in So overview screen
+  3. click Add Margin button
+  4. Verify toggle to select SO Gross Price' or 'SO Net Price'
+  5. Select 'SO Gross Price' option
+  6. Add margin allocation details (PA, Quantity, Price)
+  7. Submit margin allocation
+  8. Verify selection is saved
+  9. Check expected margin calculation uses SO Gross Price
+  10. Verify margin percentage is calculated correctly",Option to select SO Gross Price is available and saved correctly,,,,,,,,,,,,,,,,
+TS_FMOS-7720_09,PO Price Selection - SO Net Price Option,SO Approval,Verify option to select PO price from SO Net Price is available,High,SO exists in SO Requested or Margin Added status,"1. Login as State Head (Booked By)
+  2. Navigate to SO in So overview screen
+  3. click Add Margin button
+  4. Verify toggle to select 'SO Gross Price' or 'SO Net Price'
+  5. Select 'SO Net Price' option (default)
+  6. Add margin allocation details (PA, Quantity, Price)
+  7. Submit margin allocation
+  8. Verify selection is saved
+  9. Check expected margin calculation uses SO Net Price
+  10. Verify margin percentage is calculated correctly",Option to select PO price from SO Net Price is available and works correctly,,,,,,,,,,,,,,,,
+TS_FMOS-7720_10,Expected Margin Calculation with SO Gross Price,SO Approval,Verify expected margin calculation is correct when PO price is from SO Gross Price,High,SO exists with margin allocation using SO Gross Price option,"1. Request SO with:
+  - SO Gross Price: ₹3000/Qtl
+  - Bag Deduction: 1% of Gross Price
+  - Cash Discount: 1% of Gross Price
+  - SO Net Price: ₹2940/Qtl
+  2. Login as State Head
+  3. Select 'SO Gross Price' option
+  4. Add margin allocation with Purchase Price: ₹2970/Qtl
+  5. Verify expected margin calculation
+  6. Check margin percentage: (3000 - 2970) / 3000 = 1.0%
+  7. Verify calculation is displayed correctly
+  8. Compare with SO Net Price calculation to verify difference",Expected margin calculation is correct when using SO Gross Price (1.0% instead of -1.02%),,,,,,,,,,,,,,,,
+TS_FMOS-7720_11,SO Gross Price Display in DO Overview,SO Approval,Verify SO Gross Price is shown in DO Overview Ship to card when selected,High,SO exists with PO price selection as SO Gross Price and DO is created,"1. Request SO with 'SO Gross Price' selected
+  2. Create PO mapped to the SO
+  3. Then create DO
+  3. Navigate to DO Overview screen
+  4. Check 'Ship to' card
+  5. Verify 'SO Gross Price' is displayed in the card against value
+  6. Verify price value matches SO Gross Price
+  7. Verify it shows only when SO Gross Price option was selected
+  8. Test with SO Net Price option to verify it doesn't show",SO Gross Price is displayed in DO Overview Ship to card when SO Gross Price option was selected,,,,,,,,,,,,,,,,
+TS_FMOS-7720_12,SO Net Price Displayed for SO Net Price Selection,SO Approval,Verify SO Net Price is shown when SO Net Price option is selected,High,SO exists with PO price selection as SO Net Price and DO is created,"1. Request SO with 'SO Net Price' selected (default)
+  2. Create PO mapped to the SO
+  3. Then create DO
+  3. Navigate to DO Overview screen
+  4. Check 'Ship to' card
+  5. Verify 'SO Net Price' is displayed in the card against value
+  6. Verify price value matches SO Net Price
+  7. Verify it shows only when SO Net Price option was selected
+  8. Test with SO Gross Price option to verify it doesn't show",SO Net Price is displayed when SO Net Price option is selected,,,,,,,,,,,,,,,,
+TS_FMOS-7720_13,Tab-Agnostic Search for All Tab Users,SO Approval,Verify search works across all tabs for users with All tab access,High,User has access to All tab and multiple SOs exist across different tabs,"1. Login as user with All tab access
+  2. Navigate to All tab
+  3. Use search functionality to search for SO number
+  4. Verify search returns results from all tabs (Add Expected Margin, Margin Approval, Risk Approval, In-Progress Rejected)
+  5. Search by Buyer Name (Legal Name)
+  6. Verify search returns results from all tabs
+  7. Search by Buyer Name (Trader Name)
+  8. Verify search returns results from all tabs
+  9. Test search with partial SO number
+  10. Verify search is not limited to current tab",Search functionality works across all tabs for users with All tab access returning results from all visible tabs,,,,,,,,,,,,,,,,
+TS_FMOS-7720_14,Search Limited to Current Tab for Non-All Tab Users,SO Approval,Verify search is limited to current tab for users without All tab access,High,User has access to specific tabs only (not All tab),"1. Login as user without All tab access (e.g., only Margin Approval tab)
+  2. Navigate to Margin Approval tab
+  3. Use search functionality to search for SO number
+  4. Verify search returns results only from Margin Approval tab
+  5. Verify results from other tabs are not shown
+  6. Test search with SO that exists in different tab
+  7. Confirm search is tab-specific for non-All tab users",Search functionality is limited to current tab for users without All tab access,,,,,,,,,,,,,,,,
+TS_FMOS-7720_15,Invoice Requests Exclusion for SO Modified Status,SO Approval,Verify invoice requests for SO Modified status SOs do not appear in Invoice Requests bucket,High,SO exists in SO Modified status,"1. Request SO and modify it to reach SO Modified status
+  2. Request invoice for the SO Modified SO
+  3. Navigate to Invoice Requests bucket
+  4. Verify SO Modified SO invoice request is NOT visible
+  5. Verify other SO invoice requests are still visible
+  6. Change SO status from SO Modified to SO Created
+  7. Verify invoice request now appears in Invoice Requests bucket
+  8. Test multiple SO Modified SOs to confirm exclusion",Invoice requests for SO Modified status SOs are excluded from Invoice Requests bucket,,,,,,,,,,,,,,,,
+TS_FMOS-7720_16,Invoice Requests Visible After SO Modified Approval,SO Approval,Verify invoice requests appear after SO Modified is approved,High,SO exists in SO Modified status with invoice request,"1. Request SO in SO Modified status
+  2. Request invoice for the SO
+  3. Verify invoice request is not visible in Invoice Requests bucket
+  4. Approve SO Modified status
+  5. Navigate to Invoice Requests bucket
+  6. Verify invoice request now appears
+  7. Verify invoice request details are correct
+  8. Test invoice creation workflow works",Invoice requests appear in Invoice Requests bucket after SO Modified status is approved,,,,,,,,,,,,,,,,
+TS_FMOS-7720_17,Payable Days Input in Margin Allocation,SO Approval,Verify optional Payable Days column is available in margin allocation,High,SO exists in SO Requested status,"1. Login as State Head (Booked By)
+  2. Navigate to SO then SO overview
+  3. Click Add Margin button
+  4. Verify 'Payable Days' column is visible
+  5. Verify column is optional (not mandatory)
+  6. Add Payable Days value (e.g., 15 days) and check ROCE value changing accrding to calc
+  7. Add margin allocation details (PA, Quantity, Price)
+  8. If No value is given in payable days the value should be taken as default which is given during so creation through pro 
+  8. Submit margin allocation
+  9. Verify Payable Days value is saved
+  10. Verify it can be left empty (optional)",Optional Payable Days column is available and can be input during margin allocation,,,,,,,,,,,,,,,,
+TS_FMOS-7720_18,Ideal ROCE Calculation with Payable Days,SO Approval,Verify Ideal ROCE calculation includes Payable Days when provided,High,SO exists with margin allocation including Payable Days,"1. Request SO with margin allocation
+  2. Add Payable Days: 15 days
+  3. Add margin allocation details:
+  - Total Buyer Payment: ₹100000
+  - Total Supplier Payment: ₹95000
+  - Repayment Timeline: 30 days
+  4. Verify Ideal ROCE calculation uses formula:
+  Ideal ROCE = (Total Buyer Payment - Total Supplier Payment) / Total Buyer Payment × (Days of Month / (Repayment Timeline - Payable Days))
+  5. Calculate: (100000 - 95000) / 100000 × (30 / (30 - 15))
+  6. Verify calculated value matches displayed value
+  7. Test with different Payable Days values
+  8. Verify calculation updates when Payable Days changes",Ideal ROCE calculation correctly includes Payable Days in the formula,,,,,,,,,,,,,,,,
+TS_FMOS-7720_19,Ideal ROCE Calculation without Payable Days,SO Approval,Verify Ideal ROCE calculation works correctly when Payable Days is not provided,High,SO exists with margin allocation without Payable Days,"1. Request SO with margin allocation
+2. Leave Payable Days empty (optional)
+3. Add margin allocation details:
+- Total Buyer Payment: ₹100000
+- Total Supplier Payment: ₹95000
+- Repayment Timeline: 30 days
+4. Verify Ideal ROCE calculation uses original formula (without Payable Days):
+Ideal ROCE = (Total Buyer Payment - Total Supplier Payment) / ((Payment Terms of Buyer / Days of Month) × Total Buyer Payment)
+5. Verify calculation works correctly
+6. Compare with Payable Days calculation to verify difference",Ideal ROCE calculation works correctly when Payable Days is not provided using original formula,"Buyer Payment: ₹100000, Supplier Payment: ₹95000, Repayment Timeline: 30 days, Payable Days: Not provided, Ideal ROCE: Uses original formula",,,,,,,,,,,,,,,
+TS_FMOS-7720_20,Vehicle Number Display in DO List Modal,SO Approval,Verify Vehicle Number is shown instead of PA details in List of DOs modal,High,SO exists with mapped DOs,"1. Navigate to SO details page
+  2. Open 'List of DOs' modal
+  3. Verify Vehicle Number column is displayed
+  4. Verify PA details column is NOT displayed (or replaced)
+  5. Check Vehicle Number values are correct for each DO
+  6. Verify Vehicle Number is visible and readable
+  7. Test with multiple DOs
+  8. Verify sorting/filtering works on Vehicle Number",Vehicle Number is displayed in List of DOs modal instead of PA details,,,,,,,,,,,,,,,,
+TS_FMOS-7720_21,Terminology Change - List of POs to List of DOs,SO Approval,Verify text change from 'List of PO's' to 'List of DOs',High,SO exists with mapped DOs,"1. Navigate to SO details page
+  2. Verify Modal title shows 'List of DOs' (not 'List of PO's')
+  3. Click to open the modal
+  4. Verify modal title shows 'List of DOs'
+  5. Check all references to 'PO' are changed to 'DO' where applicable
+  6. Verify consistency across the interface
+  7. Test in different sections of the page",Text is changed from 'List of PO's' to 'List of DOs' consistently across the interface,,,,,,,,,,,,,,,,
+TS_FMOS-7720_22,DO ID Serialization Format,SO Approval,Verify DO ID serialization follows design format with bold text,High,SO exists with mapped DOs,"1. Navigate to SO details page
+  2. Open 'List of DOs' modal
+  3. Verify DO ID is displayed in bold text format
+  4. Check DO ID follows same design format as other deeplinks
+  5. Verify DO ID is clickable due to deeplinks
+  6. Test with multiple DOs to verify consistency
+  7. Compare with other ID formats in the system
+  8. Verify design consistency",DO ID serialization follows design format with bold text matching other deeplinks,,,,,,,,,,,,,,,,
+TS_FMOS-7720_23,Dynamic Heights for Mapped DO/CO Page,SO Approval,Verify Mapped DO/CO page has dynamic heights to accommodate all info,High,SO exists with multiple mapped DOs/COs,"1. Navigate to Mapped DO/CO tab
+  2. Verify page height adjusts dynamically based on content
+  3. Add more DOs/COs to the SO
+  4. Verify page height expands to show all content
+  5. Check no content is cut off or hidden
+  6. Verify scrolling works if content exceeds viewport
+  7. Test with minimal content (fewer DOs/COs)
+  8. Verify page height adjusts accordingly
+  9. Test responsive behavior on different screen sizes",Mapped DO/CO page has dynamic heights that adjust to accommodate all relevant information,,,,,,,,,,,,,,,,
+TS_FMOS-7720_24,Invoice View on DO Level in DO List Modal,SO Approval,Verify invoice view is available on DO level inside DO List modal,High,SO exists with mapped DOs that have invoices,"1. Navigate to SO details page
+  2. Open 'List of DOs' modal
+  3. Verify invoice view/icon is available for each DO
+  4. Click on invoice view for a specific DO
+  4. Always open latest invoice if multiple invoices are available
+  5. Verify invoice details are displayed for that DO
+  6. Check invoice information is correct
+  7. Verify invoice view works for multiple DOs
+  8. Test invoice view when invoice is not created
+  9. Verify appropriate message is shown",Invoice view is available on DO level inside DO List modal with correct invoice details,,,,,,,,,,,,,,,,
+TS_FMOS-7720_25,POs Mapped to SOs Display on Mapped Screen,SO Approval,Verify POs mapped to SOs are shown on the Mapped screen,High,SO exists with mapped POs,"1. Navigate to SO details page then SO Overview
+  3. Verify POs mapped to the SO are displayed
+  4. Check PO details are shown correctly:
+  - PO Number
+  - PO Quantity
+  - PO Price
+  - PO Status
+  5. Verify all mapped POs are listed
+  6. Test with multiple POs
+  7. Verify PO mapping information is accurate
+  8. Check PO-SO relationship is correctly displayed",POs mapped to SOs are displayed on the screen with correct details,,,,,,,,,,,,,,,,
+TS_FMOS-7720_26,Edge Case - Modify SO with New Permission,SO Approval,Verify SO Modified approval works with new permission in different tabs,High,SO exists in SO Modified status and user has new permission,"1. SO Modified status
+  2. Login as user with new SO Modified approval permission
+  3. Navigate to Margin Approval tab
+  4. Verify SO Modified SO is visible
+  5. Approve the SO from Margin Approval tab
+  6. Verify approval works correctly
+  7. Another SO Modified SO
+  8. Navigate to Risk Approval tab
+  9. Verify SO Modified SO is visible
+  10. Approve the SO from Risk Approval tab
+  11. Verify approval works correctly from both tabs",SO Modified approval works with new permission from both Margin Approval and Risk Approval tabs,,,,,,,,,,,,,,,,
+TS_FMOS-7720_27,Edge Case - Payable Days Impact on ROCE Warning,SO Approval,Verify ROCE warning thresholds work correctly with Payable Days,High,SO exists with margin allocation including Payable Days,"1. Request SO with margin allocation
+  2. Add Payable Days: 15 days
+  3. Set values that would trigger ROCE warning (< 2%)
+  4. Verify Ideal ROCE calculation includes Payable Days
+  5. Check ROCE warning is shown when ROCE < 2%
+  6. Verify warning message is correct
+  7. Test with different Payable Days values
+  8. Verify warning threshold logic works correctly",ROCE warning thresholds work correctly with Payable Days included in calculation,,,,,,,,,,,,,,,,
+TS_FMOS-7720_28,Edge Case - Multiple Invoice Requests for SO Modified,SO Approval,Verify multiple invoice requests for SO Modified SOs are all excluded,High,SO exists in SO Modified status,"1. if SO in SO Modified status
+  2. Request multiple invoice requests for the SO
+  3. Navigate to Invoice Requests bucket
+  4. Verify all invoice requests for SO Modified SO are excluded
+  5. Verify other SO invoice requests are still visible
+  6. Approve SO Modified status
+  7. Verify all invoice requests now appear
+  8. Test with multiple SO Modified SOs",All invoice requests for SO Modified status SOs are excluded from Invoice Requests bucket,,,,,,,,,,,,,,,,
+TS_FMOS-7720_29,Edge Case - Payable Days Edit After Margin Submission,SO Approval,Verify Payable Days can be edited when margin is modified,High,SO exists with margin allocation including Payable Days,"1. Request SO with margin allocation and Payable Days: 15 days
+  2. VP changes status to 'Modify Margin'
+  3. State Head edits margin allocation
+  4. Verify Payable Days field is editable
+  5. Change Payable Days to 20 days
+  6. Submit margin allocation
+  7. Verify new Payable Days value is saved
+  8. Verify Ideal ROCE calculation uses new Payable Days value",Payable Days can be edited when margin allocation is modified,,,,,,,,,,,,,,,,
+TS_FMOS-7720_30,Integration - SO Gross Price Selection Impact on DO Creation,SO Approval,Verify SO Gross Price selection impacts PO creation and pricing,High,SO exists with PO price selection as SO Gross Price,"1. Request SO with 'SO Gross Price' selected
+  2. Add margin allocation
+  3. Approve SO to SO Created status
+  4. Request PO mapped to the SO then create DO
+  5. Verify DO pricing uses SO Gross Price as reference
+  6. Navigate to DO Overview
+  7. Verify SO Gross Price is displayed in Ship to card
+  8. Verify DO pricing calculations are correct
+  9. Test end-to-end flow",SO Gross Price selection correctly impacts DO creation and pricing throughout the flow,,,,,,,,,,,,,,,,
+TS_FMOS-7720_31,Integration - Auto-Approval and Invoice Request Flow,SO Approval,Verify auto-approved SO modifications allow invoice requests,High,SO exists and quantity is modified within auto-approval threshold,"1. Request SO with approved quantity of 100 MT
+  2. Modify quantity to 105 MT (auto-approved)
+  3. Verify SO status is SO Created (auto-approved)
+  4. Requestinvoice request for the SO
+  5. Navigate to Invoice Requests bucket
+  6. Verify invoice request is visible (not in SO Modified status)
+  7. Verify invoice creation workflow works
+  8. Test end-to-end invoice flow",Auto-approved SO modifications allow invoice requests to appear in Invoice Requests bucket,,,,,,,,,,,,,,,,

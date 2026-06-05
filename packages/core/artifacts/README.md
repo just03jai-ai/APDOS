@@ -7,7 +7,7 @@ This package intentionally does not implement orchestration. Workflows, agents, 
 ## Structure
 
 ```text
-packages/artifacts/
+packages/core/artifacts/
   src/
     schemas/    Artifact validation and schema rules
     registry/   Artifact registry service
@@ -120,7 +120,7 @@ This allows a `RELEASE_PACKAGE` artifact to trace its ancestors back to the orig
 
 ## Testing
 
-Run package tests from `packages/artifacts`:
+Run package tests from `packages/core/artifacts`:
 
 ```bash
 npm test

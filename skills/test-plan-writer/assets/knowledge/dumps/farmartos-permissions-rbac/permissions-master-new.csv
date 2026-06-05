@@ -1,0 +1,431 @@
+,#,OS Page /  Pro,Platform,Product,Action,Entity,Permission,Status,Dev Comments,API Endpoints,API Params,AP,AR,FC,KYC,COMPLIANCE_EXEC,CFO,BF (BizFin),HR,Zonal_Head,SHP,MIS_Executive_Procurement,SVP,STATE_HEAD_SALES,MIS_Executive_Sales,Logistics_A,Warehouse_Manager,Unloading_Associate,Product_Analyst
+,1.0,Procurement,FMT Pro,Purchase Order,view,pro.route.purchase_orders,view:pro.route.purchase_orders,Live,"Done ,",,,,,,,,,,,,,,,,,,,,
+,2.0,Procurement,FMT Pro,Purchase Order,view,pro.po.list.in_progress,view:pro.po.list.in_progress,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/list?tab_id=1&page=1&limit=5,"Same in OS, use tab wise as in O.S.",,,,,,,,,,,,,,,,,,
+,3.0,Procurement,FMT Pro,Purchase Order,view,pro.po.list.completed,view:pro.po.list.completed,Live,,,,,,,,,,,,,,,,,,,,,
+,4,Procurement,FMT Pro,Purchase Order,view,pro.po.list.in_review,view:pro.po.list.in_review,Live,,,,,,,,,,,,,,,,,,,,,
+,5,Procurement,FMT Pro,Purchase Order,view,pro.po.so.allocation,view:pro.po.so.allocation,Live,"Done,",https://dev-ml.farmartos.com/v1/sales/allocated_po/list?page=1&limit=50&is_pending_tab=false,,,,,,,,,,,,,,,,,,,
+,6,Procurement,FMT Pro,Purchase Order,remind,pro.po.supplier_consent,remind:pro.po.supplier_consent,Live,"Mohit/done ,","https://dev-ml.farmartos.com/v1/master_purchase_order/send_reminder.             
+event_type
+: 
+1
+master_po_id
+: 
+5840",Same in Os,,,,,,,,,,,,,,,,,,
+,7,Procurement,FMT Pro,Purchase Order,create,pro.po,create:pro.po,Live,"Done IN ALL levels,","crop variety -> https://dev-ml.farmartos.com/v2/crop?is_variety_required=true
+supplier list-> https://dev-ml.farmartos.com/v4/retailer/fmt_pro_list?page_no=1&limit=5&tab_id=3 
+
+supplier data prefil -> https://dev-ml.farmartos.com/v1/master_purchase_order/prefilldata?master_merchant_id=3883
+
+
+
+create order -> https://dev-ml.farmartos.com/v1/master_purchase_order",,,,,,,,,,,,,,,,,,,
+,8,Procurement,FMT Pro,Purchase Order,edit,pro.po,edit:pro.po,Live,"Mohit/done,","https://dev-ml.farmartos.com/v1/master_purchase_order
+Request Method
+PATCH",,,,,,,,,,,,,,,,,,,
+,9,Procurement,FMT Pro,Purchase Order,remind,pro.po.review,remind:pro.po.review,Live,"Mohit/DONE,","https://dev-ml.farmartos.com/v1/master_purchase_order/send_reminder.             
+event_type
+: 
+1
+master_po_id
+: 
+5840","Same in Os, manage with ABAC",,,,,,,,,,,,,,,,,,
+,10,Sales,FMT Pro,Buyer,view,pro.route.buyer,view:pro.route.buyer,Live,,,,,,,,,,,,,,,,,,,,,
+,11,Sales,FMT Pro,Repayments,view,pro.route.repayments,view:pro.route.repayments,Live,,,,,,,,,,,,,,,,,,,,,
+,12,Sales,FMT Pro,Sales Order,view,pro.route.so,view:pro.route.so,Live,,,,,,,,,,,,,,,,,,,,,
+,13,Sales,FMT Pro,Sales Order,view,pro.so.list,view:pro.so.list,Live,,,,,,,,,,,,,,,,,,,,,
+,14,Sales,FMT Pro,Sales Order,create,pro.so,create:pro.so,Live,,,,,,,,,,,,,,,,,,,,,
+,15,Sales,FMT Pro,Sales Order,view,pro.so.details,view:pro.so.details,Live,,,,,,,,,,,,,,,,,,,,,
+,16,Sales,FMT Pro,Sales Order,edit,pro.so,edit:pro.so,Live,,,,,,,,,,,,,,,,,,,,,
+,17,Sales,FMT Pro,Sales Order,add,pro.so.unloading,add:pro.so.unloading,To plan,,,,,,,,,,,,,,,,,,,,,
+,18,Sales,FMT Pro,Sales Order,add,pro.so.deductions,add:pro.so.deductions,To plan,,,,,,,,,,,,,,,,,,,,,
+,19,Procurement,FMT Pro,Dispatch Orders,view,pro.route.dispatch_orders,view:pro.route.dispatch_orders,Live,"Done,",,,,,,,,,,,,,,,,,,,,
+,20,Procurement,FMT Pro,Unloading,view,pro.route.unloading,view:pro.route.unloading,Live,,,,,,,,,,,,,,,,,,,,,
+,21,Procurement,FMT Pro,Dispatch Orders,create,pro.do,create:pro.do,Live,Mohit/done,https://dev-ml.farmartos.com/v2/purchase_order POST,,,,,,,,,,,,,,,,,,,
+,22,Procurement,FMT Pro,Dispatch Orders,edit,pro.do,edit:pro.do,Live,"Mohit/done ,","https://dev-ml.farmartos.com/v2/purchase_order/transport PATCH
+
+https://dev-ml.farmartos.com/v2/purchase_order/dispatch_details PATCH",,,,,,,,,,,,,,,,,,,
+,23,Procurement,FMT Pro,Dispatch Orders,update,pro.do.deduction,update:pro.do.deduction,Live,,"v4/payment/deduction POST
+deduction_for
+: 
+1",,,,,,,,,,,,,,,,,,,
+,24,Procurement,FMT Pro,Dispatch Orders,view,pro.do.details.overview,view:pro.do.details.overview,Live,,,Same in Os use Os Permissions,,,,,,,,,,,,,,,,,,
+,25,Procurement,FMT Pro,Dispatch Orders,view,pro.do.details.loading,view:pro.do.details.loading,Live,,,Same in Os.,,,,,,,,,,,,,,,,,,
+,26,Procurement,FMT Pro,Dispatch Orders,view,pro.do.details.payment,view:pro.do.details.payment,Live,,,Same in Os.,,,,,,,,,,,,,,,,,,
+,27,Procurement,FMT Pro,Dispatch Orders,view,pro.do.details.unloading,view:pro.do.details.unloading,Live,,,Same in Os,,,,,,,,,,,,,,,,,,
+,28,Procurement,FMT Pro,Dispatch Orders,view,pro.do.details.deduction,view:pro.do.details.deduction,Live,,,was part of unloading migration,,,,,,,,,,,,,,,,,,
+,29,Procurement,FMT Pro,Dispatch Orders,view,pro.do.unloading.sales_overview,view:pro.do.unloading.sales_overview,Live,,,was part of unloading migration,,,,,,,,,,,,,,,,,,
+,30,Procurement,FMT Pro,Dispatch Orders,remind,pro.do.dispatch.review,remind:pro.do.dispatch.review,Live,??,,"Same in Os, need to mange with ABAC",,,,,,,,,,,,,,,,,,
+,31,Procurement,FMT Pro,Dispatch Orders,view,pro.do.list.in_review,view:pro.do.list.in_review,Live,,,,,,,,,,,,,,,,,,,,,
+,32,Procurement,FMT Pro,Dispatch Orders,view,pro.do.list.completed,view:pro.do.list.completed,Live,,,,,,,,,,,,,,,,,,,,,
+,33,Procurement,FMT Pro,Dispatch Orders,view,pro.do.list.unloaded,view:pro.do.list.unloaded,Live,,,,,,,,,,,,,,,,,,,,,
+,34,Procurement,FMT Pro,Dispatch Orders,view,pro.do.list.dispatched,view:pro.do.list.dispatched,Live,"Done,",https://dev-ml.farmartos.com/v1/purchase_order/list?tab_id=2&page=1&limit=50,Same in Os,,,,,,,,,,,,,,,,,,
+,35,Procurement,FMT Pro,Dispatch Orders,review,pro.do.loading,review:pro.do.loading,Live,"DONE  for documents ,","https://dev-ml.farmartos.com/v2/purchase_order/doc_approve PATCH
+https://dev-ml.farmartos.com/v2/purchase_order/doc_reject
+PATCH",Same in OS.,,,,,,,,,,,,,,,,,,
+,36,Procurement,FMT Pro,Dispatch Orders,initiate,pro.do.payment,initiate:pro.do.payment,Live,,/v4/payment/request,,,,,,,,,,,,,,,,,,,
+,37,Procurement,FMT Pro,Unloading,add,pro.do.unloading.deduction,add:pro.do.unloading.deduction,Live,,,,,,,,,,,,,,,,,,,,,
+,38,Procurement,FMT Pro,Unloading,update,pro.do.unloading.deduction,update:pro.do.unloading.deduction,Live,,,,,,,,,,,,,,,,,,,,,
+,39,Procurement,FMT Pro,Unloading,add,pro.do.unloading.grn,add:pro.do.unloading.grn,Live,,,,,,,,,,,,,,,,,,,,,
+,40,Procurement,FMT Pro,Unloading,update,pro.do.unloading.grn,update:pro.do.unloading.grn,Live,,,,,,,,,,,,,,,,,,,,,
+,41,Procurement,FMT Pro,Unloading,view,pro.unloading.list.grn_pending,view:pro.unloading.list.grn_pending,Live,,,,,,,,,,,,,,,,,,,,,
+,42,Procurement,FMT Pro,Unloading,view,pro.unloading.list.claim_pending,view:pro.unloading.list.claim_pending,Live,,,,,,,,,,,,,,,,,,,,,
+,43,Procurement,FMT Pro,Unloading,view,pro.unloading.list.completed,view:pro.unloading.list.completed,Live,,,,,,,,,,,,,,,,,,,,,
+,44,Procurement,FMT Pro,Unloading,view,pro.unloading.list.all,view:pro.unloading.list.all,Live,,,,,,,,,,,,,,,,,,,,,
+,45,Procurement,FMT Pro,Supplier KYC,view,pro.route.supplier,view:pro.route.supplier,Live,,,,,,,,,,,,,,,,,,,,,
+,46,Procurement,FMT Pro,Supplier KYC,view,pro.supplier.list.pending,view:pro.supplier.list.pending,Live,"as per discussion with mehtab, creating only one list permission Mohit Kumar Sharma
+cc: Vidhatra Shukla","GET -> v4/retailer/fmt_pro_list?tab_id=1&page_no=1&limit=10""",,,,,,,,,,,,,,,,,,,
+,47,Procurement,FMT Pro,Supplier KYC,view,pro.supplier.list.rejected,view:pro.supplier.list.rejected,Live,,"GET->
+""v4/retailer/fmt_pro_list?tab_id=2&page_no=1&limit=10""",,,,,,,,,,,,,,,,,,,
+,48,Procurement,FMT Pro,Supplier KYC,view,pro.supplier.list.approved,view:pro.supplier.list.approved,Live,,"GET -> ""v4/retailer/fmt_pro_list?tab_id=3&page_no=1&limit=10""",,,,,,,,,,,,,,,,,,,
+,49,Procurement,FMT Pro,Supplier KYC,view,pro.supplier.list.draft,view:pro.supplier.list.draft,Live,,"GET -> ""v4/retailer/fmt_pro_list?tab_id=4&page_no=1&limit=10""",,,,,,,,,,,,,,,,,,,
+,50,Procurement,FMT Pro,Supplier KYC,view,pro.supplier.details,view:pro.supplier.details,Live,,GET -> /v2/kyc/supplier_details?master_merchant_id=3881,,,,,,,,,,,,,,,,,,,
+,51,Procurement,FMT Pro,Supplier KYC,remind,pro.supplier.consent,remind:pro.supplier.consent,Live,,POST -> v1/kyc/send_consent,,,,,,,,,,,,,,,,,,,
+,52,Procurement,FMT Pro,Supplier KYC,update,pro.supplier.details,update:pro.supplier.details,Live,,"PUT -> v1/kyc/bank_details
+PUT -> v1/kyc/gstin_details
+PUT -> v1/kyc/gst_address",,,,,,,,,,,,,,,,,,,
+,53,Procurement,FMT Pro,Supplier KYC,add,pro.supplier.details,add:pro.supplier.details,Live,,"post -> v1/kyc/msme/confirmation
+POST ->  v1/kyc/gst/confirm
+POST -> v1/kyc/gst/confirm_address
+('v1/kyc/gst/list', 'GET', 'to fetch gst list', 1, NOW(), NOW()),
+('v1/kyc/gst/address_list', 'GET', 'to fetch gst address list', 1, NOW(), NOW()),
+('v1/kyc/msme/verification', 'GET', 'to fetch msme details ', 1, NOW(), NOW()),",,,,,,,,,,,,,,,,,,,
+,54,Procurement,FMT Pro,Supplier KYC,create,pro.supplier,create:pro.supplier,Live,,"POST -> v1/kyc/confirm_pan
+POST ->  v1/kyc/gst/confirm
+POST -> v1/kyc/gst/confirm_address
+POST -> v1/kyc/bank/confirmation
+post -> v1/kyc/msme/confirmation
+POST -> v1/retailer/poc
+POST -> v1/kyc/tds_declaration
+POST -> v1/kyc/aadhaar/confirmation
+POST -> v1/kyc/manual_address
+('v1/kyc/pan/verification', 'GET', 'to vefify pan details', 1, NOW(), NOW()),
+('v1/kyc/gst/list', 'GET', 'to fetch gst list', 1, NOW(), NOW()),
+('v1/kyc/gst/address_list', 'GET', 'to fetch gst address list', 1, NOW(), NOW()),
+('v1/kyc/bank/verification', 'GET', 'to fetch bank account details ', 1, NOW(), NOW()),
+('v1/kyc/msme/verification', 'GET', 'to fetch msme details ', 1, NOW(), NOW()),
+('v1/kyc/aadhaar/verification', 'GET', 'to fetch aadhaar details ', 1, NOW(), NOW()),",,,,,,,,,,,,,,,,,,,
+,55,Dashboards,FarmartOS,Home,view,dashboards,view:dashboards,Live,,,,Y,Y,Y,Y,Y,Y,,N,,,,,,,N,,,
+,56,Dashboards,FarmartOS,Company Metrics,view,dashboards.company_metrics.list,view:dashboards.company_metrics.list,Live,,,,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,57,Dashboards,FarmartOS,Procurement,view,dashboards.procurement.list,view:dashboards.procurement.list,Live,,,,N,N,,,,Y,,N,,,,,,,N,,,
+,58,Dashboards,FarmartOS,Finance,view,dashboards.finance.list,view:dashboards.finance.list,Live,,,,N,N,,,,Y,,N,,,,,,,N,,,
+,59,Dashboards,FarmartOS,Payments,view,dashboards.payments.list,view:dashboards.payments.list,Live,,,,Y,N,Y,Y,Y,Y,Y,N,,,,,,,N,,,
+,60,Dashboards,FarmartOS,Invoicing,view,dashboards.invoicing.list,view:dashboards.invoicing.list,Live,,,,N,Y,Y,N,N,Y,Y,N,,,,,,,N,,,
+,61,Dashboards,FarmartOS,Farmart App,view,dashboards.fmtapp.list,view:dashboards.fmtapp.list,Live,,,,N,N,,,,Y,,N,,,,,,,N,,,
+,62,Dashboards,FarmartOS,GTV Tracker,view,dashboards.gtv_tracker.list,view:dashboards.gtv_tracker.list,Live,,,,N,N,,,,Y,,N,,,,,,,N,,,
+,63,Inventory,FarmartOS,Outbound,add,co.transporter.deduction,add:co.transporter.deduction,Live,,-> v5/payment/deduction,POST,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,64,Dashboards,FarmartOS,Manage Dashboard,view,route.manage_dashboard,view:route.manage_dashboard,Live,,,,,,,,,,,,,,,,,,,,,
+,65,Dashboards,FarmartOS,Manage Dashboard,view,manage_dashboard.list,view:manage_dashboard.list,Live,,,,,,,,,,,,,,,,,,,,,
+,66,Dashboards,FarmartOS,Manage Dashboard,add,manage_dashboard.dashboard,add:manage_dashboard.dashboard,Live,,,,,,,,,,,,,,,,,,,,,
+,67,Dashboards,FarmartOS,Manage Dashboard,delete,manage_dashboard.dashboard,delete:manage_dashboard.dashboard,Live,,,,,,,,,,,,,,,,,,,,,
+,68,Access Control,FarmartOS,Users,view,route.users,view:route.users,Live,,,,,,,,,,,,,,,,,,,,,
+,69,Access Control,FarmartOS,Users,view,ml_users.list,view:ml_users.list,Live,,,,,,,,,,,,,,,,,,,,,
+,70,Access Control,FarmartOS,Users,view,system_users.list,view:system_users.list,Live,,,,,,,,,,,,,,,,,,,,,
+,71,Access Control,FarmartOS,Users,edit,emp_details,edit:emp_details,Live,,,,,,,,,,,,,,,,,,,,,
+,72,Access Control,FarmartOS,Users,add,users,add:users,Live,,,,,,,,,,,,,,,,,,,,,
+,73,Access Control,FarmartOS,Users,edit,users.policies,edit:users.policies,Live,,,,,,,,,,,,,,,,,,,,,
+,74,Access Control,FarmartOS,Policies,view,route.policies,view:route.policies,Live,,,,N,N,N,N,N,N,N,Y,N,N,N,N,N,N,N,N,N,N
+,75,Access Control,FarmartOS,Policies,view,policies.list,view:policies.list,Live,,,,,,,,,,,,,,,,,,,,,
+,76,Access Control,FarmartOS,Policies,add,policies,add:policies,Live,,,,,,,,,,,,,,,,,,,,,
+,77,Access Control,FarmartOS,Permissions,view,route.permissions,view:route.permissions,Live,,,,N,N,N,N,N,N,N,Y,N,N,N,N,N,N,N,N,N,N
+,78,Access Control,FarmartOS,Permissions,view,permissions.list,view:permissions.list,Live,,,,,,,,,,,,,,,,,,,,,
+,79,Access Control,FarmartOS,Visits,view,emp_visits.list,view:emp_visits.list,Live,,,,N,N,N,N,N,N,N,Y,N,N,N,N,N,N,N,N,N,N
+,80,Procurement,FarmartOS,Crop Creation,view,route.crop_creation,view:route.crop_creation,Live,,,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y
+,81,Procurement,FarmartOS,Crop Creation,view,crop_creation.list,view:crop_creation.list,Live,,GET /v2/crop/creation-listing,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y
+,82,Procurement,FarmartOS,Crop Creation,add,crop_creation.crop_or_variety,add:crop_creation.crop_or_variety,Live,,POST /v2/crop,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y
+,83,Inventory,FarmartOS,Outbound,initiate,co.transporter.payment,initiate:co.transporter.payment,Live,,-> /v5/payment,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,84,Inventory,FarmartOS,Outbound,map,co.so,map:co.so,Live,,"-> v3/sales_order/so_list?consignment_id=4940
+-> v1/consignment/map_so_co","GET, POST",N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,85,Inventory,FarmartOS,Outbound,modify,co.transporter.payment,modify:co.transporter.payment,Live,,"-> v1/payment/deduction_reasons/transport
+-> /v5/payment/transport_charges",,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,86,Inventory,FarmartOS,Outbound,view,route.co,view:route.co,Live,,,,,Y,,,,,,,,,,,,,,,,
+,87,Inventory,FarmartOS,Outbound,view,co.list,view:co.list,Live,,-> v1/warehouse,GET,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,88,Inventory,FarmartOS,Outbound,view,co.list.unloading_pending,view:co.list.unloading_pending,Live,,-> v1/consignment?status_ids[]=1&status_ids[]=2&page=1&limit=50,GET,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,89,Inventory,FarmartOS,Outbound,view,co.list.unloading_complete,view:co.list.unloading_complete,Live,,-> v1/consignment?status_ids[]=4&status_ids[]=5&status_ids[]=7&status_ids[]=6&status_ids[]=3&page=1&limit=50(FOR UNLOADING COMPLETED),GET,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,90,Inventory,FarmartOS,Outbound,view,co.list.all,view:co.list.all,Live,,->v1/consignment?page=1&limit=50,GET,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,91,Inventory,FarmartOS,Outbound,view,co.details,view:co.details,Live,,->/v1/consignment/consignment_details/4940,GET,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,92,Inventory,FarmartOS,Outbound,view,co.mapping_unloading_details,view:co.mapping_unloading_details,Live,,->v1/consignment/mapping_unloading_details/4940,GET,,Y,,,,,,,,,,,,,,,,
+,93,Inventory,FarmartOS,Outbound,view,co.unloading_docs,view:co.unloading_docs,Live,,,,N,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,94,Inventory,FarmartOS,Outbound,view,view:co.deduction_details,co.deduction_details,Live,,,,,,,,,,,,,,,,,,,,,
+,95,Inventory,FarmartOS,Outbound,view,co.deduction,view:co.deduction,Live,,"-> v5/payment/deduction_list?is_gst_payment=false&deduction_for=2&consignment_id=4940&page=1&limit=50
+-> v1/consignment/commodity_details?consignment_id=4940
+-> v5/payment/consignment/details?consignment_id=4940,
+
+-> v1/warehouse",", GET, GET,",Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,96,Procurement,FarmartOS,Dispatch Orders,complete,do,complete:do,Live,,/v1/purchase_order/mark_complete POST,,Y,,,,,,,N,,,,,,,N,,,
+,97,Procurement,FarmartOS,Dispatch Orders,incomplete,do,incomplete:do,Live,,/v1/purchase_order/mark_incomplete POST,,,,,,,,,,,,,,,,,,,
+,98,Procurement,FarmartOS,Dispatch Orders,review,do.deductions,review:do.deductions,Live,,POST /v3/po_unloading/deduction_info,,Y,,,,,,,N,,,,,,,N,,,
+,99,Procurement,FarmartOS,Dispatch Orders,edit,do.deductions,edit:do.deductions,Live,,PATCH /v1/po_unloading/update_deduction_info_post_approval,,,,,,,,,,,,,,,,,,,
+,100,Procurement,FarmartOS,Dispatch Orders,edit,do.halting_charges,edit:do.halting_charges,Live,,/v1/payment/add_supplier_halting_charges/ POST,,Y,,,,,,,N,,,,,,,N,,,
+,101,Procurement,FarmartOS,Dispatch Orders,view,do.list.all,view:do.list.all,Live,,https://dev-ml.farmartos.com/v1/purchase_order/list?limit=50&page=1&tab_id=7,Add Resource Control here.,N,,,,,,,N,,,,,,,N,,,
+,102,Procurement,FarmartOS,Dispatch Orders,view,do.list.completed,view:do.list.completed,Live,,https://dev-ml.farmartos.com/v1/purchase_order/list?limit=50&page=1&tab_id=6,,N,,,,,,,N,,,,,,,N,,,
+,103,Procurement,FarmartOS,Dispatch Orders,view,do.list.pending_payment,view:do.list.pending_payment,Live,,https://dev-ml.farmartos.com/v1/purchase_order/list?limit=50&page=1&tab_id=4,,N,,,,,,,N,,,,,,,N,,,
+,104,Procurement,FarmartOS,Dispatch Orders,view,do.list.review_deduction,view:do.list.review_deduction,Live,,,,,,,,,,,,,,,,,,,,,
+,105,Procurement,FarmartOS,Dispatch Orders,view,do.list.review_do,view:do.list.review_do,Live,,https://dev-ml.farmartos.com/v1/purchase_order/list?limit=50&page=1&tab_id=1,,Y,,,,,,,N,,,,,,,N,,,
+,106,Procurement,FarmartOS,Dispatch Orders,view,do.list.review_payment,view:do.list.review_payment,Live,,https://dev-ml.farmartos.com/v1/purchase_order/list?limit=50&page=1&tab_id=2,,N,,,,,,,N,,,,,,,N,,,
+,107,Procurement,FarmartOS,Dispatch Orders,view,do.list.review_unloading,view:do.list.review_unloading,Live,,https://dev-ml.farmartos.com/v1/purchase_order/list?limit=50&page=1&tab_id=3,,N,,,,,,,N,,,,,,,N,,,
+,108,Procurement,FarmartOS,Dispatch Orders,view,do.list.to_complete,view:do.list.to_complete,Live,,https://dev-ml.farmartos.com/v1/purchase_order/list?limit=50&page=1&tab_id=5,,N,,,,,,,N,,,,,,,N,,,
+,109,Procurement,FarmartOS,Dispatch Orders,view,do.loading,view:do.loading,Live,,/v2/purchase_order/doc_approval?po_id=5120    /v1/ds/dispatch/ai_assistance_details?po_id=5120,,N,,,,,,,N,,,,,,,N,,,
+,110,Procurement,FarmartOS,Dispatch Orders,review,do.loading,review:do.loading,Live,this should must be Approve Loading Document and Reject Loading Document,Approve -> /v2/purchase_order/doc_approve PATCH.  Reject :/v2/purchase_order/doc_approve,"Same in Pro, with 
+review:pro.do.loading",N,,,,,,,N,,,,,,,N,,,
+,111,Procurement,FarmartOS,Dispatch Orders,view,do.overview,view:do.overview,Live,,/v2/purchase_order/details?po_id=5120  /v1/purchase_order/metadata?po_id=5120 /v1/purchase_order/5120   /v3/master_sample/detail?lot_id=7485./v1/master_purchase_order/qc_details?master_po_id=5697,,N,,,,,,,N,,,,,,,N,,,
+,112,Procurement,FarmartOS,Dispatch Orders,view,do.payment,view:do.payment,Live,,v4/payment/transport/details?po_id=5120. /v1/trip_tracking/check_trip_status?po_id=5120. /v4/payment/retailer/details?po_id=5120.  /v4/payment/gst/details?po_id=5120,,Y,,,,,,,N,,,,,,,N,,,
+,113,Procurement,FarmartOS,Dispatch Orders,update,do.supplier.deduction,update:do.supplier.deduction,Live,,v4/payment/deduction. {deduction_for:1},,N,,,,,,,N,,,,,,,N,,,
+,114,Procurement,FarmartOS,Dispatch Orders,create,do.supplier.deduction.push_to_zoho,create:do.supplier.deduction.push_to_zoho,Live,,,,,,,,,,,,,,,,,,,,,
+,115,Procurement,FarmartOS,Dispatch Orders,initiate,do.supplier.gst_payment,initiate:do.supplier.gst_payment,Live,,"/v4/payment  {is_gst_payment:true,payment_for:1}",,Y,,,,,,,N,,,,,,,N,,,
+,116,Procurement,FarmartOS,Dispatch Orders,edit,do.supplier.other_deduction,edit:do.supplier.other_deduction,Live,,/v1/purchase_order/fulfillment_charge POST,,N,,,,,,,N,,,,,,,N,,,
+,117,Procurement,FarmartOS,Dispatch Orders,initiate,do.supplier.payment,initiate:do.supplier.payment,Live,,/v4/payment POST payload {payment_for:1},,N,,,,,,,N,,,,,,,N,,,
+,118,Procurement,FarmartOS,Dispatch Orders,create,do.supplier.push_to_zoho,create:do.supplier.push_to_zoho,Live,,,,,,,,,,,,,,,,,,,,,
+,119,Procurement,FarmartOS,Dispatch Orders,edit,do.terms,edit:do.terms,Live,,v1/master_sample/po_to_approve_details/?lot_id=7485 PATCH,,N,,,,,,,N,,,,,,,N,,,
+,120,Procurement,FarmartOS,Dispatch Orders,edit,do.transporter_account_number,edit:do.transporter_account_number,Live,,,,,,,,,,,,,,,,,,,,,
+,121,Procurement,FarmartOS,Dispatch Orders,edit,do.transporter_payment,edit:do.transporter_payment,Live,,/v4/payment/transport_charges POST,,Y,,,,,,,N,,,,,,,N,,,
+,122,Procurement,FarmartOS,Dispatch Orders,update,do.transporter.deduction,update:do.transporter.deduction,Live,,v4/payment/deduction. {deduction_for:2},,N,,,,,,,N,,,,,,,N,,,
+,123,Procurement,FarmartOS,Purchase Order,view,route.po,view:route.po,Live,,,,,,,,,,,,,,,,,,,,,
+,124,Procurement,FarmartOS,Purchase Order,view,po.list.review_po,view:po.list.review_po,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/list?page=1&limit=25&tab_id=1,Add resource control here & seed Abac level,Y,,,,,,,N,,,,,,,N,,,
+,125,Procurement,FarmartOS,Purchase Order,view,po.list.map_so,view:po.list.map_so,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/list?page=1&limit=25&tab_id=2,,Y,,,,,,,N,,,,,,,N,,,
+,126,Procurement,FarmartOS,Purchase Order,view,po.list.in_progress,view:po.list.in_progress,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/list?page=1&limit=25&tab_id=3,,Y,,,,,,,N,,,,,,,N,,,
+,127,Procurement,FarmartOS,Purchase Order,view,po.list.to_completed,view:po.list.to_completed,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/list?page=1&limit=25&tab_id=4,,Y,,,,,,,N,,,,,,,N,,,
+,128,Procurement,FarmartOS,Purchase Order,view,po.list.all,view:po.list.all,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/list?page=1&limit=25&tab_id=5,,Y,,,,,,,N,,,,,,,N,,,
+,129,Procurement,FarmartOS,Purchase Order,review,po,review:po,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,130,Procurement,FarmartOS,Purchase Order,view,po.overview,view:po.overview,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/details?master_po_id=5841.        https://dev-ml.farmartos.com/v1/master_purchase_order/metadata?master_po_id=5841,,Y,,,,,,,N,,,,,,,N,,,
+,131,Procurement,FarmartOS,Purchase Order,view,po.dispatch_orders,view:po.dispatch_orders,Live,,https://dev-ml.farmartos.com/v1/purchase_order/list_by_master_po?master_po_id=5813,,N,,,,,,,N,,,,,,,N,,,
+,132,Procurement,FarmartOS,Purchase Order,edit,po.ship_from,edit:po.ship_from,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/ship_from_details - PATCH,,N,,,,,,,N,,,,,,,N,,,
+,133,Procurement,FarmartOS,Purchase Order,edit,po.terms,edit:po.terms,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/update_terms - PATCH,,N,,,,,,,N,,,,,,,N,,,
+,134,Procurement,FarmartOS,Purchase Order,terminate,po,terminate:po,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/terminate - PATCH,,Y,,,,,,,N,,,,,,,N,,,
+,135,Procurement,FarmartOS,Purchase Order,update,po.weight,update:po.weight,Live,This is the button in the footer once the PO is approved or consent pending status.,"https://dev-ml.farmartos.com/v1/master_purchase_order/update_weight
+- PATCH",,Y,,,,,,,N,,,,,,,N,,,
+,136,Procurement,FarmartOS,Purchase Order,map,po.so,map:po.so,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/map_sales_order  - POST,,Y,,,,,,,N,,,,,,,N,,,
+,137,Procurement,FarmartOS,Purchase Order,remind,po.supplier,remind:po.supplier,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/send_reminder - POST,,N,,,,,,,N,,,,,,,N,,,
+,138,Procurement,FarmartOS,Purchase Order,complete,po,complete:po,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/mark_complete - PATCH,,Y,,,,,,,N,,,,,,,N,,,
+,139,Procurement,FarmartOS,Purchase Order,reopen,po,reopen:po,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/mark_incomplete - PATCH,,N,,,,,,,N,,,,,,,N,,,
+,140,Procurement,FarmartOS,Purchase Order,detach,po.so,detach:po.so,Live,,https://dev-ml.farmartos.com/v1/master_purchase_order/detach_so - PATCH,,N,,,,,,,N,,,,,,,N,,,
+,141,Procurement,FarmartOS,Purchase Order,reattach,po.so,reattach:po.so,Live,,/v1/buyer/detach_reattach - POST,,N,,,,,,,N,,,,,,,N,,,
+,142,Procurement,FarmartOS,Purchase Order,complete,po,complete:po,Live,,Duplicate Permission,,,,,,,,,,,,,,,,,,,
+,143,Procurement,FarmartOS,Purchase Order,update,po.buyer_price,update:po.buyer_price,Live,,,,,,,,,,,,,,,,,,,,,
+,144,Procurement,FarmartOS,Dispatch Orders,initiate,do.transporter.payment,initiate:do.transporter.payment,Live,,/v4/payment POST payload {payment_for:2},,N,,,,,,,N,,,,,,,N,,,
+,145,Procurement,FarmartOS,Dispatch Orders,view,do.unloading,view:do.unloading,Live,,v4/po_unloading?po_id=5120&so_id=345. v1/ds/unloading/ai_assistance_details?po_id=5120. /v1/trip_tracking/fetch_trip_details?po_id=5120&so_id=345,,Y,,,,,,,N,,,,,,,N,,,
+,146,Procurement,FarmartOS,Dispatch Orders,review,do.unloading,review:do.unloading,Live,,POST /v4/po_unloading/approve_unloading,,N,,,,,,,N,,,,,,,N,,,
+,147,Procurement,FarmartOS,Dispatch Orders,edit,do.unloading,edit:do.unloading,Live,,PATCH /v1/po_unloading/update_unloading_data_post_approval,,,,,,,,,,,,,,,,,,,
+,148,Procurement,FarmartOS,Dispatch Orders,edit,do.vehicle_number,edit:do.vehicle_number,Live,,v1/purchase_order/update_vehicle_number PATCH,,N,,,,,,,N,,,,,,,N,,,
+,149,Procurement,FarmartOS,Dispatch Orders,update,do.weight_and_commodity_details,update:do.weight_and_commodity_details,Live,update:do.weight in code,/v4/payment/weight_details POST,,N,,,,,,,N,,,,,,,N,,,
+,150,Procurement,FarmartOS,Dispatch Orders,view,route.do,view:route.do,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,151,Procurement,FarmartOS,Supplier Recovery,view,route.supplier_recovery,view:route.supplier_recovery,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,152,Procurement,FarmartOS,Supplier Recovery,view,supplier_recovery.list,view:supplier_recovery.list,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,153,Procurement,FarmartOS,Supplier Recovery,view,supplier_recovery.details,view:supplier_recovery.details,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,154,Procurement,FarmartOS,Supplier Recovery,view,supplier_recovery.do.list.pending,view:supplier_recovery.do.list.pending,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,155,Procurement,FarmartOS,Supplier Recovery,view,supplier_recovery.do.list.partial_mapped,view:supplier_recovery.do.list.partial_mapped,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,156,Procurement,FarmartOS,Supplier Recovery,view,supplier_recovery.do.list.completed,view:supplier_recovery.do.list.completed,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,157,Procurement,FarmartOS,Supplier Recovery,view,supplier_recovery.do.list.all,view:supplier_recovery.do.list.all,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,158,Procurement,FarmartOS,Supplier Recovery,map,supplier_recovery.do.recovery,map:supplier_recovery.do.recovery,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,159,Trade,FarmartOS,Buyer Prices,view,route.buyer_prices,view:route.buyer_prices,Live,,,,,,,,,,,,,,,,,,,,,
+,160,Trade,FarmartOS,Buyer Prices,view,buyer_prices.list,view:buyer_prices.list,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,161,Trade,FarmartOS,Buyer Prices,view,buyer_prices.list.active,view:buyer_prices.list.active,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,162,Trade,FarmartOS,Buyer Prices,create,buyer_prices,create:buyer_prices,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,163,Trade,FarmartOS,Buyer Prices,view,buyer_prices.list.expired,view:buyer_prices.list.expired,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,164,Trade,FarmartOS,Buyer Prices,view,buyer_prices.list.all,view:buyer_prices.list.all,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,165,Trade,FarmartOS,Buyer Prices,clone,buyer_route,clone:buyer_route,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,166,Trade,FarmartOS,Buyer Prices,update,buyer_price,update:buyer_price,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,167,Trade,FarmartOS,Buyer Prices,expire,buyer_price,expire:buyer_price,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,168,Trade,FarmartOS,Buyer Prices,view,buyer_prices.lead,view:buyer_prices.lead,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,169,Trade,FarmartOS,Buyer Prices,edit,buyer_prices.lead,edit:buyer_prices.lead,Live,,,,N,,,,,,,N,,,,,,,N,,,
+,170,Sales,FarmartOS,Sales Order,view,route.so,view:route.so,Live,,,,,,,,,,,,,,,,,,,,,
+,171,Sales,FarmartOS,Sales Order,view,so.list,view:so.list,Live,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,172,Sales,FarmartOS,Sales Order,view,so.list.add_margin,view:so.list.add_margin,To plan,Name changed from add_expected_margin,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,173,Sales,FarmartOS,Sales Order,view,so.list.margin_approval,view:so.list.margin_approval,Live,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,174,Sales,FarmartOS,Sales Order,view,so.list.risk_approval,view:so.list.risk_approval,Live,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,175,Sales,FarmartOS,Sales Order,view,so.list.to_complete,view:so.list.to_complete,To plan,,,,,,,,,,,,,,,,,,,,,
+,176,Sales,FarmartOS,Sales Order,view,so.list.completed,view:so.list.completed,To plan,,,,,,,,,,,,,,,,,,,,,
+,177,Sales,FarmartOS,Sales Order,view,so.list.in_progress,view:so.list.in_progress,Live,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,178,Sales,FarmartOS,Sales Order,view,so.list.rejected,view:so.list.rejected,Live,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,179,Sales,FarmartOS,Sales Order,view,so.list.all,view:so.list.all,Live,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,180,Sales,FarmartOS,Sales Order,view,so.expected_margin,view:so.expected_margin,Live,,,,N,N,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,181,Sales,FarmartOS,Sales Order,save,so.expected_margin,save:so.expected_margin,Live,,,,N,N,Y,N,N,N,N,N,Y,Y,Y,Y,Y,Y,N,N,N,N
+,182,Sales,FarmartOS,Sales Order,add,so.expected_margin,add:so.expected_margin,Live,,,,,,,,,,,,,,,,,,,,,
+,183,Sales,FarmartOS,Sales Order,edit,so.expected_margin,edit:so.expected_margin,Live,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,Y,Y,N,N,N,N
+,184,Sales,FarmartOS,Sales Order,approve,so.margin,approve:so.margin,Live,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,N,N,N,N,N,N
+,185,Sales,FarmartOS,Sales Order,update,so.status.modify_so,update:so.status.modify_so,Live,Vidhatra Shukla  can we have something like update:so.status.modify_so,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,Y,Y,N,N,N,N
+,186,Sales,FarmartOS,Sales Order,update,so.status.modify_price,update:so.status.modify_price,Live,Vidhatra Shukla  can we have something like update:so.status.modify_price,,,,,,,,,,,,,,,,,,,,
+,187,Sales,FarmartOS,Sales Order,update,so.status.modify_margin,update:so.status.modify_margin,Live,Vidhatra Shukla  can we have something like update:so.status.modify_margin,,,,,,,,,,,,,,,,,,,,
+,188,Sales,FarmartOS,Sales Order,modify,so.created_by,modify:so.created_by,Live,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,Y,Y,N,N,N,N
+,189,Sales,FarmartOS,Sales Order,approve,so,approve:so,Live,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,N,N,N,N,N,N
+,190,Sales,FarmartOS,Sales Order,approve,so.modification,approve:so.modification,Live,,,,,,,,,,,,,,,,,,,,,
+,191,Sales,FarmartOS,Sales Order,reject,so,reject:so,Live,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,N,N,N,N,N,N
+,192,Sales,FarmartOS,Sales Order,view,so.details.overview,view:so.details.overview,Live,,,,,,,,,,,,,,,,,,,,,
+,193,Sales,FarmartOS,Sales Order,view,so.details.overview,view:so.details.overview,Live,,,,,,,,,,,,,,,,,,,,,
+,194,Sales,FarmartOS,Sales Order,view,so.details.mapped_po_co,view:so.details.mapped_po_co,Live,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,195,Inventory,FarmartOS,Outbound,view,co.payment_details,view:co.payment_details,Live,,-> v5/payment/history?is_gst_payment=false&payment_for=2&consignment_id=4940,GET,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,196,Inventory,FarmartOS,Outbound,view,co.transporter.details,view:co.transporter.details,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,197,Procurement,FarmartOS,Supplier KYC,approve,supplier.kyc_details,approve:supplier.kyc_details,Live,,v1/kyc/status,"PATCH, 
+Payload: master_merchant_id, status",N,N,N,Y,N,N,N,N,N,N,N,N,N,N,N,N,N,N
+,198,Procurement,FarmartOS,Supplier KYC,create,supplier.push_to_zoho,create:supplier.push_to_zoho,Live,,/v1/zoho/sync_vendor,"POST
+Payload:master_merchant_id",,,,,,,,,,,,,,,,,,
+,199,Procurement,FarmartOS,Supplier KYC,edit,supplier.assignee,edit:supplier.assignee,Live,,/v1/kyc/re_assign,"PATCH,
+Payload:supplier_id, user_profile_id",N,N,N,Y,N,N,N,N,N,N,N,N,N,N,N,N,N,N
+,200,Procurement,FarmartOS,Supplier KYC,reject,supplier.kyc_details,reject:supplier.kyc_details,Live,,/v1/kyc/status,"PATCH, 
+master_merchant_id, 
+status,rejection_reason_id",N,N,N,Y,N,N,N,N,N,N,N,N,N,N,N,N,N,N
+,201,Procurement,FarmartOS,Supplier KYC,review,supplier,review:supplier,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,202,Procurement,FarmartOS,Supplier KYC,view,route.supplier,view:route.supplier,Live,Vidhatra Shukla need to change this action from route to view,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,203,Procurement,FarmartOS,Supplier KYC,view,supplier.list,view:supplier.list,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,204,Procurement,FarmartOS,Supplier KYC,view,route.supplier.overview,view:route.supplier.overview,Live,entity should be route.supplier.overview,-,-,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,205,Procurement,FarmartOS,Supplier KYC,view,supplier.list.consent_pending,view:supplier.list.consent_pending,Live,,/v4/retailer/list?tab=1&is_list=1&page=1&limit=100,"GET, tab",Y,Y,Y,Y,N,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,206,Procurement,FarmartOS,Supplier KYC,view,supplier.list.to_review,view:supplier.list.to_review,Live,Need to add review KYC permission. review:supplier.kyc,v4/retailer/list?tab=2&is_list=1&page=1&limit=50,"GET, tab",Y,Y,Y,Y,N,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,207,Procurement,FarmartOS,Supplier KYC,view,supplier.list.rejected,view:supplier.list.rejected,Live,,/v4/retailer/list?tab=3&is_list=1&page=1&limit=50,"GET, tab",Y,Y,Y,Y,N,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,208,Procurement,FarmartOS,Supplier KYC,view,supplier.list.approved,view:supplier.list.approved,Live,,/v4/retailer/list?tab=4&is_list=1&page=1&limit=50,"GET, tab",Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,209,Logistics,FarmartOS,Trip Tracking,refresh,trip_tracking.trip_consent,refresh:trip_tracking.trip_consent,Live,,,,,,,,,,,,,,,,,,,,,
+,210,Finance,FarmartOS,Payments,view,route.payments,view:route.payments,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,211,Finance,FarmartOS,Payments,view,payments.gst.list,view:payments.gst.list,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,212,Finance,FarmartOS,Payments,view,payments.stp.list,view:payments.stp.list,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,213,Finance,FarmartOS,Payments,view,payments.overview,view:payments.overview,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,214,Finance,FarmartOS,Payments,reject,payments.payment,reject:payments.payment,Live,,,,Y,N,N,N,N,Y,Y,N,N,N,N,N,N,,N,,,N
+,215,Finance,FarmartOS,Payments,approve,payments.request,approve:payments.request,Live,,,,Y,N,N,N,N,Y,Y,N,N,N,N,N,N,,N,,,N
+,216,Finance,FarmartOS,Payments,create,payments.payment.push_to_zoho,create:payments.payment.push_to_zoho,Live,,,,,,,,,,,,,,,,,,,,,
+,217,Finance,FarmartOS,Payments,create,payments.supplier_invoice.push_to_zoho,create:payments.supplier_invoice.push_to_zoho,Live,,,,,,,,,,,,,,,,,,,,,
+,218,Finance,FarmartOS,Payments,confirm,payments.supplier_invoice_details,confirm:payments.supplier_invoice_details,Live,,,,Y,N,N,N,N,N,Y,N,N,Y,N,N,N,,N,,,N
+,219,Finance,FarmartOS,Payments,edit,payments.supplier_invoice_details,edit:payments.supplier_invoice_details,Live,,,,Y,N,N,N,N,N,N,N,N,Y,N,N,N,,N,,,N
+,220,Finance,FarmartOS,Payments,review,payments.supplier_invoice_details,review:payments.supplier_invoice_details,Live,,,,N,N,N,N,N,N,N,N,Y,Y,Y,N,N,N,N,N,N,N
+,221,Finance,FarmartOS,Payments,view,payments.stp.list.to_review,view:payments.stp.list.to_review,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,222,Finance,FarmartOS,Payments,view,payments.stp.list.to_pay,view:payments.stp.list.to_pay,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,223,Finance,FarmartOS,Payments,view,payments.stp.list.failed,view:payments.stp.list.failed,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,224,Finance,FarmartOS,Payments,view,payments.stp.list.rejected,view:payments.stp.list.rejected,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,225,Finance,FarmartOS,Payments,view,payments.stp.list.in_process,view:payments.stp.list.in_process,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,226,Finance,FarmartOS,Payments,view,payments.stp.list.non_payment,view:payments.stp.list.non_payment,Live,,,,,,,,,,,,,,,,,,,,,
+,227,Finance,FarmartOS,Payments,view,payments.stp.list.paid,view:payments.stp.list.paid,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,228,Finance,FarmartOS,Payments,view,payments.gst.list.to_review,view:payments.gst.list.to_review,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,229,Finance,FarmartOS,Payments,view,payments.gst.list.to_pay,view:payments.gst.list.to_pay,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,230,Finance,FarmartOS,Payments,view,payments.gst.list.failed,view:payments.gst.list.failed,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,231,Finance,FarmartOS,Payments,view,payments.gst.list.rejected,view:payments.gst.list.rejected,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,232,Finance,FarmartOS,Payments,view,payments.gst.list.in_process,view:payments.gst.list.in_process,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,233,Finance,FarmartOS,Payments,view,payments.gst.list.non_payment,view:payments.gst.list.non_payment,Live,,,,,,,,,,,,,,,,,,,,,
+,234,Finance,FarmartOS,Payments,view,payments.gst.list.paid,view:payments.gst.list.paid,Live,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,235,Finance,FarmartOS,Payments,approve,payments.payment,approve:payments.payment,Live,,,,N,N,N,N,N,Y,Y,N,N,N,N,N,N,,N,,,N
+,236,Finance,FarmartOS,Payments,retry,payments.payment,retry:payments.payment,Live,,,,N,N,N,N,N,Y,Y,N,N,N,N,N,N,,,,,
+,237,Finance,FarmartOS,Payments,add,payments.utr,add:payments.utr,Live,,,,Y,N,N,N,N,N,N,N,N,N,N,N,N,,N,,,N
+,238,Finance,FarmartOS,Payments,select,payments.rows,select:payments.rows,Live,,,,Y,N,N,N,N,Y,N,N,N,N,N,N,N,N,N,N,N,N
+,239,Finance,FarmartOS,Payments,create,payments.bill.push_to_zoho,create:payments.bill.push_to_zoho,Live,,,,,,,,,,,,,,,,,,,,,
+,240,Finance,FarmartOS,Mandi Tax,view,route.mandi_tax,view:route.mandi_tax,Live,,,,Y,Y,Y,N,Y,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,241,Finance,FarmartOS,Mandi Tax,view,mandi_tax.list,view:mandi_tax.list,Live,,,,,,,,,,,,,,,,,,,,,
+,242,Finance,FarmartOS,Mandi Tax,view,mandi_tax.list.documents,view:mandi_tax.list.documents,Live,,,,Y,Y,Y,N,Y,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,243,Finance,FarmartOS,Mandi Tax,upload,mandi_tax.list.documents,upload:mandi_tax.list.documents,Live,,,,N,N,N,N,Y,N,N,N,Y,N,Y,Y,N,,N,,,Y
+,244,Finance,FarmartOS,Mandi Tax,edit,mandi_tax.list.documents,edit:mandi_tax.list.documents,Live,,,,N,N,N,N,Y,N,N,N,Y,N,Y,Y,N,,N,,,Y
+,245,Finance,FarmartOS,Mandi Tax,complete,mandi_tax.list.documents,complete:mandi_tax.list.documents,Live,,,,N,N,N,N,Y,N,N,N,Y,N,Y,Y,N,,N,,,Y
+,246,Finance,FarmartOS,Invoicing,view,route.invoicing,view:route.invoicing,Live,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,,,,
+,247,Finance,FarmartOS,Invoicing,view,invoicing.list.invoice_requests,view:invoicing.list.invoice_requests,Live,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,248,Finance,FarmartOS,Invoicing,view,invoicing.list.credit_debit_note,view:invoicing.list.credit_debit_note,Live,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,249,Finance,FarmartOS,Invoicing,view,invoicing.list.completed,view:invoicing.list.completed,Live,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,250,Finance,FarmartOS,Invoicing,view,invoicing.list.cancelled,view:invoicing.list.cancelled,Live,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,251,Finance,FarmartOS,Invoicing,view,invoicing.list.all,view:invoicing.list.all,Live,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,252,Finance,FarmartOS,Invoicing,view,invoicing.details,view:invoicing.details,Live,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,253,Finance,FarmartOS,Invoicing,view,invoicing.invoice_cn_dn,view:invoicing.invoice_cn_dn,Live,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,254,Finance,FarmartOS,Invoicing,create,invoicing.invoice,create:invoicing.invoice,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,255,Finance,FarmartOS,Invoicing,edit,invoicing.invoice.addresses,edit:invoicing.invoice.addresses,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,256,Finance,FarmartOS,Invoicing,edit,invoicing.invoice.po_number,edit:invoicing.invoice.po_number,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,257,Finance,FarmartOS,Invoicing,review,invoicing.cancel_settle_request,review:invoicing.cancel_settle_request,Live,,,,,,,,,,,,,,,,,,,,,
+,258,Finance,FarmartOS,Invoicing,edit,invoicing.bank,edit:invoicing.bank,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,259,Finance,FarmartOS,Invoicing,edit,invoicing.notes,edit:invoicing.notes,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,260,Finance,FarmartOS,Invoicing,add,invoicing.credit_note.items,add:invoicing.credit_note.items,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,261,Finance,FarmartOS,Invoicing,add,invoicing.invoice.po_co,add:invoicing.invoice.po_co,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,262,Finance,FarmartOS,Invoicing,view,invoicing.details.ewb,view:invoicing.details.ewb,Live,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,,,,
+,263,Finance,FarmartOS,Invoicing,upload,invoicing.details.ewb,upload:invoicing.details.ewb,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,264,Finance,FarmartOS,Invoicing,cancel,invoicing.invoice,cancel:invoicing.invoice,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,265,Finance,FarmartOS,Invoicing,cancel,invoicing.credit_note,cancel:invoicing.credit_note,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,266,Finance,FarmartOS,Invoicing,cancel,invoicing.debit_note,cancel:invoicing.debit_note,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,,,,
+,267,Finance,FarmartOS,Invoicing,settle,invoicing.invoice,settle:invoicing.invoice,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,268,Finance,FarmartOS,Invoicing,add,invoicing.debit_note,add:invoicing.debit_note,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,269,Finance,FarmartOS,Invoicing,add,invoicing.credit_note,add:invoicing.credit_note,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,270,Finance,FarmartOS,Invoicing,recreate,invoicing.invoice,recreate:invoicing.invoice,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,271,Finance,FarmartOS,Invoicing,complete,invoicing.invoice,complete:invoicing.invoice,Live,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,272,Finance,FarmartOS,Invoicing,update,invoicing.invoice,update: invoicing.invoice,Live,,,,,,,,,,,,,,,,,,,,,
+,273,Finance,FarmartOS,Invoicing,approve,invoicing.update_request,approve: invoicing.update_request,Live,,,,,,,,,,,,,,,,,,,,,
+,274,Finance,FarmartOS,Invoicing,view,invoicing.update_request,view: invoicing.update_request,Live,,,,,,,,,,,,,,,,,,,,,
+,275,Logistics,FarmartOS,Trip Tracking,retry,trip,retry:trip,Live,,,,N,N,N,N,N,N,N,N,N,Y,N,N,N,N,Y,N,N,N
+,276,Logistics,FarmartOS,Trip Tracking,update,trip_tracking.driver_contact,update:trip_tracking.driver_contact,Live,,,,N,N,N,N,N,N,N,N,N,Y,N,N,N,N,Y,N,N,N
+,277,Logistics,FarmartOS,Trip Tracking,view,route.trip_tracking,view:route.trip_tracking,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,278,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.list,view:trip_tracking.list,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,279,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.list.not_created,view:trip_tracking.list.not_created,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,280,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.contact_details,view:trip_tracking.contact_details,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,281,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.map,view:trip_tracking.map,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,282,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.list.consent_pending,view:trip_tracking.list.consent_pending,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,283,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.list.in_transit,view:trip_tracking.list.in_transit,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,284,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.list.unreachable,view:trip_tracking.list.unreachable,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,285,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.list.arrived,view:trip_tracking.list.arrived,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,286,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.list.terminated,view:trip_tracking.list.terminated,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,287,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.list.completed,view:trip_tracking.list.completed,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,288,Logistics,FarmartOS,Trip Tracking,view,trip_tracking.list.all,view:trip_tracking.list.all,Live,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,289,Inventory,FarmartOS,Warehouse,add,warehouse.onboarding,add:warehouse.onboarding,Live,,"v1/warehouse,       v1/warehouse/incharge","POST,POST",N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,290,Inventory,FarmartOS,Warehouse,create,warehouse.co,create:warehouse.co,Live,,"-> v2/warehouse/crop_details/52
+-> v2/warehouse/selected_po_co_list?warehouse_id=52&dispatch_qty=1&crop_id=10&variety_id=53
+-> v2/warehouse/po_co_list?warehouse_id=52&dispatch_qty=1&crop_id=10&variety_id=53&search_param=&page=1&limit=50
+-> v1/consignment/past_po_or_consignment_details?purchase_crop_order_id=18817
+-> v3/sales_order/so_list?crop_id=10&quantity=0.001
+
+-> v1/consignment","GET
+GET
+GET
+GET
+GET
+POST",N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,291,Dashboards,FarmartOS,Warehouse,view,dashboards.warehouse.list,view:dashboards.warehouse.list,Live,,,,N,N,,,,Y,,N,,,,,,,N,,,
+,292,Inventory,FarmartOS,Warehouse,view,route.warehouse,view:route.warehouse,Live,,,,N,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,N,Y
+,293,Inventory,FarmartOS,Warehouse,view,warehouse.list,view:warehouse.list,Live,,"/v1/warehouse , v2/warehouse?limit=50","GET, GET",N,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,N,Y
+,294,Sales,FarmartOS,Buyer Group,view,route.buyer_group,view:route.buyer_group,To plan,,,,,,,,,,,,,,,,,,,,,
+,295,Sales,FarmartOS,Buyer Group,view,buyer_group.list,view:buyer_group.list,To plan,,,,,,,,,,,,,,,,,,,,,
+,296,Sales,FarmartOS,Buyer Group,view,buyer_group.details,view:buyer_group.details,To plan,,,,,,,,,,,,,,,,,,,,,
+,297,Sales,FarmartOS,Buyer Group,edit,buyer_group.credit_details,edit:buyer_group.credit_details,To plan,,,,,,,,,,,,,,,,,,,,,
+,298,Sales,FarmartOS,Buyer,view,buyer.list,view:buyer.list,To plan,,,,,,,,,,,,,,,,,,,,,
+,299,Sales,FarmartOS,Buyer,view,buyer.details,view:buyer.list.sales_review,To plan,,,,,,,,,,,,,,,,,,,,,
+,300,Sales,FarmartOS,Buyer,view,buyer.list.risk_review,view:buyer.list.risk_review,To plan,,,,,,,,,,,,,,,,,,,,,
+,301,Sales,FarmartOS,Buyer,view,buyer.list.approved,view:buyer.list.approved,To plan,,,,,,,,,,,,,,,,,,,,,
+,302,Sales,FarmartOS,Buyer,view,buyer.list.rejected,view:buyer.list.rejected,To plan,,,,,,,,,,,,,,,,,,,,,
+,303,Sales,FarmartOS,Buyer,view,buyer.list.all,view:buyer.list.all,To plan,,,,,,,,,,,,,,,,,,,,,
+,304,Sales,FarmartOS,Buyer,view,buyer.details,view:buyer.details,To plan,,,,,,,,,,,,,,,,,,,,,
+,305,Sales,FarmartOS,Buyer,review,buyer.sales,review:buyer.sales,To plan,,,,,,,,,,,,,,,,,,,,,
+,306,Sales,FarmartOS,Buyer,review,buyer.risk,review:buyer.risk,To plan,,,,,,,,,,,,,,,,,,,,,
+,307,Sales,FarmartOS,Buyer,edit,buyer.poc,edit:buyer.poc,To plan,,,,,,,,,,,,,,,,,,,,,
+,308,Sales,FMT Pro,Buyer,view,pro.buyer.list,view:pro.buyer.list,To plan,,,,,,,,,,,,,,,,,,,,,
+,309,Sales,FMT Pro,Buyer,view,pro.buyer.list.in_review,view:pro.buyer.list.in_review,To plan,,,,,,,,,,,,,,,,,,,,,
+,310,Sales,FMT Pro,Buyer,view,pro.buyer.list.approved,view:pro.buyer.list.approved,To plan,,,,,,,,,,,,,,,,,,,,,
+,311,Sales,FMT Pro,Buyer,view,pro.buyer.list.rejected,view:pro.buyer.list.rejected,To plan,,,,,,,,,,,,,,,,,,,,,
+,312,Sales,FMT Pro,Buyer,view,pro.buyer.list.all,view:pro.buyer.list.all,To plan,,,,,,,,,,,,,,,,,,,,,
+,313,Sales,FMT Pro,Buyer,create,pro.buyer,create:pro.buyer,To plan,,,,,,,,,,,,,,,,,,,,,
+,314,Sales,FMT Pro,Buyer,view,pro.buyer.details,view:pro.buyer.details,To plan,,,,,,,,,,,,,,,,,,,,,
+,315,Sales,FMT Pro,Sales Order,create,pro.so,create:pro.so,To plan,,,,,,,,,,,,,,,,,,,,,
+,316,Sales,FarmartOS,Buyer,edit,buyer.bank_account,edit:buyer.bank_account,To plan,,,,,,,,,,,,,,,,,,,,,
+,317,Sales,FarmartOS,Buyer,create,buyer.push_to_zoho,create:buyer.push_to_zoho,To plan,,,,,,,,,,,,,,,,,,,,,
+,318,Sales,FarmartOS,Buyer,modify,buyer.gst,modify:buyer.gst,To plan,,,,,,,,,,,,,,,,,,,,,
+,319,Sales,FarmartOS,Buyer,sync,buyer.backfill,sync:buyer.backfill,To plan,,,,,,,,,,,,,,,,,,,,,
+,318,Sales,FarmartOS,Sales Order,complete,so,complete:so,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Sales,FarmartOS,Sales Order,review,so.completion,review:so.completion,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Sales,FarmartOS,Sales Order,incomplete,so,incomplete:so,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Sales,FMT Pro,Sales Order,complete,pro.so,complete:pro.so,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Sales,FMT Pro,Sales Order,incomplete,pro.so,incomplete:pro.so,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Banking,view,route.banking,view:route.banking,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Banking,view,banking.list,view:banking.list,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Banking,view,banking.list.uncategorised,view:banking.list.uncategorised,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Banking,view,banking.list.buyer_group_mapped,view:banking.list.buyer_group_mapped,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Banking,view,banking.list.completed,view:banking.list.completed,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Banking,view,banking.list.all,view:banking.list.all,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Banking,map,banking.transaction,map:banking.transaction,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Banking,view,banking_transaction,view:banking_transaction,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Banking,edit,banking.transaction,edit:banking.transaction,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Collections,view,route.collections,view:route.collections,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Collections,view,collections.list,view:collections.list,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Collections,view,collections.list.pending,view:collections.list.pending,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Collections,view,collections.list.partially_mapped,view:collections.list.partially_mapped,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Collections,view,collections.list.completed,view:collections.list.completed,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Collections,view,collections.list.all,view:collections.list.all,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Collections,map,collections.receipt,map:collections.receipt,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Collections,view,collections.receipt,view:collections.receipt,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Collections,edit,collections.receipt,edit:collections.receipt,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,view,route.reconciliation,view:route.reconciliation,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,view,reconciliation.list,view:reconciliation.list,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,view,reconciliation.list.pending,view:reconciliation.list.pending,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,view,reconciliation.list.partially_paid,view:reconciliation.list.partially_paid,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,view,reconciliation.list.paid,view:reconciliation.list.paid,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,view,reconciliation.list.reconciled,view:reconciliation.list.reconciled,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,view,reconciliation.list.all,view:reconciliation.list.all,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,apply,reconciliation.credits,apply:reconciliation.credits,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,edit,invoice.tds,edit:invoice.tds,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,edit,reconciliation.credits,edit:reconciliation.credits,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,reconcile,invoice,reconcile:invoice,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,reconcile,multiple_invoice,reconcile:multiple_invoice,To plan,,,,,,,,,,,,,,,,,,,,,
+,#REF!,Finance,FarmartOS,Reconciliation,view,reconciliation.credits,view:reconciliation.credits,To plan,,,,,,,,,,,,,,,,,,,,,

@@ -1,0 +1,612 @@
+#,Source of PO,Order type,FOR?,Halting charges by,Assigned To,Status,EOD Status,,,,,,,,,,,,,,,,,,,,,,,,
+1.0,PA Creates,GMV,FOR,Supplier,yashpal Saini Navya Regode Aslam Idrisi,Ongoing,Ongoing,,,,,,,,,,,,,,,,,,,,,,,,
+2.0,PA Creates,GMV,FOR,FarMart,,Not Started,Ongoing,Taxable crop,maize - yellow,Unloading pending,,,,,,,,,,,,,,,,,,,,,
+3.0,PA dispatch,GTV,FOR,Supplier,Anushka Bhattacharjee Sundram Bhardwaj Vidhatra Shukla,Blocked,Blocked,Non-Taxable crop,maize - yelllowwwwww,,,,,,,,,,,,,,,,,,,,,,
+4.0,SO Allocation,GMV,FOR,Supplier,,Ongoing,Completed,,,,,,,,,,,,,,,,,,,,,,,,
+5.0,SO Allocation,GMV,FOR,FarMart,Mahesh Prajapati Mehtab Singh Gill Vivek Anand,Ongoing,Ongoing,Vivek Anand,,Unloading pending,,,,,,,,,,,,,,,,,,,,,
+,SO Allocation,GTV,FOR,Supplier,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,Supplier Creates,GMV,FOR,Supplier,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,Supplier Creates,GMV,FOR,FarMart,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6.0,Supplier Creates,GTV,FOR,Supplier,,Blocked,Blocked,,,,,,,,,,,,,,,,,,,,,,,,
+7.0,PA Creates,GMV,NON-FOR,Supplier,Prabhat Sao,Completed,Completed,,,,,,,,,,,,,,,,,,,,,,,,
+8.0,SO Allocation,GMV,NON-FOR,Supplier,,Completed,Completed,,,,,,,,,,,,,,,,,,,,,,,,
+,Supplier Creates,GMV,NON-FOR,Supplier,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,Notification,,,,,,,,
+,,,,,,,,,,,,Action Allowed are,,,,,,Unloading Details,,,,,PRO,,,Supplier,Notification Text,,,,
+,Source of PO,Order type,FOR?,Halting charges borne by,PO / Sauda Status,SO Mapped?,DO Status,Payment on DO?,Invoice,Invoice Status,SO Mapped Invoice Sharing?,Detach SO,Re-attch SO,Terminate PO,Edit PO Terms,Ship from address,Edit DO Terms,Unloading submit by,Unloading type,Destination of Rejected Qty,Unloading Remarks,Buyer Deduction Amount,PA,SA,RPM,Supplier - On Whatsapp,PA,SA,RPM,Supplier - On Whatsapp,Deeplink
+,PA Creates,GMV,FOR,Supplier,PO Requested,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,FALSE,TRUE,FALSE,"PO requested by {PA Name}
+{Supplier Business Name}
+{PO ID}, {Crop}, {Variety}, {Quantity}
+Please review and close.",,same,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,Consent Pending,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Approved,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,FALSE,TRUE,FALSE,"PO Approved by {Approver Name}
+{Supplier Business Name}
+{PO ID}, {Crop}, {Variety}, {Quantity}
+Please create DO as soon as possible.",,same,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,SO Mapped,YES,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,TRUE,FALSE,FALSE,"{PO#} mapped with SO
+
+Please reach out to Farmart team to create Invoice.",same,,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,InProgress,YES,Vechile Arrived,-,-,-,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,TRUE,FALSE,,,"{DO#}: Document Approval Pending
+Please review transporter documents uploaded by {PA Name} for this DO.",,PA/RPM Login -> Dispatch Orders Section -> DO Details
+,,,,,InProgress,NO,Vechile Arrived,-,-,-,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Ready to Dispatch,TRUE,FALSE,No Created,After,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,TRUE,FALSE,"{DO#}: Truck Ready to Dispatch by {PA Name}
+Please review the details to dispatch the truck.",,,,PA/RPM Login -> Dispatch Orders Section -> In Review Tab -> DO Details
+,,,,,InProgress,YES,Ready to Dispatch,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,NO,Ready to Dispatch,-,-,No Created,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched,TRUE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched - Dispatch doc approved,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,TRUE,TRUE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched - Dispatch doc Rejected,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,TRUE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched,FALSE,FALSE,No Created,After,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,TRUE,FALSE,FALSE,"{DO#}: Truck Dispatched
+
+{Truck no.} has been dispatched from supplier location to {Buyer Name} and {delivery address}",,,,SA Login -> Critical Deliveries
+,,,,,InProgress,NO,Dispatched,-,-,No Created,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Arrived at Buyer,FALSE,TRUE,Settled,Before,-,-,-,-,-,-,-,-,-,,,TRUE,TRUE,TRUE,FALSE,"{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the truck driver and buyer to plan unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Delivered,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,TRUE,TRUE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Partical Delivered,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Partical Delivered - Deduction submited and its rejected,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Rejected by {Approval Person}
+Please review and reupload documents.",,SA Login -> Unloading Section -> DO Details
+,,,,,InProgress,YES,Cancelled,TRUE,FALSE,No Created,After,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,
+,,,,,InProgress,YES,Cancelled,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted - Deduction Approved,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,Amount : 0,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Partical Accepted,RTV,,Amount : X,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Approved by {Approval Person}
+Please review.",,SA Login -> Unloading Section -> DO Details
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,TRUE,TRUE,TRUE,FALSE,,{DO#} has been marked as Completed by <State Head Name>,same,same,"PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,Complete,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,FALSE,FALSE,FALSE,,{PO#} has been marked as Completed by <State Head Name>,same,same,"PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,Incomplete,YES,Incomplete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,Notification,,,,,,,,
+,,,,,,,,,,,,Action Allowed are,,,,,,Unloading Details,,,,,PRO,,,Supplier,Notification Text,,,,
+,Source of PO,Order type,FOR?,Halting charges borne by,PO / Sauda Status,SO Mapped?,DO Status,Payment on DO?,Invoice,Invoice Status,SO Mapped Invoice Sharing?,Detach SO,Re-attch SO,Terminate PO,Edit PO Terms,Ship from address,Edit DO Terms,Unloading submit by,Unloading type,Destination of Rejected Qty,Unloading Remarks,Buyer Deduction Amount,PA,SA,RPM,Supplier - On Whatsapp,PA,SA,RPM,Supplier - On Whatsapp,Deeplink
+,PA Creates,GMV,FOR,Farmart,PO Requested,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,FALSE,TRUE,FALSE,"PO requested by {PA Name}
+{Supplier Business Name}
+{PO ID}, {Crop}, {Variety}, {Quantity}
+Please review and close.",,same,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,Consent Pending,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Approved,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,FALSE,TRUE,FALSE,"PO Approved by {Approver Name}
+{Supplier Business Name}
+{PO ID}, {Crop}, {Variety}, {Quantity}
+Please create DO as soon as possible.",,same,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,SO Mapped,YES,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,TRUE,FALSE,FALSE,"{PO#} mapped with SO
+
+Please reach out to Farmart team to create Invoice.",same,,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,InProgress,YES,Vechile Arrived,-,-,-,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,TRUE,FALSE,"{DO#}: Document Approval Pending
+Please review transporter documents uploaded by {PA Name} for this DO.",,,,PA/RPM Login -> Dispatch Orders Section -> DO Details
+,,,,,InProgress,NO,Vechile Arrived,-,-,-,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Ready to Dispatch,TRUE,FALSE,No Created,After,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,TRUE,FALSE,"{DO#}: Truck Ready to Dispatch by {PA Name}
+Please review the details to dispatch the truck.",,,,PA/RPM Login -> Dispatch Orders Section -> In Review Tab -> DO Details
+,,,,,InProgress,YES,Ready to Dispatch,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,NO,Ready to Dispatch,-,-,No Created,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,NO,Ready to Dispatch - Add/Edit Halting Charges,-,-,No Created,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched,TRUE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched - Dispatch doc approved,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,TRUE,TRUE,FALSE,FALSE,"{DO#} created for Sauda {PO#}
+{Supplier name} has dispatched {qty} out of total {qty}. Pending quantity to be dispatched is {qty}.",same,,,PA/RPM Login -> Dispatch Orders Section -> DO Details
+,,,,,InProgress,YES,Dispatched - Dispatch doc Rejected,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,TRUE,FALSE,FALSE,FALSE,"Dispatch Document Rejected for {Supplier Name}
+{DO#}
+Please follow up with supplier to reupload documents.",,,,PA/RPM Login -> Dispatch Orders Section -> In Review Tab
+,,,,,InProgress,YES,Dispatched,FALSE,FALSE,No Created,After,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,TRUE,FALSE,FALSE,"{DO#}: Truck Dispatched
+
+{Truck no.} has been dispatched from supplier location to {Buyer Name} and {delivery address}",,,,SA Login -> Critical Deliveries
+,,,,,InProgress,NO,Dispatched,-,-,No Created,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Arrived at Buyer,FALSE,TRUE,Settled,Before,-,-,-,-,-,-,-,-,-,,,TRUE,TRUE,TRUE,FALSE,"{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the truck driver and buyer to plan unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Delivered,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,TRUE,TRUE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Partical Delivered,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Partical Delivered - Deduction submited and its rejected,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Rejected by {Approval Person}
+Please review and reupload documents.",,SA Login -> Unloading Section -> DO Details
+,,,,,InProgress,YES,Cancelled,TRUE,FALSE,No Created,After,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,
+,,,,,InProgress,YES,Cancelled,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted - Deduction Approved,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,Amount : 0,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Partical Accepted,RTV,,Amount : X,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Approved by {Approval Person}
+Please review.",,SA Login -> Unloading Section -> DO Details
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,TRUE,TRUE,TRUE,FALSE,,{DO#} has been marked as Completed by <State Head Name>,same,same,"PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,Complete,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,FALSE,FALSE,FALSE,,{PO#} has been marked as Completed by <State Head Name>,same,same,"PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,Incomplete,YES,Incomplete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,Notification,,,,,,,,
+,,,,,,,,,,,,Action Allowed are,,,,,,Unloading Details,,,,,PRO,,,Supplier,Notification Text,,,,
+,Source of PO,Order type,FOR?,Halting charges borne by,PO / Sauda Status,SO Mapped?,DO Status,Payment on DO?,Invoice,Invoice Status,SO Mapped Invoice Sharing?,Detach SO,Re-attch SO,Terminate PO,Edit PO Terms,Ship from address,Edit DO Terms,Unloading submit by,Unloading type,Destination of Rejected Qty,Unloading Remarks,Buyer Deduction Amount,PA,SA,RPM,Supplier - On Whatsapp,PA,SA,RPM,Supplier - On Whatsapp,Deeplink
+,PA Creates(OS),GTV,FOR,Supplier,Sauda in Review / PO Requested by Supplier,NO,-,-,-,-,-,,,,,,,,,,,,TRUE,FALSE,TRUE,TRUE,"Online Sauda requested by {Supplier name}
+{Crop}, {variety}  - {qty in tons}
+Please follow-up with RPM for approval.",,"Online Sauda requested by {Supplier name}
+{Crop}, {variety}  - {qty in tons}
+For {Buyer name}
+Price {terms} -","नमस्कार <supplier PoC name>,
+खरीददार ने आपके सौदा अनुरोध को स्वीकृत किया है। कृपया नीचे दिए गए पर्चेस ऑर्डर को स्वीकृत करें।
+ सहायता के लिए - {{support_mobile_number}} 
+[पर्चेस ऑर्डर देखें,https://farmart.app.link/{{branch_io_variable}}]",PA/RPM Login -> Purchase Orders Section -> In Review Tab
+,,,,,PO Acceptance Pending,NO,-,-,-,-,-,,,,,,,,,,,,TRUE,FALSE,TRUE,TRUE,"Sauda Approved by SH, pending at Supplier
+{Supplier name}
+{Crop}, {variety}  - {qty in tons}
+For {Buyer name}
+Price ({terms}) - {Price}
+Pending for acceptance with supplier. Please follow up.",,same,"नमस्कार <supplier PoC name>,
+{{po_id}} पर्चेस ऑर्डर स्वीकृति के लिए धन्यवाद।
+ कृपया ऑर्डर {{buyer_name}} को {{expected_delivery_date}}तक पूरा करें।
+सहायता के लिए:{{support_mobile_number}} | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]",PA/RPM Login -> Purchase Orders Section -> In Review Tab
+,,,,,Sauda Rejected(Rejected by SHP),NO,-,-,-,-,-,,,,,,,,,,,,TRUE,FALSE,TRUE,TRUE,"Sauda Rejected by State Head
+{PO#}",,same,"नमस्कार <supplier PoC name>,
+आपके रुचि के लिए धन्यवाद। हमे खेद है कि आपका {{po_id}} सौदा अनुरोध अस्वीकृत किया गया है।
+
+1. सौदा पीओ  नम्बर - {{po_number}}  
+2. फसल का नाम - {{crop_name}} {{variety_name}}  
+3. मात्रा - {{sauda_quantity_with_unit}}  
+
+
+FarMart ऐप पर और उपयुक्त बायरों का रेट देखें और पुनः सौदा करें। 
+
+*आपकी समझदारी के लिए धन्यवाद*🙏 | [मूल्य खोजें,https://farmart.app.link/{{branch_io_variable}}]""",PA/RPM Login -> Purchase Orders Section -> In Review Tab
+,,,,,Sauda Rejected(Rejected by Supplier),NO,-,-,-,-,-,,,,,,,,,,,,TRUE,FALSE,TRUE,TRUE,"Sauda Rejected by {Supplier Name}
+{PO#}
+Please follow up with them.",,same,"नमस्कार <supplier PoC name>,
+आपके उत्तर के लिए धन्यवाद। पर्चेस ऑर्डर {{po_id}} आपने स्वीकृत नहीं किया है।
+Farmart ऐप पर उपलब्ध अन्य सौदे देखें । हम आपके साथ जारी रखे गए साथीपन का इंतजार करते हैं।  | [मूल्य खोजें,https://farmart.app.link/{{branch_io_variable}}]",PA/RPM Login -> Purchase Orders Section -> In Review Tab
+,,,,,Sauda Booked,NO,-,-,-,-,-,,,,,,,,,,,,FALSE,FALSE,FALSE,TRUE,,,,"नमस्कार <supplier PoC name>,
+आपकी रुचि के लिए धन्यवाद। FarMart, खरीददार के साथ विवरण की पुष्टि कर रहा है।
+
+ पर्चेस ऑर्डर विवरण:
+बायर का नाम - {{buyer_name}}
+मात्रा - {{sauda_quantity_with_unit}}
+सौदा पीओ  नम्बर - {{po_number}}  
+फसल – {{crop_name}}
+किस्म – {{variety_name}}
+ग्रॉस बायर मूल्य - {{gross_price_with_unit}}
+नेट बायर मूल्य - {{net_price_with_unit}}
+नेट FOR मूल्य - {{net_for_price_with_unit}} 
+डिलीवरी एड्रेस - {{delivery_address}}
+
+ऑर्डर आपूर्ति को इस {{expected_delivery_date}} तक पूरा करें।
+[पर्चेस ऑर्डर देखें,https://farmart.app.link/{{branch_io_variable}}]",
+,,,,,Sauda Booked,NO,Dispatch doc in Review,-,-,-,-,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,NO,Doc Rejected,-,-,-,-,,,,,,,,,,,,FALSE,FALSE,FALSE,TRUE,,,,"नमस्कार {{supplier_poc_name}},
+फार्मार्ट ट्रेडर ने दस्तावेजों को अस्वीकार किया है, कृपया संशोधित दस्तावेज़ अपलोड करने के लिए लिंक पर क्लिक करें:
+
+1. ट्रक नंबर: {{vehicle_number}}
+2. डीओ नंबर – {{do_number}}
+3. दस्तावेज़ का नाम: {{document_name}}
+
+कृपया 🔄 दस्तावेज़ पुनः अपलोड करें।
+
+धन्यवाद। 🙏 | [दस्तावेज़ पुनः अपलोड करें,https://farmart.app.link/{{branch_io_variable}}]",
+,,,,,Sauda Booked,NO,Doc Approved,-,-,-,-,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,NO,Dispatched,-,-,-,-,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,,,,,,FALSE,FALSE,FALSE,TRUE,,,,"{vehicle_number}: ट्रक डिस्पैच 
+
+आपका ट्रक नीचे दिए गए आदेश के लिए रास्ते में है।
+
+1. डिस्पैच ऑर्डर -  {{do_number}} 
+2. डिस्पैच मात्रा - {{dispatched_quantity}}
+3. शेष मात्रा - {{remaining_quantity}}
+अपेक्षित डिलीवरी तक पहुंचेगा {{expected_delivery_date}}
+
+📆 कृपया इस {{fullfillment_date}} तक वितरण पूरा करें।
+
+📍 डिलीवरी एड्रेस : {{delivery_address}} | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]",
+,,,,,Sauda Booked,YES,Dispatched,-,-,-,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Arrived at Buyer,,,,,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Arrived at Buyer,FALSE,TRUE,Settled,Before,-,-,-,-,-,-,-,-,-,,,TRUE,TRUE,TRUE,TRUE,"{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the truck driver and buyer to plan unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.","नमस्कार <supplier PoC name>,
+आपका ट्रक {{vehicle_number}} नीचे दिए गए आर्डर के साथ डिलीवरी एड्रेस तक पहुँच गया है।
+
+डिस्पैच ऑर्डर विवरण:
+1. डिस्पैच ऑर्डर -  {{do_number}} 
+2. डिस्पैच मात्रा - {{dispatched_quantity}}
+
+ कृपया भुगतान शीघ्र प्राप्त करने के लिए FarMart ऐप पर जीआरएन और कटौती रिपोर्ट अपलोड करें।
+
+धन्यवाद ! | [दस्तावेज़ अपलोड करें,https://farmart.app.link/{{branch_io_variable}}]""","PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,Sauda Booked,YES,Arrived at Buyer - Supplier added the unloading doc,FALSE,FALSE,Settled,Before,-,-,-,-,-,-,-,-,-,,,FALSE,TRUE,FALSE,FALSE,,"{DO#} and {Buyer Name}: Unloading Added by {Supplier Name}
+Unloading documents added by supplier please review.",,,SA Login -> Unloading Section -> DO Details
+,,,,,Sauda Booked,YES,Delivered,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,TRUE,TRUE,TRUE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction","नमस्कार <supplier PoC name>,
+
+आपका फारमार्ट के साथ सौदा डिस्पैच ऑर्डर {{do_number}} का ट्रक {{vehicle_number}} सफलतापूर्वक अनलोड हो गया है। हमारे प्रतिनिधि द्वारा जीआरएन प्राप्त और अपलोड किया गया है।
+धन्यवाद! | अनलोडिंग की डिटेल देखने के लिए यहाँ क्लिक करें - https://farmart.app.link/{{branch_io_variable}}","PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,Sauda Booked,YES,Partical Delivered,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,Warehouse,,,FALSE,FALSE,FALSE,TRUE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction","नमस्कार <supplier PoC name>,
+
+आपका फारमार्ट के साथ सौदा डिस्पैच ऑर्डर {{do_number}} का ट्रक {{vehicle_number}} सफलतापूर्वक अनलोड हो गया है। हमारे प्रतिनिधि द्वारा जीआरएन प्राप्त और अपलोड किया गया है।
+धन्यवाद! | अनलोडिंग की डिटेल देखने के लिए यहाँ क्लिक करें - https://farmart.app.link/{{branch_io_variable}}","PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,Sauda Booked,YES,Partical Delivered - Deduction submited and its rejected,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,TRUE,FALSE,TRUE,,,"{DO#}: Deduction Rejected by {Approval Person}
+Please review and reupload documents.","नमस्कार <supplier PoC name>,
+
+आपका फारमार्ट के साथ सौदा डिस्पैच ऑर्डर {{do_number}} का ट्रक {{vehicle_number}} सफलतापूर्वक अनलोड हो गया है। हमारे प्रतिनिधि द्वारा जीआरएन प्राप्त और अपलोड किया गया है।
+धन्यवाद! | अनलोडिंग की डिटेल देखने के लिए यहाँ क्लिक करें - https://farmart.app.link/{{branch_io_variable}}",SA Login -> Unloading Section -> DO Details
+,,,,,Sauda Booked,YES,Cancelled,TRUE,FALSE,No Created,After,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,,FALSE,TRUE,TRUE,TRUE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction","ट्रक अस्वीकृति बायर पर: <truck number>,
+
+हम आपको सूचित करना चाहते हैं कि आपके डिस्पैच ऑर्डर {{do_number}} का ट्रक {{vehicle_number}} बायर ने अस्वीकृत कर दिया है।
+ऑर्डर की डिटेल देखें - https://farmart.app.link/{{branch_io_variable}}",
+,,,,,Sauda Booked,YES,Cancelled,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,TRUE,,,,"ट्रक अस्वीकृति बायर पर: <truck number>,
+
+हम आपको सूचित करना चाहते हैं कि आपके डिस्पैच ऑर्डर {{do_number}} का ट्रक {{vehicle_number}} बायर ने अस्वीकृत कर दिया है।
+ऑर्डर की डिटेल देखें - https://farmart.app.link/{{branch_io_variable}}",
+,,,,,Sauda Booked,YES,Deduction Submitted - Deduction Approved,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,Amount : 0,FALSE,FALSE,FALSE,TRUE,,,,"नमस्कार {{supplier_poc_name}},
+खरीददार ने आपके ट्रक {{vehicle_number}} की वितरण के लिए जीआरएन और कटौती रिपोर्ट साझा की है।
+
+डिस्पैच ऑर्डर -  {{do_number}} 
+📆 कृपया बची हुई वितरण को इस {{expected_delivery_date}} तक पूरा करें।
+
+📍 डिलीवरी एड्रेस : {{delivery_address}}
+
+आपके सब्र के लिए धन्यवाद; टीम अगले कुछ घंटों में भुगतान को रिलीज़ करेगी। | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]""",
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Partical Accepted,RTV,,Amount : X,FALSE,TRUE,FALSE,TRUE,,,"{DO#}: Deduction Approved by {Approval Person}
+Please review.","नमस्कार {{supplier_poc_name}},
+खरीददार ने आपके ट्रक {{vehicle_number}} की वितरण के लिए जीआरएन और कटौती रिपोर्ट साझा की है।
+
+डिस्पैच ऑर्डर -  {{do_number}} 
+📆 कृपया बची हुई वितरण को इस {{expected_delivery_date}} तक पूरा करें।
+
+📍 डिलीवरी एड्रेस : {{delivery_address}}
+
+आपके सब्र के लिए धन्यवाद; टीम अगले कुछ घंटों में भुगतान को रिलीज़ करेगी। | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]""",SA Login -> Unloading Section -> DO Details
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,,Amount : X,FALSE,FALSE,FALSE,TRUE,,,,"नमस्कार {{supplier_poc_name}},
+खरीददार ने आपके ट्रक {{vehicle_number}} की वितरण के लिए जीआरएन और कटौती रिपोर्ट साझा की है।
+
+डिस्पैच ऑर्डर -  {{do_number}} 
+📆 कृपया बची हुई वितरण को इस {{expected_delivery_date}} तक पूरा करें।
+
+📍 डिलीवरी एड्रेस : {{delivery_address}}
+
+आपके सब्र के लिए धन्यवाद; टीम अगले कुछ घंटों में भुगतान को रिलीज़ करेगी। | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]""",
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,Amount : X,FALSE,FALSE,FALSE,TRUE,,,,"नमस्कार {{supplier_poc_name}},
+खरीददार ने आपके ट्रक {{vehicle_number}} की वितरण के लिए जीआरएन और कटौती रिपोर्ट साझा की है।
+
+डिस्पैच ऑर्डर -  {{do_number}} 
+📆 कृपया बची हुई वितरण को इस {{expected_delivery_date}} तक पूरा करें।
+
+📍 डिलीवरी एड्रेस : {{delivery_address}}
+
+आपके सब्र के लिए धन्यवाद; टीम अगले कुछ घंटों में भुगतान को रिलीज़ करेगी। | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]""",
+,,,,,Sauda Booked,YES,Delivered,FALSE,TRUE,Active,After,-,-,-,-,-,-,Supplier,Full Accepted,NA,,,FALSE,TRUE,TRUE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction","नमस्कार {{supplier_poc_name}},
+
+आपके द्वार ट्रक {{vehicle_number}} के लिये अपलोड किए गए जीआरएन और कांटा पर्ची सबमिट हो गई है। FarMart टीम दस्तावेजों की  पुष्टि के बाद आपसे संपर्क करेगी।
+
+डिस्पैच ऑर्डर विवरण:
+1. डिस्पैच ऑर्डर -  {{do_number}} 
+TRUCK NUMBER
+2. डिस्पैच मात्रा - {{dispatched_quantity}}
+3. Unloaded quantity
+
+डिलीवरी की तारीख - {{delivery_date}}
+
+धन्यवाद! | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]","PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,Sauda Booked,YES,Partical Delivered,TRUE,TRUE,Active,After,-,-,-,-,-,-,Supplier,Partical Accepted,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction","नमस्कार {{supplier_poc_name}},
+
+आपके द्वार ट्रक {{vehicle_number}} के लिये अपलोड किए गए जीआरएन और कांटा पर्ची सबमिट हो गई है। FarMart टीम दस्तावेजों की  पुष्टि के बाद आपसे संपर्क करेगी।
+
+डिस्पैच ऑर्डर विवरण:
+1. डिस्पैच ऑर्डर -  {{do_number}} 
+TRUCK NUMBER
+2. डिस्पैच मात्रा - {{dispatched_quantity}}
+3. Unloaded quantity
+
+डिलीवरी की तारीख - {{delivery_date}}
+
+धन्यवाद! | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]","PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,Sauda Booked,YES,Partical Delivered - Deduction submited and its rejected,TRUE,TRUE,Active,After,-,-,-,-,-,-,Supplier,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Rejected by {Approval Person}
+Please review and reupload documents.","नमस्कार {{supplier_poc_name}},
+
+आपके द्वार ट्रक {{vehicle_number}} के लिये अपलोड किए गए जीआरएन और कांटा पर्ची सबमिट हो गई है। FarMart टीम दस्तावेजों की  पुष्टि के बाद आपसे संपर्क करेगी।
+
+डिस्पैच ऑर्डर विवरण:
+1. डिस्पैच ऑर्डर -  {{do_number}} 
+TRUCK NUMBER
+2. डिस्पैच मात्रा - {{dispatched_quantity}}
+3. Unloaded quantity
+
+डिलीवरी की तारीख - {{delivery_date}}
+
+धन्यवाद! | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]",SA Login -> Unloading Section -> DO Details
+,,,,,Sauda Booked,YES,Cancelled,TRUE,FALSE,No Created,After,-,-,-,-,-,-,Supplier,Full Rejected,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,D,D,"ट्रक अस्वीकृति बायर पर: <truck number>,
+
+हम आपको सूचित करना चाहते हैं कि आपके डिस्पैच ऑर्डर {{do_number}} का ट्रक {{vehicle_number}} बायर ने अस्वीकृत कर दिया है।
+ऑर्डर की डिटेल देखें - https://farmart.app.link/{{branch_io_variable}}",
+,,,,,Sauda Booked,YES,Cancelled,TRUE,TRUE,Settled,After,-,-,-,-,-,-,Supplier,Full Rejected,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,"ट्रक अस्वीकृति बायर पर: <truck number>,
+
+हम आपको सूचित करना चाहते हैं कि आपके डिस्पैच ऑर्डर {{do_number}} का ट्रक {{vehicle_number}} बायर ने अस्वीकृत कर दिया है।
+ऑर्डर की डिटेल देखें - https://farmart.app.link/{{branch_io_variable}}",
+,,,,,Sauda Booked,YES,Deduction Submitted - Deduction Approved,FALSE,TRUE,Active,After,-,-,-,-,-,-,Supplier,Full Accepted,NA,,Amount : 0,FALSE,FALSE,FALSE,FALSE,,,,"नमस्कार {{supplier_poc_name}},
+खरीददार ने आपके ट्रक {{vehicle_number}} की वितरण के लिए जीआरएन और कटौती रिपोर्ट साझा की है।
+
+डिस्पैच ऑर्डर -  {{do_number}} 
+📆 कृपया बची हुई वितरण को इस {{expected_delivery_date}} तक पूरा करें।
+
+📍 डिलीवरी एड्रेस : {{delivery_address}}
+
+आपके सब्र के लिए धन्यवाद; टीम अगले कुछ घंटों में भुगतान को रिलीज़ करेगी। | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]""",
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,Supplier,Partical Accepted,RTV,,Amount : X,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Approved by {Approval Person}
+Please review.","नमस्कार {{supplier_poc_name}},
+खरीददार ने आपके ट्रक {{vehicle_number}} की वितरण के लिए जीआरएन और कटौती रिपोर्ट साझा की है।
+
+डिस्पैच ऑर्डर -  {{do_number}} 
+📆 कृपया बची हुई वितरण को इस {{expected_delivery_date}} तक पूरा करें।
+
+📍 डिलीवरी एड्रेस : {{delivery_address}}
+
+आपके सब्र के लिए धन्यवाद; टीम अगले कुछ घंटों में भुगतान को रिलीज़ करेगी। | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]""",SA Login -> Unloading Section -> DO Details
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Settled,After,-,-,-,-,-,-,Supplier,Full Rejected,RTV,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,"नमस्कार {{supplier_poc_name}},
+खरीददार ने आपके ट्रक {{vehicle_number}} की वितरण के लिए जीआरएन और कटौती रिपोर्ट साझा की है।
+
+डिस्पैच ऑर्डर -  {{do_number}} 
+📆 कृपया बची हुई वितरण को इस {{expected_delivery_date}} तक पूरा करें।
+
+📍 डिलीवरी एड्रेस : {{delivery_address}}
+
+आपके सब्र के लिए धन्यवाद; टीम अगले कुछ घंटों में भुगतान को रिलीज़ करेगी। | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]""",
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,Supplier,Full Rejected,Warehouse,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,"नमस्कार {{supplier_poc_name}},
+खरीददार ने आपके ट्रक {{vehicle_number}} की वितरण के लिए जीआरएन और कटौती रिपोर्ट साझा की है।
+
+डिस्पैच ऑर्डर -  {{do_number}} 
+📆 कृपया बची हुई वितरण को इस {{expected_delivery_date}} तक पूरा करें।
+
+📍 डिलीवरी एड्रेस : {{delivery_address}}
+
+आपके सब्र के लिए धन्यवाद; टीम अगले कुछ घंटों में भुगतान को रिलीज़ करेगी। | [ऑर्डर ट्रैक करें,https://farmart.app.link/{{branch_io_variable}}]""",
+,,,,,,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,TRUE,TRUE,TRUE,FALSE,same,{DO#} has been marked as Completed by <State Head Name>,same,"नमस्कार {{supplier_poc_name}},
+आपके विश्वास और सहयोग के लिए धन्यवाद 🙏
+आपका पीओ नंबर {{po_number}} से जुड़ा संपूर्ण व्यापार सफलतापूर्वक पूरा हो गया है।
+प्रत्येक डीओ का भुगतान किया जा चुका है ✅
+
+भुगतान सारांश :
+कुल भुगतान राशि – Rs {{total_amount_paid}}
+
+सहायता के लिए संपर्क करें – {{support_mobile_number}}
+धन्यवाद! | [फीडबैक साझा करें, https://farmart.app.link/{{branch_io_variable}}]","PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,FALSE,FALSE,FALSE,same,{PO#} has been marked as Completed by <State Head Name>,same,"नमस्कार {{supplier_poc_name}},
+आपके विश्वास और सहयोग के लिए धन्यवाद 🙏
+आपका पीओ नंबर {{po_number}} से जुड़ा संपूर्ण व्यापार सफलतापूर्वक पूरा हो गया है।
+प्रत्येक डीओ का भुगतान किया जा चुका है ✅
+
+भुगतान सारांश :
+कुल भुगतान राशि – Rs {{total_amount_paid}}
+
+सहायता के लिए संपर्क करें – {{support_mobile_number}}
+धन्यवाद! | [फीडबैक साझा करें, https://farmart.app.link/{{branch_io_variable}}]","PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,,YES,Incomplete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,Notification,,,,,,,,
+,,,,,,,,,,,,Action Allowed are,,,,,,Unloading Details,,,,,PRO,,,Supplier,Notification Text,,,,
+,Source of PO,Order type,FOR?,Halting charges borne by,PO / Sauda Status,SO Mapped?,DO Status,Payment on DO?,Invoice,Invoice Status,SO Mapped Invoice Sharing?,Detach SO,Re-attch SO,Terminate PO,Edit PO Terms,Ship from address,Edit DO Terms,Unloading submit by,Unloading type,Destination of Rejected Qty,Unloading Remarks,Buyer Deduction Amount,PA,SA,RPM,Supplier - On Whatsapp,PA,SA,RPM,Supplier - On Whatsapp,Deeplink
+,SO Allocation,GMV,FOR,Supplier,PO Requested,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,FALSE,TRUE,FALSE,"PO requested by {PA Name}
+{Supplier Business Name}
+{PO ID}, {Crop}, {Variety}, {Quantity}
+Please review and close.",,same,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,Consent Pending,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Approved,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,FALSE,TRUE,FALSE,"PO Approved by {Approver Name}
+{Supplier Business Name}
+{PO ID}, {Crop}, {Variety}, {Quantity}
+Please create DO as soon as possible.",,same,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,SO Mapped,YES,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,TRUE,FALSE,FALSE,"{PO#} mapped with SO
+
+Please reach out to Farmart team to create Invoice.",same,,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,InProgress,YES,Vechile Arrived,-,-,-,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,TRUE,FALSE,"{DO#}: Document Approval Pending
+Please review transporter documents uploaded by {PA Name} for this DO.",,,,PA/RPM Login -> Dispatch Orders Section -> DO Details
+,,,,,InProgress,NO,Vechile Arrived,-,-,-,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Ready to Dispatch,TRUE,FALSE,No Created,After,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,TRUE,FALSE,"{DO#}: Truck Ready to Dispatch by {PA Name}
+Please review the details to dispatch the truck.",,,,PA/RPM Login -> Dispatch Orders Section -> In Review Tab -> DO Details
+,,,,,InProgress,YES,Ready to Dispatch,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,NO,Ready to Dispatch,-,-,No Created,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched,TRUE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched - Dispatch doc approved,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,TRUE,TRUE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched - Dispatch doc Rejected,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,TRUE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched,FALSE,FALSE,No Created,After,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,TRUE,FALSE,FALSE,"{DO#}: Truck Dispatched
+
+{Truck no.} has been dispatched from supplier location to {Buyer Name} and {delivery address}",,,,SA Login -> Critical Deliveries
+,,,,,InProgress,NO,Dispatched,-,-,No Created,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Arrived at Buyer,FALSE,TRUE,Settled,Before,-,-,-,-,-,-,-,-,-,,,TRUE,TRUE,TRUE,FALSE,"{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the truck driver and buyer to plan unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Delivered,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,TRUE,TRUE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Partical Delivered,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Partical Delivered - Deduction submited and its rejected,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Rejected by {Approval Person}
+Please review and reupload documents.",,SA Login -> Unloading Section -> DO Details
+,,,,,InProgress,YES,Cancelled,TRUE,FALSE,No Created,After,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,
+,,,,,InProgress,YES,Cancelled,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted - Deduction Approved,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,Amount : 0,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Partical Accepted,RTV,,Amount : X,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Approved by {Approval Person}
+Please review.",,SA Login -> Unloading Section -> DO Details
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,TRUE,TRUE,TRUE,FALSE,,{DO#} has been marked as Completed by <State Head Name>,same,same,"PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,Complete,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,FALSE,FALSE,FALSE,,{PO#} has been marked as Completed by <State Head Name>,same,same,"PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,Incomplete,YES,Incomplete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,Notification,,,,,,,,
+,,,,,,,,,,,,Action Allowed are,,,,,,Unloading Details,,,,,PRO,,,Supplier,Notification Text,,,,
+,Source of PO,Order type,FOR?,Halting charges borne by,PO / Sauda Status,SO Mapped?,DO Status,Payment on DO?,Invoice,Invoice Status,SO Mapped Invoice Sharing?,Detach SO,Re-attch SO,Terminate PO,Edit PO Terms,Ship from address,Edit DO Terms,Unloading submit by,Unloading type,Destination of Rejected Qty,Unloading Remarks,Buyer Deduction Amount,PA,SA,RPM,Supplier - On Whatsapp,PA,SA,RPM,Supplier - On Whatsapp,Deeplink
+,SO Allocation,GMV,FOR,FarMart,PO Requested,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,FALSE,TRUE,FALSE,"PO requested by {PA Name}
+{Supplier Business Name}
+{PO ID}, {Crop}, {Variety}, {Quantity}
+Please review and close.",,same,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,Consent Pending,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Approved,NO,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,FALSE,TRUE,FALSE,"PO Approved by {Approver Name}
+{Supplier Business Name}
+{PO ID}, {Crop}, {Variety}, {Quantity}
+Please create DO as soon as possible.",,same,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,SO Mapped,YES,NA,-,-,-,-,-,-,-,-,-,-,-,-,-,,,TRUE,TRUE,FALSE,FALSE,"{PO#} mapped with SO
+
+Please reach out to Farmart team to create Invoice.",same,,,PA/RPM Login -> Purchase Orders Section -> PO Details
+,,,,,InProgress,YES,Vechile Arrived,-,-,-,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,TRUE,FALSE,"{DO#}: Document Approval Pending
+Please review transporter documents uploaded by {PA Name} for this DO.",,,,PA/RPM Login -> Dispatch Orders Section -> DO Details
+,,,,,InProgress,NO,Vechile Arrived,-,-,-,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Ready to Dispatch,TRUE,FALSE,No Created,After,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,TRUE,FALSE,"{DO#}: Truck Ready to Dispatch by {PA Name}
+Please review the details to dispatch the truck.",,,,PA/RPM Login -> Dispatch Orders Section -> In Review Tab -> DO Details
+,,,,,InProgress,YES,Ready to Dispatch,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,NO,Ready to Dispatch,-,-,No Created,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,NO,Ready to Dispatch - Add/Edit Halting Charges,-,-,No Created,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched,TRUE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Dispatched - Dispatch doc approved,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,TRUE,TRUE,FALSE,FALSE,"{DO#} created for Sauda {PO#}
+{Supplier name} has dispatched {qty} out of total {qty}. Pending quantity to be dispatched is {qty}.",same,,,PA/RPM Login -> Dispatch Orders Section -> DO Details
+,,,,,InProgress,YES,Dispatched - Dispatch doc Rejected,FALSE,TRUE,Active,Before,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,-,-,-,,,TRUE,FALSE,FALSE,FALSE,"Dispatch Document Rejected for {Supplier Name}
+{DO#}
+Please follow up with supplier to reupload documents.",,,,PA/RPM Login -> Dispatch Orders Section -> In Review Tab
+,,,,,InProgress,YES,Dispatched,FALSE,FALSE,No Created,After,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,TRUE,FALSE,FALSE,"{DO#}: Truck Dispatched
+
+{Truck no.} has been dispatched from supplier location to {Buyer Name} and {delivery address}",,,,SA Login -> Critical Deliveries
+,,,,,InProgress,NO,Dispatched,-,-,No Created,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,-,-,-,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Arrived at Buyer,FALSE,TRUE,Settled,Before,-,-,-,-,-,-,-,-,-,,,TRUE,TRUE,TRUE,FALSE,"{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the truck driver and buyer to plan unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Delivered,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,TRUE,TRUE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Partical Delivered,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,InProgress,YES,Partical Delivered - Deduction submited and its rejected,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Rejected by {Approval Person}
+Please review and reupload documents.",,SA Login -> Unloading Section -> DO Details
+,,,,,InProgress,YES,Cancelled,TRUE,FALSE,No Created,After,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,
+,,,,,InProgress,YES,Cancelled,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted - Deduction Approved,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,Amount : 0,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Partical Accepted,RTV,,Amount : X,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Approved by {Approval Person}
+Please review.",,SA Login -> Unloading Section -> DO Details
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,InProgress,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,TRUE,TRUE,TRUE,FALSE,,{DO#} has been marked as Completed by <State Head Name>,same,same,"PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,Complete,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,FALSE,FALSE,FALSE,,{PO#} has been marked as Completed by <State Head Name>,same,same,"PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,Incomplete,YES,Incomplete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,Notification,,,,,,,,
+,,,,,,,,,,,,Action Allowed are,,,,,,Unloading Details,,,,,PRO,,,Supplier,Notification Text,,,,
+,Source of PO,Order type,FOR?,Halting charges borne by,PO / Sauda Status,SO Mapped?,DO Status,Payment on DO?,Invoice,Invoice Status,SO Mapped Invoice Sharing?,Detach SO,Re-attch SO,Terminate PO,Edit PO Terms,Ship from address,Edit DO Terms,Unloading submit by,Unloading type,Destination of Rejected Qty,Unloading Remarks,Buyer Deduction Amount,PA,SA,RPM,Supplier - On Whatsapp,PA,SA,RPM,Supplier - On Whatsapp,Deeplink
+,SO Allocation,GTV,FOR,Supplier,Sauda in Review / PO Requested by Supplier,NO,-,-,-,-,-,,,,,,,,,,,,TRUE,FALSE,TRUE,FALSE,"Online Sauda requested by {Supplier name}
+{Crop}, {variety}  - {qty in tons}
+Please follow-up with RPM for approval.",,"Online Sauda requested by {Supplier name}
+{Crop}, {variety}  - {qty in tons}
+For {Buyer name}
+Price {terms} -",,PA/RPM Login -> Purchase Orders Section -> In Review Tab
+,,,,,PO Acceptance Pending,NO,-,-,-,-,-,,,,,,,,,,,,TRUE,FALSE,TRUE,FALSE,"Sauda Approved by SH, pending at Supplier
+{Supplier name}
+{Crop}, {variety}  - {qty in tons}
+For {Buyer name}
+Price ({terms}) - {Price}
+Pending for acceptance with supplier. Please follow up.",,same,,PA/RPM Login -> Purchase Orders Section -> In Review Tab
+,,,,,Sauda Rejected(Rejected by SHP),NO,-,-,-,-,-,,,,,,,,,,,,TRUE,FALSE,TRUE,FALSE,"Sauda Rejected by State Head
+{PO#}",,same,,PA/RPM Login -> Purchase Orders Section -> In Review Tab
+,,,,,Sauda Rejected(Rejected by Supplier),NO,-,-,-,-,-,,,,,,,,,,,,TRUE,FALSE,TRUE,FALSE,"Sauda Rejected by {Supplier Name}
+{PO#}
+Please follow up with them.",,same,,PA/RPM Login -> Purchase Orders Section -> In Review Tab
+,,,,,Sauda Booked,NO,-,-,-,-,-,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,NO,Dispatch doc in Review,-,-,-,-,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,NO,Doc Rejected,-,-,-,-,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,NO,Doc Approved,-,-,-,-,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,NO,Dispatched,-,-,-,-,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Dispatched,-,-,-,-,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Arrived at Buyer,,,,,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Arrived at Buyer,FALSE,TRUE,Settled,Before,-,-,-,-,-,-,-,-,-,,,TRUE,TRUE,TRUE,FALSE,"{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the truck driver and buyer to plan unloading.","{DO#}: Truck Arrived At Buyer
+The truck has arrived within 5 kms of the buyer delivery pincode. Please connect with the SA to plan the unloading.",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,Sauda Booked,YES,Arrived at Buyer - Supplier added the unloading doc,FALSE,FALSE,Settled,Before,-,-,-,-,-,-,-,-,-,,,FALSE,TRUE,FALSE,FALSE,,"{DO#} and {Buyer Name}: Unloading Added by {Supplier Name}
+Unloading documents added by supplier please review.",,,SA Login -> Unloading Section -> DO Details
+,,,,,Sauda Booked,YES,Delivered,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,TRUE,TRUE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,Sauda Booked,YES,Partical Delivered,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,Sauda Booked,YES,Partical Delivered - Deduction submited and its rejected,TRUE,TRUE,Active,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Rejected by {Approval Person}
+Please review and reupload documents.",,SA Login -> Unloading Section -> DO Details
+,,,,,Sauda Booked,YES,Cancelled,TRUE,FALSE,No Created,After,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,
+,,,,,Sauda Booked,YES,Cancelled,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Deduction Submitted - Deduction Approved,FALSE,TRUE,Active,After,-,-,-,-,-,-,SA,Full Accepted,NA,,Amount : 0,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Partical Accepted,RTV,,Amount : X,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Approved by {Approval Person}
+Please review.",,SA Login -> Unloading Section -> DO Details
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Settled,After,-,-,-,-,-,-,SA,Full Rejected,RTV,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,SA,Full Rejected,Warehouse,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Delivered,FALSE,TRUE,Active,After,-,-,-,-,-,-,Supplier,Full Accepted,NA,,,FALSE,TRUE,TRUE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,Sauda Booked,YES,Partical Delivered,TRUE,TRUE,Active,After,-,-,-,-,-,-,Supplier,Partical Accepted,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,"{DO#}: Unloading Approved
+Please review and proceed to submit deduction details","{DO#}: Unloading Approved by State Head
+Please check unloading details and proceed to initiate payment and add deduction",,"PA/RPM Login -> Dispatch Orders Section -> Trip Tracking
+SA Login -> Unloading Section -> DO Details"
+,,,,,Sauda Booked,YES,Partical Delivered - Deduction submited and its rejected,TRUE,TRUE,Active,After,-,-,-,-,-,-,Supplier,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Rejected by {Approval Person}
+Please review and reupload documents.",,SA Login -> Unloading Section -> DO Details
+,,,,,Sauda Booked,YES,Cancelled,TRUE,FALSE,No Created,After,-,-,-,-,-,-,Supplier,Full Rejected,Warehouse,,,FALSE,FALSE,FALSE,FALSE,,D,D,,
+,,,,,Sauda Booked,YES,Cancelled,TRUE,TRUE,Settled,After,-,-,-,-,-,-,Supplier,Full Rejected,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Deduction Submitted - Deduction Approved,FALSE,TRUE,Active,After,-,-,-,-,-,-,Supplier,Full Accepted,NA,,Amount : 0,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,Supplier,Partical Accepted,RTV,,Amount : X,FALSE,TRUE,FALSE,FALSE,,,"{DO#}: Deduction Approved by {Approval Person}
+Please review.",,SA Login -> Unloading Section -> DO Details
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Settled,After,-,-,-,-,-,-,Supplier,Full Rejected,RTV,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,Sauda Booked,YES,Deduction Submitted,TRUE,TRUE,Marked as completed,Before,-,-,-,-,-,-,Supplier,Full Rejected,Warehouse,,Amount : X,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,TRUE,TRUE,TRUE,FALSE,,{DO#} has been marked as Completed by <State Head Name>,same,same,"PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,,YES,Complete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Full Accepted,NA,,,FALSE,FALSE,FALSE,FALSE,,{PO#} has been marked as Completed by <State Head Name>,same,same,"PA/RPM Login -> Dispatch Orders Section -> DO Details
+SA Login -> Completed Tab"
+,,,,,,YES,Incomplete,TRUE,TRUE,Marked as completed,After,-,-,-,-,-,-,SA,Partical Accepted,RTV,Add auto deductrion in supplier,,FALSE,FALSE,FALSE,FALSE,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,Notification,,,,,,,,
+,,,,,,,,,,,,Action Allowed are,,,,,,Unloading Details,,,,,PRO,,,Supplier,Notification Text,,,,
+,Source of PO,Order type,FOR?,Halting charges borne by,PO / Sauda Status,SO Mapped?,DO Status,Payment on DO?,Invoice,Invoice Status,SO Mapped Invoice Sharing?,Detach SO,Re-attch SO,Terminate PO,Edit PO Terms,Ship from address,Edit DO Terms,Unloading submit by,Unloading type,Destination of Rejected Qty,Unloading Remarks,Buyer Deduction Amount,PA,SA,RPM,Supplier - On Whatsapp,PA,SA,RPM,Supplier - On Whatsapp,Deeplink
+,Supplier Creates,GMV,FOR,Supplier,,,,,,,,,,,,,,,,,,,,,,,,,,,

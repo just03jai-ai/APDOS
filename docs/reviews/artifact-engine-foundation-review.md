@@ -2,7 +2,7 @@
 
 ## What Was Built
 
-The Artifact Engine foundation was created in `packages/artifacts`.
+The Artifact Engine foundation was created in `packages/core/artifacts`.
 
 Implemented:
 
@@ -23,7 +23,7 @@ The root workspace was also configured so `npm test` can run from the repository
 The Artifact Engine is a standalone workspace package:
 
 ```text
-packages/artifacts/
+packages/core/artifacts/
   src/
     schemas/
     registry/

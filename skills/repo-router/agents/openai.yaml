@@ -1,0 +1,4 @@
+interface:
+  display_name: "FarMart Repo Router"
+  short_description: "Route work to the right FarMart repo."
+  default_prompt: "Use $fmt-repo-router to route this FarMart task to the right repo(s), verify ownership with evidence, and name connected repos only when code evidence points there."

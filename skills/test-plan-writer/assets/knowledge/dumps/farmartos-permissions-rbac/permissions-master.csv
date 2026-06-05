@@ -1,0 +1,201 @@
+,#,OS Page /  Pro,OS Sub-Page,Action,Entity,Permission,Dev Comments,API Endpoints,API Params,AP,AR,FC,KYC,COMPLIANCE_EXEC,CFO,BF (BizFin),HR,Zonal_Head,SHP,MIS_Executive_Procurement,SVP,STATE_HEAD_SALES,MIS_Executive_Sales,Logistics_A,Warehouse_Manager,Unloading_Associate,Product_Analyst
+,1.0,Dashboards,Home,view,dashboards,view:dashboards,,,,Y,Y,Y,Y,Y,Y,,N,,,,,,,N,,,
+,2,Dashboards,Company Metrics,view,dashboards.company_metrics.list,view:dashboards.company_metrics.list,,,,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,3,Dashboards,Procurement,view,dashboards.procurement.list,view:dashboards.procurement.list,,,,N,N,,,,Y,,N,,,,,,,N,,,
+,4,Dashboards,Finance,view,dashboards.finance.list,view:dashboards.finance.list,,,,N,N,,,,Y,,N,,,,,,,N,,,
+,5,Dashboards,Payments,view,dashboards.payments.list,view:dashboards.payments.list,,,,Y,N,Y,Y,Y,Y,Y,N,,,,,,,N,,,
+,6,Dashboards,Invoicing,view,dashboards.invoicing.list,view:dashboards.invoicing.list,,,,N,Y,Y,N,N,Y,Y,N,,,,,,,N,,,
+,7,Dashboards,Farmart App,view,dashboards.fmtapp.list,view:dashboards.fmtapp.list,,,,N,N,,,,Y,,N,,,,,,,N,,,
+,8,Dashboards,GTV Tracker,view,dashboards.gtv_tracker.list,view:dashboards.gtv_tracker.list,,,,N,N,,,,Y,,N,,,,,,,N,,,
+,9,Dashboards,Warehouse,view,dashboards.warehouse.list,view:dashboards.warehouse.list,,,,N,N,,,,Y,,N,,,,,,,N,,,
+,10,Access Creation,Access Creation,view,access_creation.list,view:access_creation.list,,,,N,N,N,N,N,N,N,Y,N,N,N,N,N,N,N,N,N,N
+,11,Access Creation,Access Creation,add,emp_details,add:emp_details,,,,N,N,N,N,N,N,N,Y,N,N,N,N,N,N,N,N,N,N
+,12,Access Creation,Access Creation,edit,emp_details,edit:emp_details,,,,N,N,N,N,N,N,N,Y,N,N,N,N,N,N,N,N,N,N
+,13,Access Creation,Visits,view,emp_visits.list,view:emp_visits.list,,,,N,N,N,N,N,N,N,Y,N,N,N,N,N,N,N,N,N,N
+,14,Procurement,Supplier KYC,view,supplier.list,view:supplier.list,,,,N,N,N,Y,N,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,15,Procurement,Supplier KYC,view,supplier.overview,view:supplier.overview,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,16,Procurement,Supplier KYC,view,supplier.list.consent_pending,view:supplier.list.consent_pending,,,,N,N,N,Y,N,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,17,Procurement,Supplier KYC,view,supplier.list.to_review,view:supplier.list.to_review,,,,N,N,N,Y,N,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,18,Procurement,Supplier KYC,view,supplier.list.rejected,view:supplier.list.rejected,,,,N,N,N,Y,N,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,19,Procurement,Supplier KYC,view,supplier.list.approved,view:supplier.list.approved,,,,N,N,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,20,Procurement,Supplier KYC,view,supplier.kyc_details,view:supplier.kyc_details,,,,N,N,N,Y,N,Y,Y,N,Y,Y,Y,Y,N,N,N,N,N,Y
+,21,Procurement,Supplier KYC,approve,supplier.kyc_details,approve:supplier.kyc_details,,,,N,N,N,Y,N,N,N,N,N,N,N,N,N,N,N,N,N,N
+,22,Procurement,Supplier KYC,reject,supplier.kyc_details,reject:supplier.kyc_details,,,,N,N,N,Y,N,N,N,N,N,N,N,N,N,N,N,N,N,N
+,23,Procurement,Supplier KYC,edit,supplier.assignee,edit:supplier.assignee,,,,N,N,N,Y,N,N,N,N,N,N,N,N,N,N,N,N,N,N
+,24,Procurement,Supplier KYC,edit,supplier.kyc_details,edit:supplier.kyc_details,,,,N,N,N,Y,N,N,N,N,N,N,N,N,N,N,N,N,N,N
+,25,Procurement,Purchase Order,view,po.list,view:po.list,,,,Y,,,,,,,N,,,,,,,N,,,
+,26,Procurement,Purchase Order,view,po.procurement.list,view:po.procurement.list,,,,Y,,,,,,,N,,,,,,,N,,,
+,27,Procurement,Purchase Order,view,po.b2b.list,view:po.b2b.list,,,,Y,,,,,,,N,,,,,,,N,,,
+,28,Procurement,Purchase Order,view,po.fnv.list,view:po.fnv.list,,,,Y,,,,,,,N,,,,,,,N,,,
+,29,Procurement,Purchase Order,view,po.procurement.list.approve_po,view:po.procurement.list.approve_po,,,,Y,,,,,,,N,,,,,,,N,,,
+,30,Procurement,Purchase Order,approve,po.procurement,approve:po.procurement,,,,N,,,,,,,N,,,,,,,N,,,
+,31,Procurement,Purchase Order,view,po.procurement.details,view:po.procurement.details,,,,Y,,,,,,,N,,,,,,,N,,,
+,32,Procurement,Purchase Order,modify,po.procurment.terms,modify:po.procurment.terms,,,,N,,,,,,,N,,,,,,,N,,,
+,33,Procurement,Purchase Order,map,po.procurement.so,map:po.procurement.so,,,,N,,,,,,,N,,,,,,,N,,,
+,34,Procurement,Purchase Order,terminate,po.procurement,terminate:po.procurement,,,,N,,,,,,,N,,,,,,,N,,,
+,35,Procurement,Purchase Order,view,po.procurement.po_pdf,view:po.procurement.po_pdf,,,,Y,,,,,,,N,,,,,,,N,,,
+,36,Procurement,Purchase Order,view,po.procurement.loading,view:po.procurement.loading,,,,Y,,,,,,,N,,,,,,,N,,,
+,37,Procurement,Purchase Order,view,po.procurement.list.map_po_so,view:po.procurement.list.map_po_so,,,,Y,,,,,,,N,,,,,,,N,,,
+,38,Procurement,Purchase Order,detach,po.procurement.po_so,detach:po.procurement.po_so,,,,N,,,,,,,N,,,,,,,N,,,
+,39,Procurement,Purchase Order,view,po.procurement.list.review_dispatch,view:po.procurement.list.review_dispatch,,,,Y,,,,,,,N,,,,,,,N,,,
+,40,Procurement,Purchase Order,review,po.procurement.loading_docs,review:po.procurement.loading_docs,,,,N,,,,,,,N,,,,,,,N,,,
+,41,Procurement,Purchase Order,upload,po.procurement.loading_docs,upload:po.procurement.loading_docs,,,,N,,,,,,,N,,,,,,,N,,,
+,42,Procurement,Purchase Order,review,po.procurement.deduction,review:po.procurement.deduction,,,,N,,,,,,,N,,,,,,,N,,,
+,43,Procurement,Purchase Order,upload,po.procurement.deduction,upload:po.procurement.deduction,,,,N,,,,,,,N,,,,,,,N,,,
+,44,Procurement,Purchase Order,view,po.procurement.payment,view:po.procurement.payment,,,,Y,,,,,,,N,,,,,,,N,,,
+,45,Procurement,Purchase Order,modify,po.procurement.commodity_details,modify:po.procurement.commodity_details,,,,N,,,,,,,N,,,,,,,N,,,
+,46,Procurement,Purchase Order,modify,po.procurement.other_deductions,modify:po.procurement.other_deductions,,,,N,,,,,,,N,,,,,,,N,,,
+,47,Procurement,Purchase Order,add,po.procurement.supplier.deduction,add:po.procurement.supplier.deduction,,,,N,,,,,,,N,,,,,,,N,,,
+,48,Procurement,Purchase Order,initiate,po.procurement.supplier.payment,initiate:po.procurement.supplier.payment,,,,N,,,,,,,N,,,,,,,N,,,
+,49,Procurement,Purchase Order,modify,po.procurement.transporter.payments_details,modify:po.procurement.transporter.payments_details,,,,N,,,,,,,N,,,,,,,N,,,
+,50,Procurement,Purchase Order,add,po.procurement.transporter.deduction,add:po.procurement.transporter.deduction,,,,N,,,,,,,N,,,,,,,N,,,
+,51,Procurement,Purchase Order,initiate,po.procurement.transporter.Payment,initiate:po.procurement.transporter.Payment,,,,N,,,,,,,N,,,,,,,N,,,
+,52,Procurement,Purchase Order,initiate,po.procurement.gst.payment,initiate:po.procurement.gst.payment,,,,N,,,,,,,N,,,,,,,N,,,
+,53,Procurement,Purchase Order,view,po.procurement.list.grn_deduction,view:po.procurement.list.grn_deduction,,,,Y,,,,,,,N,,,,,,,N,,,
+,54,Procurement,Purchase Order,view,po.procurement.unloading,view:po.procurement.unloading,,,,Y,,,,,,,N,,,,,,,N,,,
+,55,Procurement,Purchase Order,review,po.procurement.unloading_docs,review:po.procurement.unloading_docs,,,,N,,,,,,,N,,,,,,,N,,,
+,56,Procurement,Purchase Order,upload,po.procurement.unloading_docs,upload:po.procurement.unloading_docs,,,,N,,,,,,,N,,,,,,,N,,,
+,57,Procurement,Purchase Order,review,po.procurement.deduction_report,review:po.procurement.deduction_report,,,,N,,,,,,,N,,,,,,,N,,,
+,58,Procurement,Purchase Order,upload,po.procurement.deduction_report,upload:po.procurement.deduction_report,,,,N,,,,,,,N,,,,,,,N,,,
+,59,Procurement,Purchase Order,add,po.procurement.unloading_details,add:po.procurement.unloading_details,,,,N,,,,,,,N,,,,,,,N,,,
+,60,Procurement,Purchase Order,edit,po.procurement.unloading_details,edit:po.procurement.unloading_details,,,,N,,,,,,,N,,,,,,,N,,,
+,61,Procurement,Purchase Order,edit,po.procurement.unloading_quantity,edit:po.procurement.unloading_quantity,,,,N,,,,,,,N,,,,,,,N,,,
+,62,Procurement,Purchase Order,edit,po.procurement.deduction_report,edit:po.procurement.deduction_report,,,,N,,,,,,,N,,,,,,,N,,,
+,63,Procurement,Purchase Order,view,po.procurement.list.review_payment,view:po.procurement.list.review_payment,,,,Y,,,,,,,N,,,,,,,N,,,
+,64,Procurement,Purchase Order,view,po.procurement.list.initiate_payment,view:po.procurement.list.initiate_payment,,,,Y,,,,,,,N,,,,,,,N,,,
+,65,Procurement,Purchase Order,view,po.procurement.list.payment_initiated,view:po.procurement.list.payment_initiated,,,,Y,,,,,,,N,,,,,,,N,,,
+,66,Procurement,Purchase Order,view,po.procurement.list.to_complete,view:po.procurement.list.to_complete,,,,Y,,,,,,,N,,,,,,,N,,,
+,67,Procurement,Purchase Order,complete,po.procurement,complete:po.procurement,,,,N,,,,,,,N,,,,,,,N,,,
+,68,Procurement,Purchase Order,view,po.procurement.list.completed,view:po.procurement.list.completed,,,,Y,,,,,,,N,,,,,,,N,,,
+,69,Procurement,Purchase Order,incomplete,po.procurement,incomplete:po.procurement,,,,N,,,,,,,N,,,,,,,N,,,
+,70,Procurement,Purchase Order,view,po.procurement.list.all,view:po.procurement.list.all,,,,Y,,,,,,,N,,,,,,,N,,,
+,71,Trade,Buyer Prices,view,buyer_prices.list,view:buyer_prices.list,,,,N,,,,,,,N,,,,,,,N,,,
+,72,Trade,Buyer Prices,view,buyer_prices.list.active,view:buyer_prices.list.active,,,,N,,,,,,,N,,,,,,,N,,,
+,73,Trade,Buyer Prices,create,buyer_prices,create:buyer_prices,,,,N,,,,,,,N,,,,,,,N,,,
+,74,Trade,Buyer Prices,view,buyer_prices.list.expired,view:buyer_prices.list.expired,,,,N,,,,,,,N,,,,,,,N,,,
+,75,Trade,Buyer Prices,view,buyer_prices.list.all,view:buyer_prices.list.all,,,,N,,,,,,,N,,,,,,,N,,,
+,76,Trade,Buyer Prices,clone,buyer_route,clone:buyer_route,,,,N,,,,,,,N,,,,,,,N,,,
+,77,Trade,Buyer Prices,update,buyer_price,update:buyer_price,,,,N,,,,,,,N,,,,,,,N,,,
+,78,Trade,Buyer Prices,expire,buyer_price,expire:buyer_price,,,,N,,,,,,,N,,,,,,,N,,,
+,79,Trade,Buyer Prices,view,buyer_prices.lead,view:buyer_prices.lead,,,,N,,,,,,,N,,,,,,,N,,,
+,80,Trade,Buyer Prices,edit,buyer_prices.lead,edit:buyer_prices.lead,,,,N,,,,,,,N,,,,,,,N,,,
+,81,Trade,Supplier Sauda's,view,sauda.list,view:sauda.list,,,,N,,,,,,,N,,,,,,,N,,,
+,82,Trade,Supplier Sauda's,view,sauda.list.sauda_in_review,view:sauda.list.sauda_in_review,,,,N,,,,,,,N,,,,,,,N,,,
+,83,Trade,Supplier Sauda's,review,sauda,review:sauda,,,,N,,,,,,,N,,,,,,,N,,,
+,84,Trade,Supplier Sauda's,edit,sauda.quantity,edit:sauda.quantity,,,,N,,,,,,,N,,,,,,,N,,,
+,85,Trade,Supplier Sauda's,edit,sauda.price,edit:sauda.price,,,,N,,,,,,,N,,,,,,,N,,,
+,86,Trade,Supplier Sauda's,view,sauda.list.po_in_review,view:sauda.list.po_in_review,,,,N,,,,,,,N,,,,,,,N,,,
+,87,Trade,Supplier Sauda's,cancel,sauda,cancel:sauda,,,,N,,,,,,,N,,,,,,,N,,,
+,88,Trade,Supplier Sauda's,view,sauda.list.in_progress,view:sauda.list.in_progress,,,,N,,,,,,,N,,,,,,,N,,,
+,89,Trade,Supplier Sauda's,add,sauda.dispatch,add:sauda.dispatch,,,,N,,,,,,,N,,,,,,,N,,,
+,90,Trade,Supplier Sauda's,review,sauda.dispatch,review:sauda.dispatch,,,,N,,,,,,,N,,,,,,,N,,,
+,91,Trade,Supplier Sauda's,confirm,sauda.dispatch,confirm:sauda.dispatch,,,,N,,,,,,,N,,,,,,,N,,,
+,92,Trade,Supplier Sauda's,view,sauda.list.delivered,view:sauda.list.delivered,,,,N,,,,,,,N,,,,,,,N,,,
+,93,Trade,Supplier Sauda's,complete,sauda,complete:sauda,,,,N,,,,,,,N,,,,,,,N,,,
+,94,Trade,Supplier Sauda's,view,sauda.list.cancelled_rejected,view:sauda.list.cancelled_rejected,,,,N,,,,,,,N,,,,,,,N,,,
+,95,Trade,Supplier Sauda's,view,sauda.list.all,view:sauda.list.all,,,,N,,,,,,,N,,,,,,,N,,,
+,96,Sales,Sales Order,view,so.list,view:so.list,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,97,Sales,Sales Order,view,so.list.add_expected_margin,view:so.list.add_expected_margin,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,98,Sales,Sales Order,view,so.list.margin_approval,view:so.list.margin_approval,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,99,Sales,Sales Order,view,so.list.risk_approval,view:so.list.risk_approval,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,100,Sales,Sales Order,view,so.list.in_progress,view:so.list.in_progress,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,101,Sales,Sales Order,view,so.list.rejected,view:so.list.rejected,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,102,Sales,Sales Order,view,so.list.all,view:so.list.all,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,103,Sales,Sales Order,view,so.expected_margin,view:so.expected_margin,,,,N,N,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,104,Sales,Sales Order,save,so.expected_margin,save:so.expected_margin,,,,N,N,Y,N,N,N,N,N,Y,Y,Y,Y,Y,Y,N,N,N,N
+,105,Sales,Sales Order,create,so.expected_margin,create:so.expected_margin,,,,N,N,Y,N,N,N,N,N,Y,Y,Y,Y,Y,Y,N,N,N,N
+,106,Sales,Sales Order,edit,so.expected_margin,edit:so.expected_margin,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,Y,Y,N,N,N,N
+,107,Sales,Sales Order,view,so.estimated_margin,view:so.estimated_margin,,,,N,N,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,108,Sales,Sales Order,approve,so.margin,approve:so.margin,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,N,N,N,N,N,N
+,109,Sales,Sales Order,modify,so,modify:so,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,Y,Y,N,N,N,N
+,110,Sales,Sales Order,modify,so.created_by,modify:so.created_by,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,Y,Y,N,N,N,N
+,111,Sales,Sales Order,approve,so,approve:so,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,N,N,N,N,N,N
+,112,Sales,Sales Order,reject,so,reject:so,,,,N,N,Y,N,N,N,N,N,Y,N,N,Y,N,N,N,N,N,N
+,113,Sales,Sales Order,view,so.mapped_po_co,view:so.mapped_po_co,,,,N,Y,N,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,N,N,Y
+,114,Logistics,Trip Tracking,view,trip.list,view:trip.list,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,115,Logistics,Trip Tracking,view,trip.list.not_created,view:trip.list.not_created,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,116,Logistics,Trip Tracking,retry,trip,retry:trip,,,,N,N,N,N,N,N,N,N,N,Y,N,N,N,N,Y,N,N,N
+,117,Logistics,Trip Tracking,view,trip.contact_details,view:trip.contact_details,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,118,Logistics,Trip Tracking,update,trip.driver_contact,update:trip.driver_contact,,,,N,N,N,N,N,N,N,N,N,Y,N,N,N,N,Y,N,N,N
+,119,Logistics,Trip Tracking,view,trip.map,view:trip.map,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,120,Logistics,Trip Tracking,view,trip.list.consent_pending,view:trip.list.consent_pending,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,121,Logistics,Trip Tracking,view,trip.list.in_transit,view:trip.list.in_transit,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,122,Logistics,Trip Tracking,view,trip.list.unreachable,view:trip.list.unreachable,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,123,Logistics,Trip Tracking,view,trip.list.arrived,view:trip.list.arrived,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,124,Logistics,Trip Tracking,view,trip.list.terminated,view:trip.list.terminated,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,125,Logistics,Trip Tracking,view,trip.list.completed,view:trip.list.completed,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,126,Logistics,Trip Tracking,view,trip.list.all,view:trip.list.all,,,,Y,Y,Y,Y,Y,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,Y,Y
+,127,Finance,Payments,view,route.payments,view:route.payments,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,128,Finance,Payments,view,payments.gst.list,view:payments.gst.list,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,129,Finance,Payments,view,payments.stp.list,view:payments.stp.list,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,130,Finance,Payments,view,payments.overview,view:payments.overview,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,131,Finance,Payments,reject,payments.payment,reject:payments.payment,,,,Y,N,N,N,N,Y,Y,N,N,N,N,N,N,,N,,,N
+,132,Finance,Payments,approve,payments.request,approve:payments.request,,,,Y,N,N,N,N,Y,Y,N,N,N,N,N,N,,N,,,N
+,133,Finance,Payments,confirm,payments.supplier_invoice,confirm:payments.supplier_invoice,,,,Y,N,N,N,N,N,Y,N,N,Y,N,N,N,,N,,,N
+,134,Finance,Payments,edit,payments.supplier_invoice,edit:payments.supplier_invoice,,,,Y,N,N,N,N,N,N,N,N,Y,N,N,N,,N,,,N
+,135,Finance,Payments,review,payements.supplier_invoice,review:payements.supplier_invoice,,,,N,N,N,N,N,N,N,N,Y,Y,Y,N,N,N,N,N,N,N
+,136,Finance,Payments,view,payments.stp.list.to_review,view:payments.stp.list.to_review,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,137,Finance,Payments,view,payments.stp.list.to_pay,view:payments.stp.list.to_pay,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,138,Finance,Payments,view,payments.stp.list.failed,view:payments.stp.list.failed,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,139,Finance,Payments,view,payments.stp.list.rejected,view:payments.stp.list.rejected,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,140,Finance,Payments,view,payments.stp.list.in_process,view:payments.stp.list.in_process,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,141,Finance,Payments,view,payments.stp.list.paid,view:payments.stp.list.paid,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,142,Finance,Payments,view,payments.gst.list.to_review,view:payments.gst.list.to_review,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,143,Finance,Payments,view,payments.gst.list.to_pay,view:payments.gst.list.to_pay,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,144,Finance,Payments,view,payments.gst.list.failed,view:payments.gst.list.failed,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,145,Finance,Payments,view,payments.gst.list.rejected,view:payments.gst.list.rejected,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,146,Finance,Payments,view,payments.gst.list.in_process,view:payments.gst.list.in_process,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,147,Finance,Payments,view,payments.gst.list.paid,view:payments.gst.list.paid,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,148,Finance,Payments,approve,payments.payment,approve:payments.payment,,,,N,N,N,N,N,Y,Y,N,N,N,N,N,N,,N,,,N
+,149,Finance,Payments,retry,payments.payment,retry:payments.payment,,,,N,N,N,N,N,Y,Y,N,N,N,N,N,N,,,,,
+,150,Finance,Payments,add,payments.utr,add:payments.utr,,,,Y,N,N,N,N,N,N,N,N,N,N,N,N,,N,,,N
+,151,Finance,Payments,select,payments.rows,select:payments.rows,,,,Y,N,N,N,N,Y,N,N,N,N,N,N,N,N,N,N,N,N
+,152,Finance,Mandi Tax,view,route.mandi_tax,view:route.mandi_tax,,,,Y,Y,Y,N,Y,Y,Y,N,Y,Y,Y,Y,N,,,,,
+,153,Finance,Mandi Tax,view,mandi_tax.list.documents,view:mandi_tax.list.documents,,,,Y,Y,Y,N,Y,Y,Y,N,Y,Y,Y,Y,N,,N,,,Y
+,154,Finance,Mandi Tax,upload,mandi_tax.list.documents,upload:mandi_tax.list.documents,,,,N,N,N,N,Y,N,N,N,Y,N,Y,Y,N,,N,,,Y
+,155,Finance,Mandi Tax,edit,mandi_tax.list.documents,edit:mandi_tax.list.documents,,,,N,N,N,N,Y,N,N,N,Y,N,Y,Y,N,,N,,,Y
+,156,Finance,Mandi Tax,complete,mandi_tax.list.documents,complete:mandi_tax.list.documents,,,,N,N,N,N,Y,N,N,N,Y,N,Y,Y,N,,N,,,Y
+,157,Finance,Invoicing,view,route.invoicing,view:route.invoicing,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,,,,
+,158,Finance,Invoicing,view,invoicing.list,view:invoicing.list,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,159,Finance,Invoicing,view,invoicing.list.invoice_requests,view:invoicing.list.invoice_requests,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,160,Finance,Invoicing,view,invoicing.list.credit_debit_note,view:invoicing.list.credit_debit_note,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,161,Finance,Invoicing,view,invoicing.list.completed,view:invoicing.list.completed,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,162,Finance,Invoicing,view,invoicing.list.cancelled,view:invoicing.list.cancelled,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,163,Finance,Invoicing,view,invoicing.list.all,view:invoicing.list.all,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,164,Finance,Invoicing,view,invoicing.details,view:invoicing.details,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,165,Finance,Invoicing,view,invoicing.invoice_cn_dn,view:invoicing.invoice_cn_dn,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,N,,,Y
+,166,Finance,Invoicing,create,invoicing.invoice,create:invoicing.invoice,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,167,Finance,Invoicing,edit,invoicing.invoice.addresses,edit:invoicing.invoice.addresses,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,168,Finance,Invoicing,edit,invoicing.invoice.po_number,edit:invoicing.invoice.po_number,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,169,Finance,Invoicing,edit,invoicing.bank,edit:invoicing.bank,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,170,Finance,Invoicing,edit,invoicing.notes,edit:invoicing.notes,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,171,Finance,Invoicing,add,invoicing.credit_note.items,add:invoicing.credit_note.items,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,172,Finance,Invoicing,add,invoicing.invoice.po_co,add:invoicing.invoice.po_co,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,173,Finance,Invoicing,view,invoicing.details.ewb,view:invoicing.details.ewb,,,,Y,Y,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,,,,,
+,174,Finance,Invoicing,upload,invoicing.details.ewb,upload:invoicing.details.ewb,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,175,Finance,Invoicing,cancel,invoicing.invoice,cancel:invoicing.invoice,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,176,Finance,Invoicing,cancel,invoicing.credit_note,cancel:invoicing.credit_note,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,177,Finance,Invoicing,cancel,invoicing.debit_note,cancel:invoicing.debit_note,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,,,,
+,178,Finance,Invoicing,settle,invoicing.invoice,settle:invoicing.invoice,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,179,Finance,Invoicing,add,invoicing.debit_note,add:invoicing.debit_note,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,180,Finance,Invoicing,add,invoicing.credit_note,add:invoicing.credit_note,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,181,Finance,Invoicing,recreate,invoicing.invoice,recreate:invoicing.invoice,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,182,Finance,Invoicing,complete,invoicing.invoice,complete:invoicing.invoice,,,,N,Y,N,N,N,N,Y,N,N,N,N,N,N,,N,,,N
+,183,Inventory,Warehouse,view,warehouse.list,view:warehouse.list,,,,N,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,Y,Y,N,Y
+,184,Inventory,Warehouse,add,warehouse.onboarding,add:warehouse.onboarding,,,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,185,Inventory,Warehouse,create,warehouse.co,create:warehouse.co,,,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,186,Inventory,Outbound,view,co.list,view:co.list,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,187,Inventory,Outbound,view,co.list.unloading_pending,view:co.list.unloading_pending,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,188,Inventory,Outbound,view,co.list.unloading_complete,view:co.list.unloading_complete,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,189,Inventory,Outbound,view,co.list.all,view:co.list.all,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,190,Inventory,Outbound,view,co.details,view:co.details,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,191,Inventory,Outbound,map,co.so,map:co.so,,,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,192,Inventory,Outbound,review,co.unloading_docs,review:co.unloading_docs,,,,N,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,193,Inventory,Outbound,upload,co.unloading_docs,upload:co.unloading_docs,,,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,194,Inventory,Outbound,view,co.deduction,view:co.deduction,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,195,Inventory,Outbound,upload,co.deduction,upload:co.deduction,,,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,196,Inventory,Outbound,view,co.payment,view:co.payment,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,197,Inventory,Outbound,modify,co.transporter.payment,modify:co.transporter.payment,,,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,198,Inventory,Outbound,view,co.transporter.details,view:co.transporter.details,,,,Y,N,Y,N,N,Y,Y,N,Y,Y,Y,Y,Y,Y,N,Y,N,Y
+,199,Inventory,Outbound,add,co.transporter.deduction,add:co.transporter.deduction,,,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N
+,200,Inventory,Outbound,initiate,co.transporter.payment,initiate:co.transporter.payment,,,,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,Y,N,N

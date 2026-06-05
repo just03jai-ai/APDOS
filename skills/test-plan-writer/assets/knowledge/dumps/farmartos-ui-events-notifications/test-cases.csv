@@ -1,0 +1,435 @@
+Test Case ID,Test Scenario,Platform,Module,Test Case Description,Severity,Test Type,Positive / Negative,Expected Result,Action Performed By,Status,Developer Assigned,Developer Test CheckList,Comments
+TC_MR_1,Button Functionality,FarMartOS,Button Molecule,"Verify that the ""Retry Trip"" button is enabled and displays the correct label styling for retry action.",S0,Design,Positive,"The ""Retry Trip"" button should be enabled when applicable, with appropriate label text and style (green with white text) to indicate a retry action.",SH,Pass,,TRUE,
+TC_MR_2,Search Input Field,FarMartOS,Search Molecule,"Verify that the search input field accepts PO ID, Trip ID and CO ID and displays placeholder text ""Search by PO ID,Trip ID and CO ID"".",S0,Design,Positive,"The input field should accept text and correctly display placeholder text, with a proper width and style as per the design.",SH,Pass,,TRUE,
+TC_MR_3,Pagination Control,FarMartOS,Pagination Molecule,Verify that the pagination control displays the correct number of pages and allows navigation to the next/previous page.,S0,Functionality,Positive,"The pagination molecule should correctly display the number of pages and allow navigation between pages with proper button styling for ""Next"" and ""Previous"".",SH,Pass,,TRUE,
+TC_MR_4,Empty State for Trip Status,FarMartOS,Badge Molecule,"Verify that if no trip status is available, the table displays ""Not Available"" in the corresponding status column.",S0,Functionality,Negative,"If no trip status exists, the status column should show ""Not Available"" with proper alignment and style, without causing UI layout issues.",SH,,,FALSE,
+TC_MR_5,Responsive Design on Table,FarMartOS,Table Molecule,"Verify that the table displays correctly on different screen sizes, maintaining its structure and scroll behavior in responsive view.",S0,Functionality,Positive,"The table should be responsive, with proper column widths and scroll behavior on smaller screens without breaking the layout.",SH,,,FALSE,
+TC_MR_6,Delivery Location Information,FarMartOS,Text Molecule,"Verify that the ""Delivery Location"" column displays correct location details, ensuring consistent formatting for different locations.",S0,Functionality,Positive,"The delivery location information should display in the correct format without overflow or text truncation, regardless of the length of the location name.",SH,,,FALSE,
+TC_MR_7,Pagination Dropdown Selection,FarMartOS,Pagination Molecule,"Verify that the ""Results per page"" dropdown correctly updates the number of rows shown in the table and the pagination adjusts accordingly.",S0,Functionality,Positive,"Selecting a different value from the ""Results per page"" dropdown should update the table with the specified number of rows, and the pagination should update correctly.",SH,Pass,,TRUE,"Sundram Bhardwaj  we are using ""Rows"" cc Mahesh Prajapati"
+TC_MR_8,Error Handling for Missing Data,FarMartOS,Text Molecule,"Verify that when any column data is missing (e.g., ""PO Details""), an appropriate message (e.g., ""Not Available"") is displayed without breaking the table layout.",S0,Functionality,Positive,"If column data is missing for any row, ""Not Available"" should appear in the corresponding field, without affecting the table’s design or structure.",SH,Pass,,TRUE,
+TC_MR_9,Error Validation for Invalid Input,FarMartOS,Input Molecule,"Verify that when invalid data (e.g., incorrect PO ID, Trip ID and CO ID) is entered, an error message appears without breaking the layout.",S0,Functionality,Positive,"If an invalid PO ID,Trip ID or CO ID or CO ID is entered, an error message should appear below the input field, without disrupting the form layout or other elements.",SH,,,FALSE,Sundram Bhardwaj not valid for now cc Mahesh Prajapati
+TC_MR_10,Accessibility: Screen Reader Support,FarMartOS,Icon Molecule,"Verify that all icons and interactive elements (e.g., buttons, dropdowns) are accessible via screen readers with appropriate labels.",S0,Functionality,Positive,"Icons and interactive elements should be readable by screen readers, with correct aria labels, allowing visually impaired users to navigate the UI effectively.",SH,Pass,,TRUE,
+TC_MR_11,Color Contrast Compliance,FarMartOS,All Molecules,"Verify that all text, buttons, and interactive elements meet WCAG color contrast standards, ensuring readability for all users.",S0,Functionality,Positive,"All text, buttons, and interactive elements should meet WCAG 2.1 AA color contrast guidelines, providing clear readability and visual separation for accessibility.",SH,,,FALSE,
+TC_MR_12,Focus Indicator for Interactive Elements,FarMartOS,Input/Dropdown/Button Molecule,"Verify that all interactive elements (e.g., input fields, buttons) display a clear focus indicator when navigated to via keyboard.",S0,Functionality,Positive,"When navigating through the UI using the keyboard, a visible focus indicator (e.g., border or outline) should appear on input fields, buttons, and dropdowns.",SH,,,FALSE,
+TC_MR_13,Character Limit Validation,FarMartOS,Input Molecule,"Verify that input fields (e.g., PO ID, Trip ID CO ID) enforce character limits of 150 character and show an error if the user exceeds the limit.",S0,Functionality,Positive,"Input fields should not accept more characters than specified in their validation rules (e.g., maximum 150 characters for a Trip ID) and should show an error if exceeded.",SH,,,FALSE,Sundram Bhardwaj we have limt of 150 char but showing error is not mentioned in the figme cc Mahesh Prajapati
+TC_MR_14,Performance of Dropdown Loading,FarMartOS,Dropdown Molecule,"Verify that dropdowns (e.g., ""State"") load their options quickly without noticeable delay, especially when dealing with large datasets.",S0,Functionality,Positive,"Dropdowns should load options swiftly, even with a large number of options, ensuring a smooth user experience without long delays.",SH,Pass,,TRUE,
+TC_MR_15,Loading Indicator for Slow Operations,FarMartOS,Button Molecule,"Verify that when clicking a button that triggers a slow operation (e.g., data fetching), a loading spinner or indicator appears.",S0,Functionality,Positive,"If an action triggered by a button takes time to complete (e.g., data fetch), a loading spinner or progress indicator should appear, informing the user of ongoing work.",SH,Pass,,TRUE,
+TC_MR_16,Cross-Browser Consistency,FarMartOS,All Molecules,"Verify that all components (input fields, buttons, icons, dropdowns) render and function consistently across major browsers (Chrome, Safari).",S0,Functionality,Positive,"All elements should render and function consistently across different browsers (Chrome, Safari, Firefox, Edge), with no visual or functional discrepancies.",SH,,,FALSE,
+TC_MR_17,,,,Flow Wise Cases,Flow Wise Cases
+TC_MR_18,When SH login and check the tracking status of the logistics,FarMartOS,Tracking logistic screen module,Verify that when SH click on the Logistic tab and click on Trip Tracking button in drawer there should be the Trip Tracking Screen open for them.,S0,Functionality,Positive,When SH click logistic and the Trip Tracking button web should open the Trip Tracking screen that should show the all tracking status to them,SH,Pass,,TRUE,
+TC_MR_19,When SH login and check the tracking status of the logistics,FarMartOS,Tracking logistic screen module,"Verify that there Should be the ""Trip Tracking"" heading text on the top left of the screen with there properties
+//styleName: h3;
+font-family: Noto Sans;
+font-size: 24px;
+font-weight: 600;
+line-height: 36px;
+text-align: left;",S0,Design,Positive,"The ""Trip Tracking"" heading should be visible at the top left of the screen with the following properties: style name h3, font family Noto Sans, font size 24px, font weight 600, line height 36px, and text aligned to the left. The text should display correctly without any truncation or overlap, and the styling should remain consistent across different screen sizes and rePOlutions.",SH,Pass,,TRUE,
+TC_MR_20,When SH login and check the tracking status of the logistics,FarMartOS,Tracking logistic screen module,"Verify that there should be the search bar present on the Left side under the screen name, and it should contain the startDecorator and placeholder with these properties
+
+State=""Enabled"";
+Size=""Md"";
+Color=""Neutral"";
+Error?=False;
+Start Decorator?=true;
+Start Decorator=""SearchRounded"";
+End Decorator?=false;
+Helper Text?=false;
+Label?=false;
+Placeholder?=true;
+↳ Placeholder=""Search by PO ID Trip ID or CO ID"";
+Value?=false;",S0,Design,Positive,"The search bar should be on the left side under the screen name with the following properties: state ""Enabled"", size ""Md"", color ""Neutral"", start decorator ""SearchRounded"", and placeholder ""Search by PO ID,Trip ID or CO ID or CO ID"". It should have no error, no end decorator, helper text, label, or pre-filled value.",SH,Pass,,TRUE,
+TC_MR_21,When SH login and check the tracking status of the logistics,FarMartOS,Tracking logistic screen module,Verify that there should be the debouncing present in search bar,S0,Functionality,Positive,"The search bar should have debouncing implemented, ensuring that the search input is only processed after a short delay following the user's final keystroke, preventing multiple requests during fast typing.",SH,Pass,,TRUE,
+TC_MR_22,When SH login and check the tracking status of the logistics,FarMartOS,Tracking logistic screen module,Verify that search bar should not accept any links or unreliable data,S0,Functionality,Negative,"The search bar should reject any input that contains links or unreliable data, ensuring only valid PO ID,Trip ID or CO ID entries are accepted, with appropriate validation to prevent invalid submissions.",SH,Pass,,TRUE,
+TC_MR_23,When SH login and check the tracking status of the logistics,FarMartOS,Tracking logistic screen module,Verify that there should be proper validation in frontend and backend in search bar,S0,Functionality,Positive,"The search bar should have validation on both frontend and backend, ensuring only valid PO IDs or Trip IDs are submitted. Invalid input should trigger appropriate error messages and prevent submission.",SH,Pass,,FALSE,
+TC_MR_24,,,,,,,,,,,,,
+TC_MR_25,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that there should be the Three filters present at the to right side of the screen just opposite of the search bar which are 
+1. Select State
+2. Select Trip Status
+3. Filter (with startDecorator and //styleName: components/buttons/md;
+font-family: Noto Sans;
+font-size: 14px;
+font-weight: 600;
+line-height: 14px;
+text-align: left;
+text-underline-position: from-font;
+text-decoration-skip-ink: none;
+)",S0,Design,Positive,"Three filters should be displayed on the top-right side of the screen, opposite the search bar: Select State, Select Trip Status, and Filter. The Filter button should have a start decorator and be styled as per the design specifications (font: Noto Sans, 14px, weight 600, left-aligned, with proper text underline and decoration).",SH,Pass,,TRUE,
+TC_MR_26,,FarMartOS,Table Module,Select State: In this Filter should when user click on it open the drop-down with all state present in india,S0,Functionality,Positive,In this Filter should when user click on it open the drop-down with all state present in india,SH,Pass,,TRUE,
+TC_MR_27,,FarMartOS,Table Module,Select State: All the state will be in Select tree module in which the state will be multi selected,S0,Functionality,Positive,All the state will be in Select tree module in which the state will be multi selected,SH,Pass,,TRUE,
+TC_MR_28,,FarMartOS,Table Module,Select State: This filter work on the basis of Source of the trucks from where the tracking starts,S0,Functionality,Positive,This filter work on the basis of Source of the trucks from where the tracking starts,SH,Pass,,TRUE,
+TC_MR_29,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Select Trip Status:  there should be the placeholder name "" Select Trip Status"" with the onclick functionality and The filter button should open the tree search filter",S0,Functionality,Negative,"The Select Trip Status filter should display a placeholder text ""Select Trip Status"" and have an onclick functionality. The Filter button should open the tree search filter when clicked.",SH,Pass,,TRUE,
+TC_MR_30,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Select Trip Status: onclick the card should open and on the top of the card the search filter should be present with the Place holder Name ""Search Status"" with startDecorator",S0,Functionality,Negative,"On clicking Select Trip Status, a card should open with a search filter at the top. The search filter should display the placeholder text ""Search Status"" and have a start decorator as per the design.",SH,Pass,,TRUE,
+TC_MR_31,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Select Trip Status: on the bottom of the search filter there should be the 9 status with check box present which should be clickable,S0,Functionality,Positive,"On clicking Select Trip Status, a card should open with a search filter at the top. Below the search filter, there should be 9 status options, each with a clickable checkbox.",SH,Pass,,TRUE,
+TC_MR_32,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Select Trip Status:  
+1. Consent Pending
+2. Consent Removed
+3. On Track
+4. Halted
+5. Potential Delay
+6. Driver Not Reachable
+7. Arrived
+8. Terminated
+9. Completed
+
+( The check box should be clickable and checkbox and with status text)",S0,Functionality,Positive,"On clicking Select Trip Status, a card should open with a search filter at the top. Below the search filter, 9 status options should be displayed with corresponding text and clickable checkboxes. The statuses include Consent Pending, Consent Removed, On Track, Halted, Potential Delay, Driver Not Reachable, Arrived, Terminated, and Completed. Each checkbox should be properly aligned with its respective status text.",SH,Pass,,TRUE,
+TC_MR_33,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Select Trip Status: When SHP clicks on the check box the full data of The table present on the view should be filter out on the bases of the selected status and The check box should have  multiseletced functionality,S0,Functionality,Positive,"When SHP clicks on a checkbox under Select Trip Status, the table data on the view should be filtered based on the selected status. The checkboxes should support multi-selection functionality, allowing filtering by multiple statuses simultaneously.",SH,Pass,,TRUE,
+TC_MR_34,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Filter:  There should be one filter tab just after the Select Trip status which should be clickable and open the Right drawer and if the user clicks on the grey area the drawer should be close,S0,Functionality,Negative,"There should be a Filter tab located just after Select Trip Status. This tab should be clickable and, when clicked, should open the left drawer for further filter options.",SH,Pass,,TRUE,
+TC_MR_35,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Filter:  the drawer should contains the header which should be the ""Filter"" and There should be the close tab at the top Right of the screen",S0,Functionality,Positive,"When the Filter tab is clicked, the left drawer should open and display a header with the text ""Filter"" at the top. Additionally, there should be a close tab located at the top left of the screen to close the drawer.",SH,Pass,,TRUE,
+TC_MR_36,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Filter: There should be divider just after the Header name,S0,Functionality,Positive,"The left drawer, when opened by clicking the Filter tab, should have a header with the text ""Filter"" at the top, followed by a divider immediately below the header to separate it from the rest of the content.",SH,Pass,,TRUE,
+TC_MR_37,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Filter : After the divider there should be four tree select which having the label
+
+1. Procurement Associate Name
+2. Sales Associate Name
+3. Dispatch Date From
+4.Dispatch Date To",S0,Functionality,Positive,"After the divider in the left drawer, there should be four tree select components, each with a label. The labels should be ""Procurement Associate Name,"" ""Sales Associate Name,"" ""Dispatch Date From,"" and ""Dispatch Date To."" These tree select components should be properly aligned and functional, allowing the user to select filters based on each respective label.",SH,Pass,,FALSE,Sundram Bhardwaj there is change in the label oplease check figma
+TC_MR_38,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,1. Procurement AsPOciate Name: This tree select should have all the list of PA name which are on boarded OS as PA,S0,Functionality,Positive,The Procurement Associate Name tree select should display a list of all PA names that are onboarded as PA in the system. Users should be able to select from this list to filter the data accordingly.,SH,Pass,,TRUE,
+TC_MR_39,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,1. Procurement AsPOciate Name: This Tree select alPO have search filter and multiselect functionaloity with checkbox with PA names,S0,Functionality,Positive,"The Procurement Associate Name tree select should include a search filter that allows users to quickly find specific PA names. It should also support multi-select functionality, enabling users to select multiple PA names at once, with each name accompanied by a checkbox for selection.",SH,Pass,,TRUE,
+TC_MR_40,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,2. Sales AsPOciate Name: This tree select should have all the list of SA name which are on boarded OS as SA,S0,Functionality,Positive,The Sales Associate Name tree select should display a list of all AA names that are onboarded as SA in the system. Users should be able to select from this list to filter the data accordingly.,SH,Pass,,TRUE,
+TC_MR_41,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,2. Sales AsPOciate Name: This Tree select alPO have search filter and multiselect functionaloity with checkbox with PA names,S0,Functionality,Positive,"The Sales Associate Name tree select should include a search filter that allows users to quickly find specific SA names. It should also support multi-select functionality, enabling users to select multiple SA names at once, with each name accompanied by a checkbox for selection.",SH,Pass,,TRUE,
+TC_MR_42,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Dispatch Date From and Dispatch Date To: should have end Decorator with on click functionality and open the calender to select Dates,S0,Functionality,Positive,"The Dispatch Date From and Dispatch Date To tree selects should each have an end decorator with an onclick functionality. When clicked, the end decorator should open a calendar picker that allows users to select dates.",SH,Fail,,TRUE,
+TC_MR_43,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,There Should a Footer which should have two tabs which are Clear filter and Apply filter,S0,Functionality,Positive,"The left drawer should have a footer containing two tabs: Clear Filter and Apply Filter. The Clear Filter tab should reset all selected filters, while the Apply Filter tab should apply the selected filters to the data.",SH,Pass,,TRUE,
+TC_MR_44,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Clear filter have red in color and Apply filter should have Brand color Bg and these tab should be activated when any of the filter is select in any tree select,S0,Functionality,Positive,"The footer of the left drawer should have two tabs: Clear Filter and Apply Filter. The Clear Filter tab should be displayed in red color, and the Apply Filter tab should have a background color matching the brand color. Both tabs should remain inactive by default and only become activated when a filter is selected in any of the tree selects.",SH,Fail,,TRUE,
+TC_MR_45,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that There should be the Seven Tab on the Top of The Table Which are 
+1. Trip Not Created
+2. Consent Pending
+3. In-Transit
+4. Driver Not Reachable
+5. Arrived
+6. Terminated
+7. Completed
+8. All Trips",S0,Functionality,Positive,"There should be seven tabs displayed at the top of the table, labeled as follows: Trip Not Created, Consent Pending, In-Transit, Driver Not Reachable, Arrived, Terminated, Completed, and All. These tabs should be clearly visible and accessible for users to navigate between different sections of the table.",SH,Pass,,TRUE,
+TC_MR_46,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Trip Not Created: this tab on consist those Trip whose status is in ""Trip not created "" and alPO shows the count of the trips which are in Trip not Created  and Thise Trip not created will not visible in all trips",S0,Functionality,Positive,"The Trip Not Created tab should display only trips with the status ""Trip Not Created."" Additionally, the tab should show the count of trips that fall under this status, providing users with an overview of how many trips are in the ""Trip Not Created"" status.",SH,Pass,,TRUE,
+TC_MR_47,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Consent Pending:  This Tab Shows those Trips whose status is either in ""Consent pending and  Consent removed"" this tab shows the count of Trips",S0,Functionality,Positive,"The Consent Pending tab should display trips with statuses ""Consent Pending"" and ""Consent Removed."" The tab should also show the count of trips that fall under these statuses, giving users an overview of the number of trips in ""Consent Pending"" or ""Consent Removed"" status.",SH,Pass,,TRUE,
+TC_MR_48,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,In-Transit: This Tab should shows the Ontrack status and the Halted statust and alPO shows The count of The Trip,S0,Functionality,Positive,"The In-Transit tab should display trips with the statuses ""On Track"" and ""Halted."" The tab should also show the count of trips that fall under these statuses, providing users with an overview of how many trips are currently ""In-Transit.""",SH,Pass,,TRUE,
+TC_MR_49,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Driver Not Reachable: This Tabs should only contains the ""Driver Not Reachable""  trip and alPO contains the count of trips",S0,Functionality,Positive,"The Driver Not Reachable tab should display only trips with the status ""Driver Not Reachable."" The tab should also show the count of trips that fall under this status, giving users an overview of how many trips are marked as ""Driver Not Reachable.""",SH,Pass,,FALSE,
+TC_MR_50,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Arrived: The tabs shows shows those Trips whose trips status is arrived only and alPO shows the count of the trips,S0,Functionality,Positive,"The Arrived tab should display trips with the status ""Arrived"" only. The tab should also show the count of trips that fall under this status, providing users with an overview of how many trips have ""Arrived.""",SH,Pass,,FALSE,
+TC_MR_51,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Terminated: This tabs shows those trips whose status are terminated with there Trip counts,S0,Functionality,Positive,"The Terminated tab should display only trips with the status ""Terminated."" The tab should also show the count of trips that are marked as ""Terminated,"" giving users a clear view of how many trips fall under this status.",SH,Pass,,TRUE,
+TC_MR_52,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Completed: This tab shows those Trips whose trip status is Completed with counts,S0,Functionality,Positive,"The Completed tab should display only trips with the status ""Completed."" The tab should also show the count of trips that are marked as ""Completed,"" providing users with an overview of how many trips have reached the ""Completed"" status.",SH,Not Executed,,FALSE,
+TC_MR_53,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,All Trips: This tab shows all the recent first trips which are cretaed by the SHP,S0,Functionality,Positive,"The All Trips should display all trips created by the SHP, with the most recent trips appearing first. This tab should provide a comprehensive view of all trips, regardless of their status, allowing users to see the complete list of trips in chronological order.",SH,Pass,,TRUE,
+TC_MR_54,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify After these tab the main data table start which should have These headers
+1. Dispatch Date
+2. ETA
+3. Order Type
+4. PO/CO Details
+5. Trip ID
+6. Delivery Location
+7. Last Update Time
+8. Dispatch Location
+9. Trip Status
+10. Actions",S0,Design,Positive,"After the tabs, the main data table should begin with the following headers: Dispatch Date, ETA, Order Type, PO/CO Details, Trip ID, Trip Status, Last Update Time, Dispatch Location, Delivery Location, and Actions. These headers should be clearly displayed at the top of the table to organize and label the data effectively.",SH,Pass,,TRUE,
+TC_MR_55,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that all the header of the table should contains this color
+border-top: 1px POlid var(--neutral-outlined-Border, #CDD7E1)",S0,Design,Positive,"All Tripsle headers should have a border-top color of 1px POlid var(--neutral-outlined-Border, #CDD7E1).",SH,Pass,,FALSE,"level='body-xs', textColor={""text.secondary""}"
+TC_MR_56,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that in the ""Dispatch Date"" column, all the dispatch dates and Times are shown against the truck in the dispatch state from the Farmart App Side, and the date and time format should be in.
+
+Date:  DD/MM/YYYY
+Time:  HH:MM AM
+Time:  HH:MM PM",S0,Design,Positive,"Verify that in the ""Dispatch Date"" column, all the dispatch dates and Times are shown against the truck in the dispatch state from the Farmart App Side, and the date and time format should be in.
+
+Date:  DD/MM/YYYY
+Time:  HH:MM AM
+Time:  HH:MM PM",SH,Pass,,FALSE,in the figma we are using DD MMM YYYY
+TC_MR_57,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that when after the ""Dispatch Date""  column, it will show the ""ETA"" column in which all the ""ETA""  will show against the truck dispatched.",S0,Functionality,Positive,"When the Dispatch Date column is displayed, verify that it is immediately followed by the ETA column. Each entry in the ETA column should accurately correspond to the truck dispatched, showing the expected delivery date for each dispatch. The data should be aligned correctly, and every truck dispatch should have a corresponding ETA listed.",SH,Pass,,TRUE,
+TC_MR_58,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that After The ""ETA"" column, the table will show the ""Order Type column.",S0,Design,Positive,"After the ETA column, the Order Type column should be displayed next in the table. Each Order Type should be correctly aligned and visible, ensuring that the table follows the proper column sequence. The Order Type column should contain the relevant Order Type information for each entry, immediately following the ETA, with no misalignment or missing data.",SH,Pass,,TRUE,
+TC_MR_59,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that the ""Order Type"" column should contain the in which form the Trips is Created which are the B2B, Procurment and FOR",S0,Design,Positive,"The Order Type column should display the type of form in which the trips were created, including options such as B2B, Procurement, and FOR. This should clearly indicate the business category for each trip in the data table.",SH,Pass,,TRUE,
+TC_MR_60,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that after the ""Order Type"" column, there should be a ""PO/CO Details""  column with a header.",S0,Design,Positive,"After the Order Type column, the PO/CO Details column should be displayed with a clearly visible header, positioned correctly in the table layout.",SH,Pass,,TRUE,
+TC_MR_61,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that In the ""PO/CO Details"" column, there should be the PO number and crop name in which the trade happened and the Weight of the Crop",S0,Functionality,Positive,"The PO/CO Details column should display the PO number, crop name involved in the trade, and the weight of the crop for each trip. This information should be clearly shown for each entry in the data table, providing detailed insight into the specifics of the purchase order and associated trade details.",SH,Pass,,TRUE,
+TC_MR_62,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that after the ""PO/CO Details"" column there should be the ""Trip ID"" column",S0,Design,Positive,"After the PO/CO Details column, the table should display the Dispatch Location column. This column should have a clearly visible header and be correctly aligned within the table layout, maintaining the proper sequence of columns.",SH,Pass,,TRUE,
+TC_MR_63,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that when in the Trip ID columns if the trips status is in Trip is not Created the cells should contains ""Not Available and the Deeplink under with name Not Available"" in the disable form",S0,Design,Positive,"In the Trip ID column, if the trip status is ""Trip Not Created,"" the cells should display ""Not Available."" Additionally, there should be a disabled deeplink within the cell with the label ""Not Available,"" indicating that the link is not active for trips with this status.",SH,Pass,,FALSE,
+TC_MR_64,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Verify that if the Trips is in any other Trip status There will be the Truck number and the Trip ID with deeplink that can redirect user to trip tracking page,S0,Design,Positive,"If the trip is in any status other than ""Trip Not Created,"" the Trip ID column should display the truck number along with the Trip ID. The Trip ID should be a clickable deeplink that redirects the user to the trip tracking page for further details and tracking of the trip.",SH,Pass,,FALSE,when user click on the link it will open a modal with trip details
+TC_MR_65,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that after the ""Trip Details"" there should be the ""Trip Status"" column present in the table",S0,Design,Positive,"After the Trip Details column, the table should display the Trip Status column. The Trip Status column header should be clearly visible and properly aligned within the table layout, maintaining the correct sequence of columns. Each entry in this column should accurately reflect the status of the respective trip.",SH,Pass,,FALSE,
+TC_MR_66,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that In the Trip status column it should contains the ""Trip status"" showing the current status of the Trucks",S0,Design,Positive,"In the Trip Status column, each entry should display the Trip Status, indicating the current status of the trucks. The status should be clearly visible, properly aligned, and accurately reflect the real-time condition of each truck, such as ""In Transit,"" ""Delivered,"" or ""Pending.""",SH,Pass,,TRUE,
+TC_MR_67,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"It will show all the Chip's statuses in almost real-time, and these Chip's statuses are
+1. Consent Pending
+2. Consent Removed
+3. On Track
+4. Halted
+5. Potential Delay
+6. Driver Not Reachable
+7. Arrived
+8. Terminated
+9. Completed
+
+with there proper design present in tracking service",S0,Design,Positive,"It will show all the Chip's statuses in almost real-time, and these Chip's statuses are
+1. Consent Pending
+2. Consent Removed
+3. On Track
+4. Halted
+5. Potential Delay
+6. Driver Not Reachable
+7. Arrived
+8. Terminated
+9. Completed
+
+with there proper design present in tracking service",SH,Pass,,TRUE,
+TC_MR_68,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Verify that after the Trip status column there will be Last Update Time Column,S0,Design,Positive,"After the Trip Status column, there should be a Last Update Time column in the data table. This column should display the most recent time the trip data was updated, providing users with an indication of when the last modification occurred for each trip entry.",SH,Pass,,FALSE,
+TC_MR_69,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Last Update Time There should be the Date and Time which is the last update of the trip status against the Specific PO,S0,Design,Positive,"The Last Update Time column should display both the date and time of the last update for the trip status specific to each PO. This information should reflect when the trip's status was last modified, providing users with precise and relevant timing for tracking updates on each trip.",SH,Fail,,TRUE,
+TC_MR_70,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Last Update Time Column should have this Format
+Date:  DD/MM/YYYY
+Time:  HH:MM AM
+Time:  HH:MM PM",S0,Design,Positive,"Last Update Time Column should have this Format
+Date:  DD/MM/YYYY
+Time:  HH:MM AM
+Time:  HH:MM PM",SH,Pass,,FALSE,in figma we are using DD MMM YYYY
+TC_MR_71,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that after the ""Last Update Time"" column there should be the ""Dispatch Location"" column",S0,Design,Positive,"After the Last Update Time column, there should be a Dispatch Location column in the data table. This column should display the location from which the trip was dispatched, providing users with details on the starting point of each trip.",SH,Pass,,FALSE,
+TC_MR_72,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Verify that there should be the full Dispatch location of truck on from where the truck is moved to there destinations,S0,Functionality,Positive,"In the Dispatch Location column, the full dispatch location of the truck should be displayed, indicating the exact origin from which the truck has moved to its destination. This information should be clearly visible and properly aligned within the column, ensuring that each entry accurately represents the complete dispatch location for each truck.",SH,Pass,,FALSE,
+TC_MR_73,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that if the location is more of a single cell, it should be truncated.",S0,Functionality,Positive,"If the dispatch location exceeds a single cell's width, it should be truncated to ensure that only a portion of the text is visible, with an ellipsis indicating additional content.",SH,Pass,,TRUE,
+TC_MR_74,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that after the ""Dispatch Location"" column, there should be the ""Delivery Location"", which should show the destination location where the truck is going",S0,Design,Positive,"After the Dispatch Location column, the table should display the Delivery Location column. This column should clearly indicate the destination location where the truck is headed. The header for the Delivery Location column should be visible and properly aligned within the table, ensuring it follows the correct sequence of columns. Each entry should accurately reflect the destination for the respective truck dispatch.",SH,Pass,,TRUE,
+TC_MR_75,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Verify the When the Delivery location is more than the cell is should truncate the location,S0,Functionality,Positive,"Verify that when the delivery location exceeds the cell width, it should be truncated to fit within the cell.",SH,Pass,,TRUE,
+TC_MR_76,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that after the ""Delivery Location"" column there should be the ""Action"" column present",S0,Design,Positive,"After the Trip Details column, the table should display the Action column. The Action column should have a clearly visible header and be properly aligned within the table layout, following the correct sequence of columns.",SH,Pass,,FALSE,
+TC_MR_77,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that the Action column should contain a ""Retry Button"" if the trip is not created with the Brand colour, and it should be clickable.",S0,Functionality,Positive,"In the Action column, each entry should contain a Retry Button displayed in the brand color. The button should be clearly visible, properly styled, and fully clickable. Upon clicking, the button should trigger the appropriate action without any errors, ensuring full functionality.",SH,Pass,,TRUE,
+TC_MR_78,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that when SH clicks on the Retry button, there will be three Screnaions.
+1. It created a trip successfully and shows the Toast message, which should be In Brand colour, and has a startDecorator, which is ticked and Text ""Trip created successfully!"" in white colour.
+
+2. When the trip is not created from the FarMart or Saudabook app side and the SH clicks on Retry it shows the toast message whichs should contains this color ""background: var(--warning-POlid-Bg, #9A5B13);
+""  and have a tooltip icon and show the Text ""Trip has not been created yet. Please try again later""  in white colour.
+
+3. when SH clicks on the button, and there is any network or any other issue, there should be a Toast message popup and show in red colour with a cross icon and the text ""Unable to refresh the trip status. Please try again."" in white colour",S0,Functionality,Positive,"Verify that when the SH clicks on the ""Retry"" button, the following three scenarios occur:
+
+1. Successful Trip Creation: A toast message displays in brand color with a tick icon and the text ""Trip created successfully!"" in white.
+
+2. Trip Not Created: If the trip is not created from the Farmart or Saudabook app, a toast message appears with a background color of var(--warning-POlid-Bg, #9A5B13), containing a tooltip icon and the text ""Trip has not been created yet. Please try again later"" in white.
+
+3. Network Issue: If there's a network or other issue, a toast message pops up in red with a cross icon and the text ""Unable to refresh the trip status. Please try again."" in white.",SH,Pass,,TRUE,
+TC_MR_79,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that after the Trip is created in the Action tab, there should be The Three Dot present, which is clickable (if the PO or CO is remapped, the exising trip will become removed and new trip row with retry button created)",S0,Design,Positive,"After a trip is created, in the Actions column, there should be a three-dot menu (ellipsis) present for each trip entry. These three dots should be clickable, allowing users to access additional options or actions related to the specific trip.",SH,Pass,,TRUE,
+TC_MR_80,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that there should be when SH clicks on Three dot button it open the Card which should contains the Two Tab which are ""Refresh Consent"" and ""Update Truck Driver Contact"" with there respective StartDecorators",S0,Functionality,Positive,"When the SH (Sales Head) clicks on the three-dot button in the Action column, a card should open, displaying two tabs: Refresh Consent and Update Truck Driver Contact. Each tab should feature its respective StartDecorator for clear identification. The card should be visually distinct and easy to navigate, ensuring a smooth user experience when accessing these functionalities.",SH,Pass,,FALSE,one more option to show contact details
+TC_MR_81,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that when SH clicks on ""Update Truck Driver Contact"" button it will opens the modal which should contains 
+
+""Update Driver Contact Number"" as title of modal, sub title, Trip ID, ""Driver Contact Number"" and the Inputbox field which Accept only 10 number , and there should be two button at bottom which are Cancel button and Update button with clock icon decorator",S0,Design,Positive,"When the SH clicks on the ""Update Truck Driver Contact"" button, a modal should open with the following elements:
+
+Title: ""Update Driver Contact Number""
+Trip id
+Input Box: Accepts only 10 digits for the driver's contact number
+
+Buttons at the Bottom:
+
+Cancel Button
+
+Update Button (with a clock icon decorator)",SH,Pass,,FALSE,
+TC_MR_82,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"""Update Truck Driver Contact"" button  used when SH need to update the truck driver number PO it input the new driver number and click on Update button it will shows the confirmation modal and then SH have to click on confirm button to update the new truck driver number and send the consent message to that number and it alPO reflect it to the contact details drawer where the driver number is placed",S0,Functionality,Positive,"Upon clicking the ""Update Truck Driver Contact"" button, the system successfully updates the truck driver's contact number, sends a consent message to the new number, and reflects the updated number in the contact details drawer.",SH,Pass,,TRUE,
+TC_MR_83,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"If User enter The same Number of driver to update the driver number backend will throw the error that ""Trip can not be created with same number""",S0,Functionality,Negative,"If User enter The same Number of driver to update the driver number backend will throw the error that ""Trip can not be created with same number""",SH,Pass,,FALSE,error is-Mobile number is same as previous mobile number
+TC_MR_84,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,Verify that the Update button will be disabled until the 10 number is entered in the input field,S0,Functionality,Positive,Verify that the Update button will be disabled until the 10 number is entered in the input field,SH,Pass,,TRUE,
+TC_MR_85,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that When SH enter the Driver Correct Driver number it will update the modal with ""Tick Icon"" at the top left with title ""Update Driver Contact Number"" and the sub title ""Are you sure you want to update the Truck Driver mobile number? This can't be reversed once done""",S0,Functionality,Positive,"When SH enters the correct driver number, the modal should display a ""Tick Icon"" at the top left, with the title ""Update Driver Contact Number"" and the subtitle ""Are you sure you want to update the Truck Driver mobile number? This can't be reversed once done.""",SH,Pass,,TRUE,
+TC_MR_86,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"Verify that when user when SH clicks on update button it update the number and changes into the ""Confirm"" button with StartDecorator",S0,Functionality,Positive,"When SH clicks on the ""Update"" button, the system should successfully update the driver number and change the ""Update"" button to a ""Confirm"" button with a StartDecorator icon.",SH,Pass,,FALSE,there are two different modal for driver number input and confirmation
+TC_MR_87,When SH login and check the tracking status of the logistics,FarMartOS,Table Module,"When the number is successfully updated the web show the toast message which is ""Driver Contact number is updated Successfully"" with start decorator",S0,Functionality,Positive,"When the number is successfully updated, the system should display a toast message saying ""Driver Contact number is updated Successfully"" with a StartDecorator icon.",SH,Pass,,TRUE,
+TC_MR_88,When SH login and check the tracking status of the logistics,FarMartOS,Trip Details(Tracking Service),"Verify that when SH clicks in any link in cell of any Trip Details column it will open the modal with there properties. 
+
+width: Fixed (700px)px;
+height: Fixed (700px)px;
+top: 162px;
+left: 370px;
+gap: 0px;
+border-radius: var(--radius-lg);
+opacity: 0px;",S0,Functionality,Positive,"Verify that when SH clicks in any link in cell of any Trip ID column it will open the modal with there properties. 
+
+width: Fixed (700px)px;
+height: Fixed (700px)px;
+top: 162px;
+left: 370px;
+gap: 0px;
+border-radius: var(--radius-lg);
+opacity: 0px;",SH,Pass,,FALSE,use will click on trip link in Trip Id column then it will open modal
+TC_MR_89,When SH login and check the tracking status of the logistics,FarMartOS,Trip Details(Tracking Service),"Verify that the modal should contain the 
+1. PO ID,
+2. Cross tab,
+3. Divider,
+4. Full tracking Service Page which includes Map, Truck Status , truck number,current location, location history tab, truck route details with Order Type and destination",S0,Design,Positive,"Verify that the modal contains the following elements:
+
+
+PO ID
+Cross tab
+Divider
+Full Tracking Service Page which includes:
+1.Map
+2.Truck Status
+3.Truck Number
+4.Current Location
+5.Location History tab
+6.Truck Route details with Order Type and destination",SH,Pass,,TRUE,
+TC_MR_90,When SH login and check the tracking status of the logistics,FarMartOS,Trip Details(Tracking Service),Verify that The PO ID should be Present at the Top Left of the modal  and the cross tab at the top right of the cornors which should be clickable and close the modal onclick,S0,Functionality,Positive,The modal displays the PO ID at the top left corner. The cross tab is positioned at the top right corner and is clickable; clicking it successfully closes the modal.,SH,Pass,,TRUE,
+TC_MR_91,When SH login and check the tracking status of the logistics,FarMartOS,Trip Details(Tracking Service),Verify that there should be the divider which should separate the tracking Service IFrame and header,S0,Design,Positive,"A divider is present in the modal, effectively separating the tracking service iframe from the header, ensuring a clear visual distinction between the two sections.",SH,Pass,,TRUE,
+TC_MR_92,When SH login and check the tracking status of the logistics,FarMartOS,Trip Details(Tracking Service),"Verify that after the divider, the Whole tracking Service IFrame Should be visible and should have Heading truck tracking details. this tracking service is that service which is created against the PO and PO mapping",S0,Functionality,Positive,"After the divider, the entire tracking service iframe is visible and prominently displays the heading ""Truck Tracking Details."" This tracking service is linked to the service created against the PO and PO mapping.",SH,Pass,,TRUE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,
+,,,,,,,,,,,,FALSE,

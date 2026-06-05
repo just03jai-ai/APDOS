@@ -2,7 +2,7 @@
 
 ## What Was Built
 
-APDOS-002 created the Executive Orchestrator package in `packages/orchestrator`.
+APDOS-002 created the Executive Orchestrator package in `packages/core/orchestrator`.
 
 Implemented:
 
@@ -23,7 +23,7 @@ The orchestrator converts a business goal into a complete workflow plan. It does
 Package structure:
 
 ```text
-packages/orchestrator/
+packages/core/orchestrator/
   src/
     planner/
     workflows/
@@ -45,7 +45,7 @@ Planning is deterministic. The same normalized goal produces the same workflow I
 
 ## Interfaces
 
-Defined in `packages/orchestrator/src/contracts/workflow-plan.ts`:
+Defined in `packages/core/orchestrator/src/contracts/workflow-plan.ts`:
 
 - `GoalIntake`
 - `WorkflowPlan`
@@ -71,7 +71,7 @@ Planner:
 
 ## Tests
 
-Tests are in `packages/orchestrator/tests/executive-orchestrator.test.ts`.
+Tests are in `packages/core/orchestrator/tests/executive-orchestrator.test.ts`.
 
 Covered:
 

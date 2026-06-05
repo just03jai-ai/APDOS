@@ -1,0 +1,10 @@
+{
+  "sources": [
+    {
+      "id": "local-skills",
+      "type": "filesystem",
+      "path": "./skills",
+      "enabled": true
+    }
+  ]
+}

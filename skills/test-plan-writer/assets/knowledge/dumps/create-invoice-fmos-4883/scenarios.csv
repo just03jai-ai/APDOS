@@ -1,0 +1,46 @@
+Invoice Type,PO/CO Combination,,Create Invoice,Create CN,Create DN,Cancel Invoice,Settle Invoice,Eway bill,Upload Eway Bill,Mark as Complete
+Taxable - Interstate,Single PO,,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE
+Taxable - Intrastate,Single PO,,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE
+Non-Taxable,Single PO,,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+Taxable - Interstate,Single CO,,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE
+Taxable - Intrastate,Single CO,,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,,,,within 24
+Non-Taxable,Single CO,,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,,,,post 24hr
+Taxable - Interstate,Multiple POs,,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE
+Taxable - Intrastate,Multiple POs,,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE
+Non-Taxable,Multiple POs,,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+Taxable - Interstate,Multiple COs,,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE
+Taxable - Intrastate,Multiple COs,,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE
+Non-Taxable,Multiple COs,,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+Taxable - Interstate,Combination of PO and CO,,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE
+Taxable - Intrastate,Combination of PO and CO,,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE
+Non-Taxable,Combination of PO and CO,,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+Scenarios,Retailer Payment,Invoice,Status,User,Action,,Terminate PO
+1.0,Paid,Cancelled or Settled,Till and including Dispatched,SH,Re-attach SO,,NO
+2.0,Paid,Not Generated,Till and including Dispatched,SH,Re-attach SO,,NO
+3.0,Not Paid,Cancelled or Settled,Till and including Dispatched,SH,Deattach SO,,YES
+4.0,Either,Generated but not Cancelled or Settled,Till and including Dispatched,-,Not allowed to detach,,NO
+5.0,Not Paid,Not Generated,Till and including Dispatched,SH,Deattach SO,,YES
+,Recreate,Test this scenario for both cancelled and settled invoice,,,,,,,,,
+,S-1,10POs,,,Dev Test,Cancelled,Settled,,,,
+,,,Terminate PO,2 POs,TRUE,done,done,,,,
+,,Recreate - Expected,The system should recreate the invoice for the eight remaining POs,,,,,,,,
+,S-2,10POs,,,Dev Test,,,,,,
+,,,Terminate,1 PO,TRUE,done,done,,,,
+,,,Re-attach,2 POs,,,,,,,
+,,Recreate - Expected,The system should recreate the invoice for the remaining 7 POs,,,,,,,,
+,S-3,10POs,,,Dev Test,,,,,,
+,,,Terminate,1 PO,TRUE,done,done,,,,
+,,,Re-attach,2 POs,,,,,,,
+,,,De-attach,3 POs,,,,,,,
+,,Recreate - Expected,The system should recreate the invoice for the remaining 4 POs,,,,,,,,
+,S-4,5POs,,,Dev Test,,,,,,
+,,,Terminate,5 POs,TRUE,done,done,,,,
+,,Recreate - Expected,The system should not allow recreating the invoice,,,,,,,,
+,S-5,5POs,,,Dev Test,,,,,,
+,,,Terminate,1 PO,TRUE,done,done,,,,
+,,,De-attach,4 POs,,,,,,,
+,,Recreate - Expected,The system should not allow recreating the invoice,,,,,,,,
+,S-6,5POs,,,Dev Test,,,,,,
+,,,,,TRUE,,,,,,
+,,No change,,,,,,,,,
+,,Recreate - Expected,The system should allow recreating the invoice for all POs,,,,,,,,

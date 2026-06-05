@@ -1,0 +1,23 @@
+S.No,Module,Description
+,Unloading - Listing screen,"Tabs - Unloading, Claim Pending and Complete"
+,Unloading - Listing screen,"Listing screen - Tile - DO/SO/CO, Order type- GMV and GMV, Order status, Supplier name, Truck number, SO id, Crop & Variety and DO qty"
+,Unloading - Listing screen,Listing screen - Claim Pending Tab - Tile - same as above and Add and Edit Deduction
+,Unloading - Details,"Detail header - DO Details, 2 tabs- Overview and Unloading"
+,Unloading - Details - Overview,Details - right top order type and order status
+,Unloading - Details - Overview,"Details - tile 1 - DO id, FOR, Truck number, SO id, Crop & Variety and DO qty"
+,Unloading - Details - Overview,"Details - tile 2 - Vehicle Arrival - Vehicle Number, driver number and date of reporting and call driver button"
+,Unloading - Details - Overview,"Details - tile 3 - Sales Order Details - Buyer name, Ship to, PA name, Call PA button"
+,Unloading - Details - Overview,Details - tile 4 - Buyer Docs view
+,Unloading - Details - Overview,Details - tile 5 - Invoice Docs view
+,Unloading - Details - Overview,Add deduction button for delivered and partially delivered
+,Unloading - Details - Overview,Add deduction should not be available for cancelled orders
+,Unloading - Details - Unloading,Tile 1 - Unloding doc - GRN and Kanta Parchi doc with doc status and view option
+Que
+1.0,,"As we are allowing modifications to the unloading before it gets approved by the SHP, are we also granting the same permission to the supplier?"
+,,"In case of edit and update, header is add deduction"
+,,"Big summary screen - different from add, edit and update"
+,,"Seperate flow for edit, update"
+,,Handover weight should be Gross weight not net weight
+,,"Trnasport doc: In FOR case also we are uploading transport doc are we not showiing it, currently we are showing in Dispatch docs"
+,,Sequence of latest buyer invoie(ascending order) and are we are should any chip for cancelled or settled invoice
+,,Currently we are showing e-way bill for settled invoice also

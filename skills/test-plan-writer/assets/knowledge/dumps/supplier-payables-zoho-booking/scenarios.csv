@@ -1,0 +1,230 @@
+Test_Scenario_ID,Scenario_Name,Module,Description,Priority,Preconditions,Test_Steps,Expected_Result,Test_Data,,,,,,,,,,,,,,,,
+TS-001,Payable Booking Against Suppliers,Supplier Payables,Verify automated payable booking in Zoho when payment status becomes 'Deposited',High,PO exists with supplier invoice confirmed and payment initiated,"1. Create PO with supplier invoice confirmation
+ 2. Initiate payment for the PO
+ 3. Update payment status to 'Deposited'
+ 4. Verify bill is created in Zoho Books with following values:
+  - Date of payable start (date of dispatch)
+  - Amount payable
+  - PO#
+ 5. Check payable tracking record is updated
+ 6. Verify zoho_synced status is true","Bill is automatically created in Zoho with correct amount and PO details including date of dispatch, amount payable, and PO number","PO Number: PO12345, Amount: ₹100000, Supplier: SupplierX, Dispatch Date: 2025-01-17"
+TS-002,Payment Deposit Update in Zoho,Supplier Payables,Verify payment details are updated in Zoho when payment status becomes 'Deposited',High,Payable already exists in Zoho for the PO,"1. Ensure payable is already created in Zoho
+ 2. Update payment status to 'Deposited'
+ 3. Verify payment record is created in Zoho with following values:
+  - Amount of payment
+  - Time of payment
+  - Payment UTR
+  - PO#
+ 4. Check payment amount and UTR are recorded
+ 5. Verify supplier balance is updated
+ 6. Confirm payment history is maintained","Payment details are automatically synced to Zoho with correct amount, UTR, time of payment, and PO number","Payment Amount: ₹50000, UTR: UTR123456, PO: PO12345, Payment Time: 2025-01-17 14:30:00"
+TS-003,Debit Note Creation Automation,Supplier Payables,Verify debit notes are auto-created when deductions are added,High,PO exists with payable created in Zoho,"1. Navigate to PO deduction section
+ 2. Add deduction for quality issue (₹5000)
+ 3. Add deduction for shortage (₹3000)
+ 4. Verify debit notes are created in Zoho with following values:
+  - Debit note #
+  - Supplier business name
+  - Supplier GST #
+  - Supplier Billing Address
+  - Source of Supply
+  - Destination of Supply
+  - PO #
+  - Date of Debit note
+  - Type of deduction
+  - If Quality deduction (then note added by the SA)
+  - Amount of deduction
+  - Digital signatures
+ 5. Check debit note PDF is generated
+ 6. Verify digital signature is applied
+ 7. Verify debit note is visible as attachment next to deduction
+ 8. Confirm notifications are sent","Debit notes are automatically created in Zoho with all required values including supplier details, addresses, deduction type, and digital signatures","Deduction Amounts: Quality ₹5000, Shortage ₹3000, PO: PO12345, Supplier: ABC Traders, GST: 29ABCDE1234F1Z5"
+TS-004,Debit Note Deletion Automation,Supplier Payables,Verify debit notes are deleted when deductions are removed,High,PO exists with deductions and debit notes created,"1. Navigate to existing deductions
+ 2. Remove quality deduction (₹5000)
+ 3. Verify debit note is deleted from Zoho
+ 4. Check new bill is created for deduction amount
+ 5. Verify differential entry is made
+ 6. Verify deleted debit notes are not visible in deduction section
+ 7. Confirm no notes or remarks are required while deleting debit notes
+ 8. Confirm notifications are sent",Debit note is automatically deleted and differential bill is created. Deleted debit notes are not visible in deduction section,"Deduction to Remove: Quality ₹5000, PO: PO12345"
+TS-005,Digital Signature Implementation,Supplier Payables,Verify digital signatures are applied to debit notes,High,Debit note is created and ready for signature,"1. Create debit note for deduction
+ 2. Apply digital signature to debit note
+ 3. Verify signature details are captured
+ 4. Check timestamp is recorded
+ 5. Verify signature is visible in PDF
+ 6. Confirm signature validation
+ 7. Verify digital signatures are included in debit note values as per PRD",Digital signature is successfully applied with timestamp and validation,"Signature Details: Farmart Service Private Limited, Date: 17-01-2025 12:02:54"
+TS-006,TDS Management and Calculation,Supplier Payables,Verify TDS is calculated correctly based on 50L threshold,High,Supplier has existing payment history,"1. Check supplier's cumulative payment history
+ 2. Create new PO with amount that crosses 50L threshold
+ 3. Verify TDS calculation (0.1% on incremental amount)
+ 4. Check TDS is included in payable amount
+ 5. Verify TDS entry is made in Zoho
+ 6. Confirm TDS tracking is updated",TDS is calculated correctly at 0.1% on incremental amount over 50L,"Cumulative Amount: ₹520000, TDS Rate: 0.1%, TDS Amount: ₹200"
+TS-007,Notification System for PA and RPM,Supplier Payables,Verify FMT Pro push notifications are sent for debit note events,medium,PA and RPM have FMT Pro access,"1. Create debit note for deduction
+ 2. Verify FMT Pro push notification is sent to PA
+ 3. Verify FMT Pro push notification is sent to RPM
+ 4. Check notification content includes amount and PO details
+ 5. Verify deep link navigation works
+ 6. Confirm notification is received in real-time",FMT Pro push notifications are sent to PA and RPM with correct details,Notification: 'Debit Note of Rs 5000 for Quality Issue in PO12345 has been created'
+TS-008,Notification System for Suppliers,Supplier Payables,Verify WhatsApp notifications are sent to suppliers for debit note events,medium,Supplier has WhatsApp contact details,"1. Create debit note for deduction
+ 2. Verify WhatsApp notification is sent to supplier
+ 3. Check notification includes amount and PO details
+ 4. Verify link to view debit note details works
+ 5. Test notification in Hindi language
+ 6. Confirm notification delivery status",WhatsApp notification is sent to supplier with debit note details,WhatsApp Message: 'Debit Note of Rs 5000 has been issued for Quality Issue in PO12345'
+TS-009,Serialization for Debit Notes,Supplier Payables,Verify debit note serialization follows DN + ST(State Code) + 00000 format,medium,System is configured with state information,"1. Create debit note for deduction
+ 2. Verify serialization format: DN + ST (State Code) + 00000 (five digit serial number)
+ 3. Check sequential numbering is maintained
+ 4. Verify state code is included correctly
+ 5. Test multiple debit notes serialization
+ 6. Confirm format consistency
+ 7. Verify series is maintained for debit notes",Debit note serialization follows correct format with state name and five-digit sequential numbering,"Format: DNST00001, DNST00002, etc. (DN + ST + 00000)"
+TS-010,Sync Status and Push to Zoho Button,Supplier Payables,Verify manual sync capability for failed operations,medium,Zoho sync has failed for some operations,"1. Identify failed sync operations for:
+  - Supplier invoices
+  - Debit notes
+  - Payments
+ 2. Click 'Push to Zoho' button
+ 3. Verify manual sync is triggered
+ 4. Check sync status is updated
+ 5. Verify data is synced to Zoho
+ 6. Confirm success notification is shown","Manual sync successfully pushes data to Zoho and updates sync status for supplier invoices, debit notes, and payments","Failed Operations: Bill creation, Payment update, Debit note creation"
+TS-011,Edge Case - Payment Rejection After Invoice Confirmation,Supplier Payables,Verify payable is removed when payment is rejected after invoice confirmation,High,PO has invoice confirmed and payment initiated,"1. Confirm supplier invoice for PO
+ 2. Initiate payment for the PO
+ 3. Reject the payment
+ 4. Verify payable is removed from Zoho
+ 5. Check bill is voided in Zoho
+ 6. Verify payable tracking status is updated
+ 7. Confirm PO can be terminated if needed",Payable is automatically removed from Zoho when payment is rejected,"PO: PO12345, Invoice: INV001, Payment Status: Rejected"
+TS-012,Edge Case - Weight Change After Invoice Confirmation,Supplier Payables,Verify payable amount is updated when weight changes after invoice confirmation,High,PO has invoice confirmed and payable created,"1. Confirm supplier invoice for PO
+ 2. Update dispatch weight (increase/decrease)
+ 3. Verify payable amount is recalculated
+ 4. Check differential entry is made in Zoho
+ 5. Verify payable tracking is updated
+ 6. Confirm new amount reflects in Zoho
+ 7. Test both weight increase and decrease scenarios",Payable amount is automatically updated in Zoho with differential entries,"Original Weight: 1000kg, New Weight: 1200kg, Price: ₹50/kg",,,,,,,,,,,,,,,,
+TS-013,Edge Case - Cashfree Payment Reversal,Supplier Payables,Verify weekly cron job handles payment status inconsistencies,medium,Payment status has been reversed by Cashfree,"1. Simulate payment status reversal
+ 2. Wait for weekly cron job execution
+ 3. Verify cron job detects inconsistency
+ 4. Check adjustment entry is made in Zoho
+ 5. Verify payable tracking is updated
+ 6. Confirm payment history is corrected
+ 7. Test multiple reversal scenarios",Weekly cron job successfully detects and corrects payment status inconsistencies,"Payment Status: Deposited → Failed, Adjustment Amount: ₹50000"
+TS-014,Edge Case - Multiple Invoices Against One PO,Supplier Payables,Verify separate bills are created for multiple invoices against one PO,medium,Supplier shares multiple invoices for single PO,"1. Create PO with single supplier
+ 2. Supplier shares two invoices for the PO
+ 3. Verify two separate bills are created in Zoho
+ 4. Check bills have suffix for differentiation (supplier invoice number added by AP with suffix)
+ 5. Verify both bills are linked to same PO
+ 6. Confirm separate tracking records are maintained
+ 7. Test payment allocation across bills
+ 8. Verify unique bills are created with supplier invoice number suffix",Separate bills are created in Zoho with suffix for multiple invoices as per PRD,"PO: PO12345, Invoice1: INV001, Invoice2: INV002, Suffix: (A), (B)",,,,,,,,,,,,,,,,
+TS-015,Edge Case - Same Invoice Against Multiple POs,Supplier Payables,Verify bill allocation is handled for same invoice across multiple POs,medium,Same invoice is shared across multiple POs,"1. Create multiple POs for same supplier
+ 2. Share same invoice across all POs
+ 3. Verify separate bills are created for each PO
+ 4. Check serialization suffix is added (supplier invoice number added by AP with suffix)
+ 5. Verify individual tracking for each PO
+ 6. Confirm payment allocation works correctly
+ 7. Test AP can manage suffix entries
+ 8. Verify unique bills are created with supplier invoice number suffix as per PRD",Separate bills are created with suffix for same invoice across multiple POs as per PRD,"Invoice: INV001, PO1: PO12345, PO2: PO12346, Suffix: (A), (B)",,,,,,,,,,,,,,,,
+TS-016,Edge Case - TDS Threshold Crossing,Supplier Payables,Verify TDS is applied only on incremental amount when threshold is crossed,High,Supplier is approaching 50L threshold,"1. Check supplier's cumulative payments (₹45L)
+ 2. Create new PO with amount that crosses 50L (₹10L)
+ 3. Verify TDS is calculated only on incremental amount (₹5L)
+ 4. Check TDS rate is 0.1%
+ 5. Verify TDS entry is made in Zoho
+ 6. Confirm TDS tracking is updated
+ 7. Test multiple threshold crossings",TDS is calculated correctly on incremental amount over 50L threshold,"Cumulative: ₹45L, New PO: ₹10L, TDS on: ₹5L, Rate: 0.1%"
+TS-017,Edge Case - Deduction Impact on TDS,Supplier Payables,Verify TDS is recalculated when deductions affect net amount,High,PO has TDS applicable and deductions are added,"1. Create PO with TDS applicable amount
+ 2. Add deductions that reduce net amount
+ 3. Verify TDS is recalculated on net amount
+ 4. Check differential TDS entry is made
+ 5. Verify TDS tracking is updated
+ 6. Confirm next PO TDS calculation is correct
+ 7. Test multiple deduction scenarios",TDS is recalculated correctly when deductions affect net amount,"PO Amount: ₹100000, Deduction: ₹10000, TDS on: ₹90000"
+TS-018,Edge Case - Rejection impact in RTV Cases,Supplier Payables,Verify in RTV if item are rejected the DN should be autocreated,High,The DN should be created automatically and visible in OS,"1. Create  unloading by SA and add rejection or any other check name
+2. The DN should auto created on OS
+3. The number of DN should be same as the rejection type selected in pro
+4. Verify all the DN quantity and type of dedcution should be same",Auto RTV will be impacted on the DN creations,"Unloading
+Total 100%
+1. Accepted: 50%
+2. Rejected: 25%
+3. Shortage: 25%"
+TS-019,Halting Charges Handling,Supplier Payables,Verify new bill is created for halting charges on FOR PO,medium,FOR PO has halting charges added,"1. Create FOR PO with halting charges
+ 2. Verify new bill is created for halting charges
+ 3. Check bill includes halting charge amount
+ 4. Verify bill is added to supplier subtotal (payable)
+ 5. Confirm payable tracking includes halting charges
+ 6. Test payment allocation includes halting charges
+ 7. Verify Zoho sync includes halting charges
+ 8. Verify new bill is created for halting charges as per PRD edge case",New bill is created for halting charges and included in supplier subtotal (payable) as per PRD,"Halting Charges: ₹5000, FOR PO: PO12345, Bill: OS Invoice + (A)"
+TS-020,Offline Payments Handling,Supplier Payables,Verify manual UTR addition works for offline payments,medium,Offline payment is made to supplier,"1. Initiate offline payment to supplier
+ 2. Mark payment as failed from backend
+ 3. Add manual UTR for the payment
+ 4. Verify payment is recorded in system
+ 5. Check Zoho sync includes offline payment
+ 6. Confirm payment history is updated
+ 7. Test multiple offline payment scenarios",Offline payments are handled correctly with manual UTR addition,"Offline Payment: ₹25000, UTR: UTR789012, Status: Manual Entry"
+TS-021,Zoho API Integration,Supplier Payables,Verify Zoho Books API integration works for all operations,High,Zoho Books API is configured and accessible,"1. Test bill creation via Zoho API
+ 2. Test payment creation via Zoho API
+ 3. Test vendor credit creation via Zoho API
+ 4. Verify API rate limits are respected
+ 5. Check authentication works correctly
+ 6. Test error handling for API failures
+ 7. Verify data consistency between systems",Zoho Books API integration works correctly for all operations,"API Endpoint: https://www.zohoapis.in/books/v3/, Rate Limit: 1000/hour"
+TS-022,PDF Generation for Debit Notes,Supplier Payables,Verify debit note PDF is generated with correct content,medium,Debit note is created and ready for PDF generation,"1. Create debit note for deduction
+ 2. Generate PDF for the debit note
+ 3. Verify PDF contains all required information
+ 4. Check supplier details are correct
+ 5. Verify deduction amount and reason
+ 6. Confirm digital signature is included
+ 7. Test PDF download functionality",Debit note PDF is generated with correct content and formatting,"PDF Content: Supplier details, Deduction amount, Digital signature"
+TS-023,File Storage for Documents,Supplier Payables,Verify debit note documents are stored in AWS S3,medium,AWS S3 is configured for file storage,"1. Generate debit note PDF
+ 2. Verify file is uploaded to AWS S3
+ 3. Check file is accessible via URL
+ 4. Verify file permissions are correct
+ 5. Test file download from S3
+ 6. Confirm file retention policy
+ 7. Test multiple file uploads",Debit note documents are successfully stored in AWS S3,"S3 Bucket: farmart-documents, File: debit-note-12345.pdf"
+TS-024,Data Validation Before Zoho Sync,Supplier Payables,Verify comprehensive validation prevents API failures,High,Data validation rules are configured,"1. Test with invalid supplier data
+ 2. Test with missing required fields
+ 3. Test with invalid amount formats
+ 4. Test with incorrect PO references
+ 5. Verify validation errors are shown
+ 6. Check sync is blocked for invalid data
+ 7. Test validation for all data types",Data validation prevents invalid data from being synced to Zoho,"Invalid Data: Missing supplier ID, Invalid amount format, Missing PO reference"
+TS-025,Retry Mechanism for Failed Sync,Supplier Payables,Verify exponential backoff works for failed Zoho API calls,medium,Zoho API calls are failing intermittently,"1. Simulate Zoho API failures
+ 2. Verify retry mechanism is triggered
+ 3. Check exponential backoff is applied
+ 4. Verify maximum retry attempts
+ 5. Test different failure scenarios
+ 6. Confirm retry queue persistence
+ 7. Test manual retry functionality",Retry mechanism works correctly with exponential backoff for failed API calls,"Retry Attempts: 3, Backoff: 1s, 2s, 4s, Max Attempts: 5"
+TS-026,Manual Sync Trigger for Critical Operations,Supplier Payables,Verify manual intervention workflow works for critical operations,medium,Critical operations have failed to sync automatically,"1. Identify critical sync failures
+ 2. Use manual sync trigger
+ 3. Verify manual sync processes the queue
+ 4. Check sync status is updated
+ 5. Confirm data is synced to Zoho
+ 6. Test different critical operations
+ 7. Verify manual sync logging",Manual sync trigger successfully processes critical operations,"Critical Operations: Bill creation, Payment updates, Debit note creation"
+TS-027,Exact Notification Template Validation,Supplier Payables,Verify exact notification text matches PRD templates,High,Notification system is configured with PRD templates,"1. Create debit note for deduction
+ 2. Verify FMT Pro notification text exactly matches: 'Debit Note of Rs <amount of deduction> for <type of deduction> quantity in <PO#> has been created and shared with <supplier business name>'
+ 3. Verify WhatsApp notification text exactly matches: 'Debit Note of Rs <amount of deduction> has been issued for <type of deduction> in <PO#>. Click to view details.'
+ 4. Verify Hindi WhatsApp notification text exactly matches: '<PO#> में <type of deduction> के लिए <amount of deduction> रुपये का डेबिट नोट जारी किया गया है। विवरण देखने के लिए क्लिक करें।'
+ 5. Test notification for debit note deletion
+ 6. Verify all template variables are populated correctly
+ 7. Confirm notification delivery to correct recipients",Exact notification text matches PRD templates with all variables populated,"Notification Templates: FMT Pro, WhatsApp English, WhatsApp Hindi",
+TS-028,Zoho Posting Format Validation,Supplier Payables,Verify Zoho posting follows exact format specified in PRD,High,Zoho integration is configured with PRD posting format,"1. Create PO supplier invoice confirmation
+ 2. Verify bill description format: '<PO Number><supplier invoice #> - due on <>'
+ 3. Verify payment description format: '<PO Number><amount paid> for payment of <supplier invoice #>'
+ 4. Test TDS entry format: 'Bill Number - <supplier invoice #>'
+ 5. Verify deduction credit format: '<PO Number><DN number><amount of deduction + GST for deduction> for payment of <supplier invoice #>'
+ 6. Test deduction bill format: '<PO Number><bill number><amount of deduction + GST for deduction> for settlement of <DN number>'
+ 7. Verify halting charges format: '<PO Number><supplier invoice #> - due on <>'
+ 8. Confirm all transaction types use correct serialization
+ 9. Validate amount posting as specified in PRD table",Zoho posting follows exact format and serialization as per PRD table,"Posting Format: Bill, Payment, Tax Withheld, Credits with specific descriptions",
+TS-029,Backfill Scenario Validation,Supplier Payables,Verify backfill requirements as specified in PRD,medium,Backfill scenarios are identified as per PRD,"1. Verify supplier payable across POs created before release date will NOT be backfilled
+ 2. Verify supplier debit note PDF for POs created post release will NOT be backfilled
+ 3. Test that only new POs after release date get automated sync
+ 4. Verify old POs continue with manual Zoho updates
+ 5. Confirm backfill exclusions are properly documented
+ 6. Test edge cases for pre-release POs
+ 7. Verify no automatic sync for historical data
+ 8. Confirm manual process for old POs
+ 9. Validate backfill policy implementation",Backfill requirements are correctly implemented as per PRD specifications,"Backfill Policy: No backfill for pre-release POs, Manual updates for historical data",
