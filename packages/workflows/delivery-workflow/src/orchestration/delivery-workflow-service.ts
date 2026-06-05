@@ -11,6 +11,7 @@ import {
 } from "@apdos/artifacts";
 import { ContextRetrievalService } from "@apdos/context-engine";
 import { DiscoveryAgentService } from "@apdos/discovery-agent";
+import { EngineeringAgentService } from "@apdos/engineering-agent";
 import { ProductAgentService } from "@apdos/product-agent";
 import { SkillRuntimeService } from "@apdos/skill-runtime";
 import {
@@ -28,7 +29,6 @@ import {
   DELIVERY_WORKFLOW_TYPE
 } from "../stages/delivery-stages.js";
 import {
-  createCodeChangeArtifact,
   createIdeaArtifact,
   createReleasePackageArtifact,
   createTestResultArtifact,
@@ -46,6 +46,7 @@ export interface DeliveryWorkflowServiceDependencies {
   approvals?: ApprovalService;
   architectureAgent?: ArchitectureAgentService;
   discoveryAgent?: DiscoveryAgentService;
+  engineeringAgent?: EngineeringAgentService;
   productAgent?: ProductAgentService;
   validators?: ValidatorRegistry;
 }
@@ -56,6 +57,7 @@ export class DeliveryWorkflowService {
   private readonly approvals: ApprovalService;
   private readonly architectureAgent: ArchitectureAgentService;
   private readonly discoveryAgent: DiscoveryAgentService;
+  private readonly engineeringAgent: EngineeringAgentService;
   private readonly productAgent: ProductAgentService;
   private readonly validators: ValidatorRegistry;
   private readonly context: ContextRetrievalService;
@@ -88,6 +90,13 @@ export class DeliveryWorkflowService {
       });
     this.architectureAgent = dependencies.architectureAgent ??
       new ArchitectureAgentService({
+        artifacts: this.artifacts,
+        context: this.context,
+        workflows: this.workflows,
+        skillRuntime
+      });
+    this.engineeringAgent = dependencies.engineeringAgent ??
+      new EngineeringAgentService({
         artifacts: this.artifacts,
         context: this.context,
         workflows: this.workflows,
@@ -173,19 +182,27 @@ export class DeliveryWorkflowService {
     });
     validationResults.push(this.validateRequiredArtifact(techSpec, artifacts));
 
+    const { engineeringPackage, codeChanges } = await this.runEngineeringStage({
+      workflowId,
+      actorId,
+      createdAt,
+      prd,
+      techSpec,
+      implementationPlan,
+      artifacts,
+      contextPackages
+    });
+    const codeChange = codeChanges[0];
+
     await this.captureContext({
       workflowId,
-      artifactIds: [techSpec.id, implementationPlan.id],
+      artifactIds: [engineeringPackage.id, ...codeChanges.map((artifact) => artifact.id)],
       contextPackages
     });
     this.workflows.advanceStage({
       workflowId,
       stageId: DELIVERY_STAGE_IDS.validation,
       occurredAt: createdAt
-    });
-    const codeChange = await this.registerArtifact({
-      artifact: createCodeChangeArtifact(stageInput, techSpec, implementationPlan),
-      artifacts
     });
     const testResult = await this.registerArtifact({
       artifact: createTestResultArtifact(stageInput, codeChange),
@@ -211,7 +228,12 @@ export class DeliveryWorkflowService {
       contextPackages
     });
 
-    const releasePackage = createReleasePackageArtifact(stageInput, codeChange, testResult);
+    const releasePackage = createReleasePackageArtifact(
+      stageInput,
+      codeChange,
+      testResult,
+      engineeringPackage
+    );
     const releaseValidation = this.validateRequiredArtifact(
       releasePackage,
       [...artifacts, releasePackage]
@@ -233,6 +255,7 @@ export class DeliveryWorkflowService {
     return {
       workflow,
       artifacts,
+      engineeringPackage,
       releasePackage: registeredReleasePackage,
       approvals: this.approvals.listApprovals(),
       validationResults,
@@ -407,6 +430,61 @@ export class DeliveryWorkflowService {
     };
   }
 
+  private async runEngineeringStage(input: {
+    workflowId: string;
+    actorId: string;
+    createdAt: string;
+    prd: BaseArtifact;
+    techSpec: BaseArtifact;
+    implementationPlan: BaseArtifact;
+    artifacts: BaseArtifact[];
+    contextPackages: DeliveryWorkflowRunResult["contextPackages"];
+  }): Promise<{
+    engineeringPackage: BaseArtifact;
+    codeChanges: BaseArtifact[];
+  }> {
+    await this.captureContext({
+      workflowId: input.workflowId,
+      artifactIds: [input.prd.id, input.techSpec.id, input.implementationPlan.id],
+      contextPackages: input.contextPackages
+    });
+
+    this.workflows.advanceStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.engineering,
+      occurredAt: input.createdAt
+    });
+
+    const { codeChangeArtifacts, engineeringPackageArtifact } =
+      await this.engineeringAgent.createCodeChangeArtifacts({
+        request: {
+          workflowId: input.workflowId,
+          prdArtifactId: input.prd.id,
+          techSpecArtifactId: input.techSpec.id,
+          implementationPlanArtifactId: input.implementationPlan.id
+        },
+        actorId: input.actorId,
+        createdAt: input.createdAt,
+        stageId: DELIVERY_STAGE_IDS.engineering
+      });
+    input.artifacts.push(...codeChangeArtifacts, engineeringPackageArtifact);
+
+    this.workflows.completeStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.engineering,
+      artifactIds: [
+        ...codeChangeArtifacts.map((artifact) => artifact.id),
+        engineeringPackageArtifact.id
+      ],
+      occurredAt: input.createdAt
+    });
+
+    return {
+      engineeringPackage: engineeringPackageArtifact,
+      codeChanges: codeChangeArtifacts
+    };
+  }
+
   private async registerArtifact(input: {
     artifact: BaseArtifact;
     artifacts: BaseArtifact[];
@@ -476,7 +554,14 @@ export class DeliveryWorkflowService {
         workflowId: input.workflowId,
         artifactIds: input.artifactIds,
         agentId: "delivery-workflow-v1",
-        skillIds: ["repo-router", "prd-writer", "tech-spec-writer", "release"]
+        skillIds: [
+          "repo-router",
+          "prd-writer",
+          "tech-spec-writer",
+          "backend-contributor",
+          "frontend-contributor",
+          "release"
+        ]
       })
     );
   }

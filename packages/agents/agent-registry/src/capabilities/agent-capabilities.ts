@@ -18,6 +18,12 @@ export const technicalArchitectureCapability: AgentCapability = {
   description: "Produces technical architecture and implementation planning artifacts."
 };
 
+export const engineeringDeliveryCapability: AgentCapability = {
+  id: "capability:engineering-delivery",
+  name: "Engineering Delivery",
+  description: "Turns architecture outputs into implementation-ready engineering packages."
+};
+
 export const governanceReviewCapability: AgentCapability = {
   id: "capability:governance-review",
   name: "Governance Review",
@@ -34,6 +40,7 @@ export const AGENT_CAPABILITIES = [
   discoveryAnalysisCapability,
   productRequirementsCapability,
   technicalArchitectureCapability,
+  engineeringDeliveryCapability,
   governanceReviewCapability,
   releasePackagingCapability
 ] as const;

@@ -84,14 +84,17 @@ export function createTestResultArtifact(
 export function createReleasePackageArtifact(
   input: StageOutputInput,
   codeChange: BaseArtifact,
-  testResult: BaseArtifact
+  testResult: BaseArtifact,
+  engineeringPackage?: BaseArtifact
 ): BaseArtifact {
   return createArtifact(input, {
     id: `${input.workflowId}:release-package`,
     type: ArtifactType.RELEASE_PACKAGE,
     title: "Governed Release Package",
     description: `Governed release package for ${input.goal}.`,
-    parentIds: [codeChange.id, testResult.id],
+    parentIds: engineeringPackage
+      ? [engineeringPackage.id, codeChange.id, testResult.id]
+      : [codeChange.id, testResult.id],
     stageId: DELIVERY_STAGE_IDS.releasePackage,
     metadata: {
       releaseVersion: "1.0.0",

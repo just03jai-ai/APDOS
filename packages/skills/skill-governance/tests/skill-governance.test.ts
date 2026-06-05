@@ -33,6 +33,23 @@ describe("SkillMappingService", () => {
     );
   });
 
+  it("maps implementation skills to Engineering Agent", () => {
+    const service = new SkillMappingService();
+
+    const engineeringSkills = service.getSkillsForAgent("agent:engineering");
+
+    assert.deepEqual(
+      engineeringSkills.map((skill) => skill.skillId),
+      [
+        "backend-contributor",
+        "frontend-contributor",
+        "mono-web-contributor",
+        "crons-contributor",
+        "data-science-monorepo-contributor"
+      ]
+    );
+  });
+
   it("returns skill dependencies as metadata", () => {
     const service = new SkillMappingService();
 
@@ -151,6 +168,17 @@ describe("SkillRecommendationService", () => {
 
     assert.equal(service.recommendNextAgent(context), "agent:architecture");
     assert.equal(service.recommendWorkflowStage(context), "tech-spec");
+  });
+
+  it("recommends the Engineering Agent when architecture outputs are available", () => {
+    const service = new SkillRecommendationService();
+    const context = {
+      availableArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
+      completedSkills: ["tech-spec-writer", "implement-plan", "design-system"]
+    };
+
+    assert.equal(service.recommendNextAgent(context), "agent:engineering");
+    assert.equal(service.recommendWorkflowStage(context), "engineering");
   });
 
   it("does not recommend skills with incomplete dependencies", () => {

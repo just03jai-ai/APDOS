@@ -58,6 +58,7 @@ Skills are mapped to APDOS agents:
 agent:discovery
 agent:product
 agent:architecture
+agent:engineering
 agent:governance
 agent:release
 ```
@@ -69,7 +70,7 @@ idea
 discovery
 prd
 tech-spec
-implementation
+engineering
 validation
 approval
 release-package
@@ -123,4 +124,3 @@ Use `SkillGovernanceService` when a caller wants mapping, graph, and recommendat
 ## Current Limits
 
 The layer is deterministic and in-memory. It does not yet persist governance policy, enforce runtime permissions, or infer mappings with an LLM.
-

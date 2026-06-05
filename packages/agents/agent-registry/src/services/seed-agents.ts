@@ -2,6 +2,7 @@ import { ArtifactType } from "@apdos/artifacts";
 import type { AgentDefinition } from "../contracts/agent-definition.js";
 import {
   discoveryAnalysisCapability,
+  engineeringDeliveryCapability,
   governanceReviewCapability,
   productRequirementsCapability,
   releasePackagingCapability,
@@ -59,6 +60,29 @@ export const architectureAgent: AgentDefinition = {
   }
 };
 
+export const engineeringAgent: AgentDefinition = {
+  id: "agent:engineering",
+  name: "EngineeringAgent",
+  description: "Creates engineering delivery packages from architecture outputs.",
+  version: "0.1.0",
+  status: "available",
+  capabilities: [engineeringDeliveryCapability],
+  inputArtifacts: [ArtifactType.PRD, ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
+  outputArtifacts: [ArtifactType.ENGINEERING_PACKAGE],
+  requiredSkills: [
+    "backend-contributor",
+    "frontend-contributor",
+    "mono-web-contributor",
+    "crons-contributor",
+    "data-science-monorepo-contributor"
+  ],
+  executionConstraints: {
+    maxConcurrentRuns: 1,
+    requiresHumanApproval: false,
+    allowedWorkflowStages: ["Engineering"]
+  }
+};
+
 export const governanceAgent: AgentDefinition = {
   id: "agent:governance",
   name: "GovernanceAgent",
@@ -97,6 +121,7 @@ export const INITIAL_AGENT_DEFINITIONS = [
   discoveryAgent,
   productAgent,
   architectureAgent,
+  engineeringAgent,
   governanceAgent,
   releaseAgent
 ] as const;

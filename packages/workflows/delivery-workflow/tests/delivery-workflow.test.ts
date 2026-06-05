@@ -20,8 +20,10 @@ describe("DeliveryWorkflowService", () => {
     });
 
     assert.equal(result.workflow.status, WorkflowStatus.COMPLETED);
-    assert.equal(result.workflow.stages.length, 7);
+    assert.equal(result.workflow.stages.length, 8);
     assert.equal(result.workflow.stages.every((stage) => stage.status === "COMPLETED"), true);
+    assert.equal(result.engineeringPackage.type, ArtifactType.ENGINEERING_PACKAGE);
+    assert.equal(result.engineeringPackage.id, "workflow-delivery-1:engineering-package");
     assert.equal(result.releasePackage.type, ArtifactType.RELEASE_PACKAGE);
     assert.equal(result.releasePackage.id, "workflow-delivery-1:release-package");
     assert.deepEqual(
@@ -33,6 +35,11 @@ describe("DeliveryWorkflowService", () => {
         ArtifactType.TECH_SPEC,
         ArtifactType.IMPLEMENTATION_PLAN,
         ArtifactType.CODE_CHANGE,
+        ArtifactType.CODE_CHANGE,
+        ArtifactType.CODE_CHANGE,
+        ArtifactType.CODE_CHANGE,
+        ArtifactType.CODE_CHANGE,
+        ArtifactType.ENGINEERING_PACKAGE,
         ArtifactType.TEST_RESULT,
         ArtifactType.RELEASE_PACKAGE
       ]
@@ -74,6 +81,24 @@ describe("DeliveryWorkflowService", () => {
       "workflow-delivery-1:tech-spec"
     ]);
     assert.ok(Array.isArray(implementationPlan?.metadata.tasks));
+    assert.deepEqual(result.engineeringPackage.metadata.sourceSkillIds, [
+      "backend-contributor@1.0",
+      "frontend-contributor@1.0",
+      "mono-web-contributor@1.0",
+      "crons-contributor@1.0",
+      "data-science-monorepo-contributor@1.0"
+    ]);
+    assert.ok(Array.isArray(result.engineeringPackage.metadata.backendTasks));
+    assert.ok(Array.isArray(result.engineeringPackage.metadata.frontendTasks));
+    assert.ok(Array.isArray(result.engineeringPackage.metadata.databaseTasks));
+    assert.ok(Array.isArray(result.engineeringPackage.metadata.apiTasks));
+    assert.ok(Array.isArray(result.engineeringPackage.metadata.migrationTasks));
+    assert.ok(Array.isArray(result.engineeringPackage.metadata.cronTasks));
+    assert.ok(Array.isArray(result.engineeringPackage.metadata.dependencies));
+    assert.ok(Array.isArray(result.engineeringPackage.metadata.implementationOrder));
+    assert.ok(Array.isArray(result.engineeringPackage.metadata.sprintPlan));
+    assert.equal(result.engineeringPackage.metadata.storyPoints, 34);
+    assert.ok(Array.isArray(result.engineeringPackage.metadata.risks));
   });
 
   it("validates PRD, TECH_SPEC, and RELEASE_PACKAGE before completion", async () => {
@@ -139,14 +164,20 @@ describe("DeliveryWorkflowService", () => {
 
     assert.equal(result.traceability.releasePackageId, "workflow-traceability-1:release-package");
     assert.deepEqual(releaseTrace?.parentIds, [
-      "workflow-traceability-1:code-change",
+      "workflow-traceability-1:engineering-package",
+      "workflow-traceability-1:code-change:1",
       "workflow-traceability-1:test-result"
     ]);
     assert.deepEqual(
       releaseTrace?.ancestorIds.sort(),
       [
-        "workflow-traceability-1:code-change",
+        "workflow-traceability-1:code-change:1",
+        "workflow-traceability-1:code-change:2",
+        "workflow-traceability-1:code-change:3",
+        "workflow-traceability-1:code-change:4",
+        "workflow-traceability-1:code-change:5",
         "workflow-traceability-1:discovery",
+        "workflow-traceability-1:engineering-package",
         "workflow-traceability-1:idea",
         "workflow-traceability-1:implementation-plan",
         "workflow-traceability-1:prd",
@@ -197,11 +228,11 @@ describe("DeliveryWorkflowService", () => {
 
     assert.equal(
       result.workflow.history.filter((event) => event.type === "STAGE_STARTED").length,
-      7
+      8
     );
     assert.equal(
       result.workflow.history.filter((event) => event.type === "STAGE_COMPLETED").length,
-      7
+      8
     );
     assert.equal(
       result.workflow.history.at(-1)?.type,

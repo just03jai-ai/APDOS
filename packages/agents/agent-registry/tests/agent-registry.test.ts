@@ -88,7 +88,7 @@ describe("AgentRegistry", () => {
 
     assert.deepEqual(
       agents.map((agent) => agent.name),
-      ["ArchitectureAgent", "GovernanceAgent", "ReleaseAgent"]
+      ["ArchitectureAgent", "EngineeringAgent", "GovernanceAgent", "ReleaseAgent"]
     );
   });
 
@@ -112,6 +112,7 @@ describe("AgentRegistry", () => {
         "DiscoveryAgent",
         "ProductAgent",
         "ArchitectureAgent",
+        "EngineeringAgent",
         "GovernanceAgent",
         "ReleaseAgent"
       ]

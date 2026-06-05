@@ -25,6 +25,7 @@ export interface DeliveryWorkflowTraceability {
 export interface DeliveryWorkflowRunResult {
   workflow: WorkflowInstance;
   artifacts: BaseArtifact[];
+  engineeringPackage: BaseArtifact;
   releasePackage: BaseArtifact;
   approvals: ApprovalRequest[];
   validationResults: ValidationResult[];
