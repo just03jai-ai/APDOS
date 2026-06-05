@@ -13,6 +13,7 @@ import { ContextRetrievalService } from "@apdos/context-engine";
 import { DiscoveryAgentService } from "@apdos/discovery-agent";
 import { EngineeringAgentService } from "@apdos/engineering-agent";
 import { ProductAgentService } from "@apdos/product-agent";
+import { QaAgentService } from "@apdos/qa-agent";
 import { SkillRuntimeService } from "@apdos/skill-runtime";
 import {
   ValidatorRegistry,
@@ -31,7 +32,6 @@ import {
 import {
   createIdeaArtifact,
   createReleasePackageArtifact,
-  createTestResultArtifact,
   type StageOutputInput
 } from "../stages/mock-stage-outputs.js";
 import type {
@@ -48,6 +48,7 @@ export interface DeliveryWorkflowServiceDependencies {
   discoveryAgent?: DiscoveryAgentService;
   engineeringAgent?: EngineeringAgentService;
   productAgent?: ProductAgentService;
+  qaAgent?: QaAgentService;
   validators?: ValidatorRegistry;
 }
 
@@ -59,6 +60,7 @@ export class DeliveryWorkflowService {
   private readonly discoveryAgent: DiscoveryAgentService;
   private readonly engineeringAgent: EngineeringAgentService;
   private readonly productAgent: ProductAgentService;
+  private readonly qaAgent: QaAgentService;
   private readonly validators: ValidatorRegistry;
   private readonly context: ContextRetrievalService;
 
@@ -97,6 +99,13 @@ export class DeliveryWorkflowService {
       });
     this.engineeringAgent = dependencies.engineeringAgent ??
       new EngineeringAgentService({
+        artifacts: this.artifacts,
+        context: this.context,
+        workflows: this.workflows,
+        skillRuntime
+      });
+    this.qaAgent = dependencies.qaAgent ??
+      new QaAgentService({
         artifacts: this.artifacts,
         context: this.context,
         workflows: this.workflows,
@@ -194,9 +203,26 @@ export class DeliveryWorkflowService {
     });
     const codeChange = codeChanges[0];
 
+    const { qaPackage, testResults, governanceFindings } = await this.runQaStage({
+      workflowId,
+      actorId,
+      createdAt,
+      prd,
+      techSpec,
+      implementationPlan,
+      engineeringPackage,
+      artifacts,
+      contextPackages
+    });
+    const testResult = testResults[0];
+
     await this.captureContext({
       workflowId,
-      artifactIds: [engineeringPackage.id, ...codeChanges.map((artifact) => artifact.id)],
+      artifactIds: [
+        qaPackage.id,
+        ...testResults.map((artifact) => artifact.id),
+        ...governanceFindings.map((artifact) => artifact.id)
+      ],
       contextPackages
     });
     this.workflows.advanceStage({
@@ -204,27 +230,23 @@ export class DeliveryWorkflowService {
       stageId: DELIVERY_STAGE_IDS.validation,
       occurredAt: createdAt
     });
-    const testResult = await this.registerArtifact({
-      artifact: createTestResultArtifact(stageInput, codeChange),
-      artifacts
-    });
     this.workflows.completeStage({
       workflowId,
       stageId: DELIVERY_STAGE_IDS.validation,
-      artifactIds: [codeChange.id, testResult.id],
+      artifactIds: [qaPackage.id, testResult.id],
       occurredAt: createdAt
     });
 
     await this.captureContext({
       workflowId,
-      artifactIds: [codeChange.id, testResult.id],
+      artifactIds: [qaPackage.id, testResult.id],
       contextPackages
     });
 
     await this.runApprovalStage({
       workflowId,
       actorId,
-      artifactIds: [codeChange.id, testResult.id],
+      artifactIds: [qaPackage.id, testResult.id],
       contextPackages
     });
 
@@ -232,7 +254,7 @@ export class DeliveryWorkflowService {
       stageInput,
       codeChange,
       testResult,
-      engineeringPackage
+      qaPackage
     );
     const releaseValidation = this.validateRequiredArtifact(
       releasePackage,
@@ -256,6 +278,7 @@ export class DeliveryWorkflowService {
       workflow,
       artifacts,
       engineeringPackage,
+      qaPackage,
       releasePackage: registeredReleasePackage,
       approvals: this.approvals.listApprovals(),
       validationResults,
@@ -485,6 +508,78 @@ export class DeliveryWorkflowService {
     };
   }
 
+  private async runQaStage(input: {
+    workflowId: string;
+    actorId: string;
+    createdAt: string;
+    prd: BaseArtifact;
+    techSpec: BaseArtifact;
+    implementationPlan: BaseArtifact;
+    engineeringPackage: BaseArtifact;
+    artifacts: BaseArtifact[];
+    contextPackages: DeliveryWorkflowRunResult["contextPackages"];
+  }): Promise<{
+    qaPackage: BaseArtifact;
+    testResults: BaseArtifact[];
+    governanceFindings: BaseArtifact[];
+  }> {
+    await this.captureContext({
+      workflowId: input.workflowId,
+      artifactIds: [
+        input.prd.id,
+        input.techSpec.id,
+        input.implementationPlan.id,
+        input.engineeringPackage.id
+      ],
+      contextPackages: input.contextPackages
+    });
+
+    this.workflows.advanceStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.qa,
+      occurredAt: input.createdAt
+    });
+
+    const {
+      qaPackageArtifact,
+      testResultArtifacts,
+      governanceFindingArtifacts
+    } = await this.qaAgent.createQaPackage({
+      request: {
+        workflowId: input.workflowId,
+        prdArtifactId: input.prd.id,
+        techSpecArtifactId: input.techSpec.id,
+        implementationPlanArtifactId: input.implementationPlan.id,
+        engineeringPackageArtifactId: input.engineeringPackage.id
+      },
+      actorId: input.actorId,
+      createdAt: input.createdAt,
+      stageId: DELIVERY_STAGE_IDS.qa
+    });
+    input.artifacts.push(
+      ...testResultArtifacts,
+      ...governanceFindingArtifacts,
+      qaPackageArtifact
+    );
+
+    this.workflows.completeStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.qa,
+      artifactIds: [
+        ...testResultArtifacts.map((artifact) => artifact.id),
+        ...governanceFindingArtifacts.map((artifact) => artifact.id),
+        qaPackageArtifact.id
+      ],
+      occurredAt: input.createdAt
+    });
+
+    return {
+      qaPackage: qaPackageArtifact,
+      testResults: testResultArtifacts,
+      governanceFindings: governanceFindingArtifacts
+    };
+  }
+
   private async registerArtifact(input: {
     artifact: BaseArtifact;
     artifacts: BaseArtifact[];
@@ -560,6 +655,8 @@ export class DeliveryWorkflowService {
           "tech-spec-writer",
           "backend-contributor",
           "frontend-contributor",
+          "test-plan-writer",
+          "ai-data-analyst",
           "release"
         ]
       })

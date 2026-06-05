@@ -30,6 +30,7 @@ The `ArtifactType` enum currently supports:
 - `TASK`
 - `CODE_CHANGE`
 - `ENGINEERING_PACKAGE`
+- `QA_PACKAGE`
 - `TEST_RESULT`
 - `GOVERNANCE_FINDING`
 - `RELEASE_PACKAGE`

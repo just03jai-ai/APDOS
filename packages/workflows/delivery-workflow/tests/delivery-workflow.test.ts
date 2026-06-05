@@ -20,10 +20,12 @@ describe("DeliveryWorkflowService", () => {
     });
 
     assert.equal(result.workflow.status, WorkflowStatus.COMPLETED);
-    assert.equal(result.workflow.stages.length, 8);
+    assert.equal(result.workflow.stages.length, 9);
     assert.equal(result.workflow.stages.every((stage) => stage.status === "COMPLETED"), true);
     assert.equal(result.engineeringPackage.type, ArtifactType.ENGINEERING_PACKAGE);
     assert.equal(result.engineeringPackage.id, "workflow-delivery-1:engineering-package");
+    assert.equal(result.qaPackage.type, ArtifactType.QA_PACKAGE);
+    assert.equal(result.qaPackage.id, "workflow-delivery-1:qa-package");
     assert.equal(result.releasePackage.type, ArtifactType.RELEASE_PACKAGE);
     assert.equal(result.releasePackage.id, "workflow-delivery-1:release-package");
     assert.deepEqual(
@@ -41,6 +43,8 @@ describe("DeliveryWorkflowService", () => {
         ArtifactType.CODE_CHANGE,
         ArtifactType.ENGINEERING_PACKAGE,
         ArtifactType.TEST_RESULT,
+        ArtifactType.GOVERNANCE_FINDING,
+        ArtifactType.QA_PACKAGE,
         ArtifactType.RELEASE_PACKAGE
       ]
     );
@@ -99,6 +103,19 @@ describe("DeliveryWorkflowService", () => {
     assert.ok(Array.isArray(result.engineeringPackage.metadata.sprintPlan));
     assert.equal(result.engineeringPackage.metadata.storyPoints, 34);
     assert.ok(Array.isArray(result.engineeringPackage.metadata.risks));
+    assert.deepEqual(result.qaPackage.metadata.sourceSkillIds, [
+      "test-plan-writer@1.0",
+      "ai-data-analyst@1.0"
+    ]);
+    assert.ok(Array.isArray(result.qaPackage.metadata.testCases));
+    assert.ok(Array.isArray(result.qaPackage.metadata.regressionCoverage));
+    assert.ok(Array.isArray(result.qaPackage.metadata.integrationTests));
+    assert.ok(Array.isArray(result.qaPackage.metadata.acceptanceTests));
+    assert.ok(Array.isArray(result.qaPackage.metadata.edgeCases));
+    assert.ok(Array.isArray(result.qaPackage.metadata.negativeScenarios));
+    assert.ok(Array.isArray(result.qaPackage.metadata.uatChecklist));
+    assert.ok(Array.isArray(result.qaPackage.metadata.releaseValidationChecklist));
+    assert.ok(Array.isArray(result.qaPackage.metadata.riskAreas));
   });
 
   it("validates PRD, TECH_SPEC, and RELEASE_PACKAGE before completion", async () => {
@@ -164,9 +181,9 @@ describe("DeliveryWorkflowService", () => {
 
     assert.equal(result.traceability.releasePackageId, "workflow-traceability-1:release-package");
     assert.deepEqual(releaseTrace?.parentIds, [
-      "workflow-traceability-1:engineering-package",
+      "workflow-traceability-1:qa-package",
       "workflow-traceability-1:code-change:1",
-      "workflow-traceability-1:test-result"
+      "workflow-traceability-1:qa-test-result:1"
     ]);
     assert.deepEqual(
       releaseTrace?.ancestorIds.sort(),
@@ -181,8 +198,10 @@ describe("DeliveryWorkflowService", () => {
         "workflow-traceability-1:idea",
         "workflow-traceability-1:implementation-plan",
         "workflow-traceability-1:prd",
+        "workflow-traceability-1:qa-finding:1",
+        "workflow-traceability-1:qa-package",
+        "workflow-traceability-1:qa-test-result:1",
         "workflow-traceability-1:tech-spec",
-        "workflow-traceability-1:test-result"
       ].sort()
     );
   });
@@ -228,11 +247,11 @@ describe("DeliveryWorkflowService", () => {
 
     assert.equal(
       result.workflow.history.filter((event) => event.type === "STAGE_STARTED").length,
-      8
+      9
     );
     assert.equal(
       result.workflow.history.filter((event) => event.type === "STAGE_COMPLETED").length,
-      8
+      9
     );
     assert.equal(
       result.workflow.history.at(-1)?.type,

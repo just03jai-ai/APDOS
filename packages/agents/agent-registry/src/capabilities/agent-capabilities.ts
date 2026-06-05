@@ -24,6 +24,12 @@ export const engineeringDeliveryCapability: AgentCapability = {
   description: "Turns architecture outputs into implementation-ready engineering packages."
 };
 
+export const qaValidationCapability: AgentCapability = {
+  id: "capability:qa-validation",
+  name: "QA Validation",
+  description: "Turns engineering packages into validation-ready QA evidence."
+};
+
 export const governanceReviewCapability: AgentCapability = {
   id: "capability:governance-review",
   name: "Governance Review",
@@ -41,6 +47,7 @@ export const AGENT_CAPABILITIES = [
   productRequirementsCapability,
   technicalArchitectureCapability,
   engineeringDeliveryCapability,
+  qaValidationCapability,
   governanceReviewCapability,
   releasePackagingCapability
 ] as const;

@@ -176,10 +176,15 @@ export const testPlanWriterSkill: SkillDefinition = {
   name: "test-plan-writer",
   description: "Creates test planning artifacts from implementation plans and technical specs.",
   version: "1.0",
-  dependencies: ["implement-plan"],
+  dependencies: ["backend-contributor"],
   category: "quality",
   status: "available",
-  inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN, ArtifactType.CODE_CHANGE],
+  inputArtifacts: [
+    ArtifactType.PRD,
+    ArtifactType.TECH_SPEC,
+    ArtifactType.IMPLEMENTATION_PLAN,
+    ArtifactType.ENGINEERING_PACKAGE
+  ],
   outputArtifacts: [ArtifactType.TEST_RESULT],
   templates: [testPlanTemplate],
   rules: [
@@ -344,10 +349,10 @@ export const aiDataAnalystSkill: SkillDefinition = {
   name: "ai-data-analyst",
   description: "Analyzes delivery artifacts and data outputs for validation findings.",
   version: "1.0",
-  dependencies: ["backend-contributor"],
+  dependencies: ["test-plan-writer"],
   category: "quality",
   status: "available",
-  inputArtifacts: [ArtifactType.CODE_CHANGE, ArtifactType.TEST_RESULT],
+  inputArtifacts: [ArtifactType.ENGINEERING_PACKAGE, ArtifactType.TEST_RESULT],
   outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
   templates: [],
   rules: [

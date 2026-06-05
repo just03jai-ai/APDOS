@@ -7,7 +7,7 @@
   "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "npm --workspace @apdos/discovery-agent run build && npm --workspace @apdos/product-agent run build && npm --workspace @apdos/architecture-agent run build && npm --workspace @apdos/engineering-agent run build && tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
+    "test": "npm --workspace @apdos/discovery-agent run build && npm --workspace @apdos/product-agent run build && npm --workspace @apdos/architecture-agent run build && npm --workspace @apdos/engineering-agent run build && npm --workspace @apdos/qa-agent run build && tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
   },
   "dependencies": {
     "@apdos/architecture-agent": "0.1.0",
@@ -17,6 +17,7 @@
     "@apdos/discovery-agent": "0.1.0",
     "@apdos/engineering-agent": "0.1.0",
     "@apdos/product-agent": "0.1.0",
+    "@apdos/qa-agent": "0.1.0",
     "@apdos/skill-runtime": "0.1.0",
     "@apdos/validation-engine": "0.1.0",
     "@apdos/workflow-engine": "0.1.0"

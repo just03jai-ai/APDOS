@@ -5,6 +5,7 @@ import {
   engineeringDeliveryCapability,
   governanceReviewCapability,
   productRequirementsCapability,
+  qaValidationCapability,
   releasePackagingCapability,
   technicalArchitectureCapability
 } from "../capabilities/agent-capabilities.js";
@@ -83,6 +84,28 @@ export const engineeringAgent: AgentDefinition = {
   }
 };
 
+export const qaAgent: AgentDefinition = {
+  id: "agent:qa",
+  name: "QaAgent",
+  description: "Creates validation-ready QA packages from engineering outputs.",
+  version: "0.1.0",
+  status: "available",
+  capabilities: [qaValidationCapability],
+  inputArtifacts: [
+    ArtifactType.PRD,
+    ArtifactType.TECH_SPEC,
+    ArtifactType.IMPLEMENTATION_PLAN,
+    ArtifactType.ENGINEERING_PACKAGE
+  ],
+  outputArtifacts: [ArtifactType.QA_PACKAGE],
+  requiredSkills: ["test-plan-writer", "ai-data-analyst"],
+  executionConstraints: {
+    maxConcurrentRuns: 1,
+    requiresHumanApproval: false,
+    allowedWorkflowStages: ["QA"]
+  }
+};
+
 export const governanceAgent: AgentDefinition = {
   id: "agent:governance",
   name: "GovernanceAgent",
@@ -122,6 +145,7 @@ export const INITIAL_AGENT_DEFINITIONS = [
   productAgent,
   architectureAgent,
   engineeringAgent,
+  qaAgent,
   governanceAgent,
   releaseAgent
 ] as const;

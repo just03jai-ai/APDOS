@@ -135,24 +135,29 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
     enabled: true
   },
   {
-    skillId: "ai-data-analyst",
+    skillId: "test-plan-writer",
     version: "1.0",
-    ownerAgent: "agent:architecture",
-    workflowStage: "validation",
-    inputArtifacts: [ArtifactType.CODE_CHANGE, ArtifactType.TEST_RESULT],
-    outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
+    ownerAgent: "agent:qa",
+    workflowStage: "qa",
+    inputArtifacts: [
+      ArtifactType.PRD,
+      ArtifactType.TECH_SPEC,
+      ArtifactType.IMPLEMENTATION_PLAN,
+      ArtifactType.ENGINEERING_PACKAGE
+    ],
+    outputArtifacts: [ArtifactType.TEST_RESULT],
     dependencies: ["backend-contributor"],
     executionOrder: 100,
     enabled: true
   },
   {
-    skillId: "test-plan-writer",
+    skillId: "ai-data-analyst",
     version: "1.0",
-    ownerAgent: "agent:architecture",
-    workflowStage: "validation",
-    inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN, ArtifactType.CODE_CHANGE],
-    outputArtifacts: [ArtifactType.TEST_RESULT],
-    dependencies: ["implement-plan"],
+    ownerAgent: "agent:qa",
+    workflowStage: "qa",
+    inputArtifacts: [ArtifactType.ENGINEERING_PACKAGE, ArtifactType.TEST_RESULT],
+    outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
+    dependencies: ["test-plan-writer"],
     executionOrder: 110,
     enabled: true
   },

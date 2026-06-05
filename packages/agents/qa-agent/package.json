@@ -1,0 +1,24 @@
+{
+  "name": "@apdos/qa-agent",
+  "version": "0.1.0",
+  "description": "Skill-powered QA Agent for APDOS validation-ready delivery packages.",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "npm --workspace @apdos/runtime-orchestrator run build && tsc -p tsconfig.json",
+    "test": "npm --workspace @apdos/runtime-orchestrator run build && tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
+  },
+  "dependencies": {
+    "@apdos/artifacts": "0.1.0",
+    "@apdos/context-engine": "0.1.0",
+    "@apdos/runtime-orchestrator": "0.1.0",
+    "@apdos/skill-governance": "0.1.0",
+    "@apdos/skill-runtime": "0.1.0",
+    "@apdos/workflow-engine": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}

@@ -59,6 +59,7 @@ agent:discovery
 agent:product
 agent:architecture
 agent:engineering
+agent:qa
 agent:governance
 agent:release
 ```
@@ -71,7 +72,7 @@ discovery
 prd
 tech-spec
 engineering
-validation
+qa
 approval
 release-package
 ```

@@ -92,7 +92,8 @@ describe("SkillRegistry", () => {
         "tech-spec-writer",
         "implement-plan",
         "design-system",
-        "frontend-contributor"
+        "frontend-contributor",
+        "test-plan-writer"
       ]
     );
   });
