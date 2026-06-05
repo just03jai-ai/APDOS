@@ -39,6 +39,7 @@ export interface SkillDefinition {
   name: string;
   description: string;
   version: string;
+  dependencies?: string[];
   category: SkillCategory;
   status: SkillStatus;
   inputArtifacts: ArtifactType[];

@@ -1,17 +1,20 @@
 {
   "name": "@apdos/architecture-agent",
   "version": "0.1.0",
-  "description": "Deterministic Architecture Agent for APDOS.",
+  "description": "Skill-powered Architecture Agent for APDOS.",
   "type": "module",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
+    "build": "npm --workspace @apdos/runtime-orchestrator run build && tsc -p tsconfig.json",
+    "test": "npm --workspace @apdos/runtime-orchestrator run build && tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
   },
   "dependencies": {
     "@apdos/artifacts": "0.1.0",
     "@apdos/context-engine": "0.1.0",
+    "@apdos/runtime-orchestrator": "0.1.0",
+    "@apdos/skill-governance": "0.1.0",
+    "@apdos/skill-runtime": "0.1.0",
     "@apdos/workflow-engine": "0.1.0"
   },
   "devDependencies": {

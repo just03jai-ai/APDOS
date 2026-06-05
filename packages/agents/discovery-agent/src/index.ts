@@ -5,7 +5,6 @@ export {
   type DiscoveryReport
 } from "./contracts/discovery-report.js";
 export {
-  analyzeGoalWithDeterministicRules,
   validateDiscoveryRequest
 } from "./analysis/deterministic-discovery-analysis.js";
 export {

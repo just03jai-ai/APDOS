@@ -19,32 +19,41 @@ export class RuntimeHealthService {
     const runtimeSkillNames = uniqueSorted(runtimeSkills.map((skill) => skill.name));
     const missingSkillNames = governedSkillNames.filter((skillName) => !runtimeSkillNames.includes(skillName));
     const extraSkillNames = runtimeSkillNames.filter((skillName) => !governedSkillNames.includes(skillName));
+    const runtimeSkillByNameAndVersion = new Map(
+      runtimeSkills.map((skill) => [`${skill.name}@${skill.version}`, skill])
+    );
     const dependencyValidation = this.skillGovernance.graph.validateDependencies();
     const dependencyIssues = dependencyValidation.issues.map(
       (issue) => `${issue.skillId}:${issue.dependency}:${issue.reason}`
     );
+    const metadataIssues = validateRuntimeMetadata(governedSkills, runtimeSkillByNameAndVersion);
     const executableSkillNames: string[] = [];
 
-    for (const skillName of governedSkillNames) {
-      if (missingSkillNames.includes(skillName)) {
+    for (const skill of governedSkills) {
+      if (missingSkillNames.includes(skill.skillId)) {
         continue;
       }
 
       try {
-        this.skillRuntime.loadSkill(skillName, "1.0");
-        executableSkillNames.push(skillName);
+        this.skillRuntime.loadSkill(skill.skillId, skill.version ?? "1.0");
+        executableSkillNames.push(skill.skillId);
       } catch {
-        missingSkillNames.push(skillName);
+        missingSkillNames.push(skill.skillId);
       }
     }
 
     return {
-      valid: missingSkillNames.length === 0 && extraSkillNames.length === 0 && dependencyIssues.length === 0,
+      valid:
+        missingSkillNames.length === 0 &&
+        extraSkillNames.length === 0 &&
+        dependencyIssues.length === 0 &&
+        metadataIssues.length === 0,
       governedSkillNames,
       runtimeSkillNames,
       missingSkillNames: uniqueSorted(missingSkillNames),
       extraSkillNames,
       dependencyIssues,
+      metadataIssues,
       executableSkillNames: uniqueSorted(executableSkillNames)
     };
   }
@@ -62,6 +71,62 @@ export class RuntimeHealthService {
 
 function uniqueSorted(values: string[]): string[] {
   return [...new Set(values)].sort();
+}
+
+function validateRuntimeMetadata(
+  governedSkills: ReturnType<SkillGovernanceService["mapping"]["listSkills"]>,
+  runtimeSkillByNameAndVersion: Map<string, SkillDefinition>
+): string[] {
+  const issues: string[] = [];
+
+  for (const governedSkill of governedSkills) {
+    const version = governedSkill.version ?? "1.0";
+    const runtimeSkill = runtimeSkillByNameAndVersion.get(`${governedSkill.skillId}@${version}`);
+
+    if (!runtimeSkill) {
+      issues.push(`${governedSkill.skillId}@${version}:version:missing`);
+      continue;
+    }
+
+    collectArrayMismatchIssues(
+      issues,
+      `${governedSkill.skillId}@${version}`,
+      "inputArtifacts",
+      governedSkill.inputArtifacts,
+      runtimeSkill.inputArtifacts
+    );
+    collectArrayMismatchIssues(
+      issues,
+      `${governedSkill.skillId}@${version}`,
+      "outputArtifacts",
+      governedSkill.outputArtifacts,
+      runtimeSkill.outputArtifacts
+    );
+    collectArrayMismatchIssues(
+      issues,
+      `${governedSkill.skillId}@${version}`,
+      "dependencies",
+      governedSkill.dependencies,
+      runtimeSkill.dependencies ?? []
+    );
+  }
+
+  return issues;
+}
+
+function collectArrayMismatchIssues(
+  issues: string[],
+  skillId: string,
+  field: string,
+  governedValues: string[],
+  runtimeValues: string[]
+): void {
+  const governed = uniqueSorted(governedValues);
+  const runtime = uniqueSorted(runtimeValues);
+
+  if (governed.join("|") !== runtime.join("|")) {
+    issues.push(`${skillId}:${field}:governance=${governed.join(",")}:runtime=${runtime.join(",")}`);
+  }
 }
 
 function listRuntimeSkills(skillRuntime: SkillRuntimeService): SkillDefinition[] {

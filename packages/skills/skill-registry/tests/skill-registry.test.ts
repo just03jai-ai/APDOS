@@ -14,6 +14,7 @@ function buildSkill(overrides: Partial<SkillDefinition> = {}): SkillDefinition {
     name: "test-skill",
     description: "Test skill definition.",
     version: "1.0",
+    dependencies: [],
     category: "research",
     status: "available",
     inputArtifacts: [ArtifactType.IDEA],
@@ -88,8 +89,6 @@ describe("SkillRegistry", () => {
     assert.deepEqual(
       skills.map((skill) => skill.name),
       [
-        "repo-router",
-        "knowledge",
         "tech-spec-writer",
         "implement-plan",
         "design-system",

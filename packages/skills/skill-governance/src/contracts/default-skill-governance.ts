@@ -4,6 +4,7 @@ import type { SkillGovernanceMetadata } from "./skill-governance-metadata.js";
 export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   {
     skillId: "repo-router",
+    version: "1.0",
     ownerAgent: "agent:discovery",
     workflowStage: "idea",
     inputArtifacts: [ArtifactType.IDEA],
@@ -14,6 +15,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "knowledge",
+    version: "1.0",
     ownerAgent: "agent:discovery",
     workflowStage: "discovery",
     inputArtifacts: [ArtifactType.IDEA],
@@ -24,6 +26,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "codebase-research",
+    version: "1.0",
     ownerAgent: "agent:discovery",
     workflowStage: "discovery",
     inputArtifacts: [ArtifactType.IDEA, ArtifactType.TASK],
@@ -34,6 +37,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "prd-writer",
+    version: "1.0",
     ownerAgent: "agent:product",
     workflowStage: "prd",
     inputArtifacts: [ArtifactType.DISCOVERY_REPORT],
@@ -44,6 +48,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "tech-spec-writer",
+    version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "tech-spec",
     inputArtifacts: [ArtifactType.PRD],
@@ -54,6 +59,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "implement-plan",
+    version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "tech-spec",
     inputArtifacts: [ArtifactType.PRD, ArtifactType.TECH_SPEC],
@@ -64,6 +70,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "design-system",
+    version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "tech-spec",
     inputArtifacts: [ArtifactType.PRD, ArtifactType.TECH_SPEC],
@@ -74,6 +81,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "backend-contributor",
+    version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "implementation",
     inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
@@ -84,6 +92,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "frontend-contributor",
+    version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "implementation",
     inputArtifacts: [ArtifactType.PRD, ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
@@ -94,6 +103,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "mono-web-contributor",
+    version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "implementation",
     inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
@@ -104,6 +114,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "crons-contributor",
+    version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "implementation",
     inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
@@ -114,6 +125,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "data-science-monorepo-contributor",
+    version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "implementation",
     inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
@@ -124,6 +136,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "ai-data-analyst",
+    version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "validation",
     inputArtifacts: [ArtifactType.CODE_CHANGE, ArtifactType.TEST_RESULT],
@@ -134,6 +147,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "test-plan-writer",
+    version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "validation",
     inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN, ArtifactType.CODE_CHANGE],
@@ -144,6 +158,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "git-guardian",
+    version: "1.0",
     ownerAgent: "agent:governance",
     workflowStage: "approval",
     inputArtifacts: [ArtifactType.CODE_CHANGE, ArtifactType.TEST_RESULT],
@@ -154,6 +169,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "conventions",
+    version: "1.0",
     ownerAgent: "agent:governance",
     workflowStage: "approval",
     inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.CODE_CHANGE],
@@ -164,6 +180,7 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   },
   {
     skillId: "chronolog-logging",
+    version: "1.0",
     ownerAgent: "agent:release",
     workflowStage: "release-package",
     inputArtifacts: [ArtifactType.GOVERNANCE_FINDING, ArtifactType.CODE_CHANGE, ArtifactType.TEST_RESULT],

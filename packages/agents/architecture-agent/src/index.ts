@@ -6,10 +6,7 @@ export type {
   ImplementationPlanContract
 } from "./contracts/implementation-plan.js";
 export {
-  generateTechSpecWithDeterministicRules,
-  generateImplementationPlanWithDeterministicRules,
-  validateArchitectureRequest,
-  type ArchitectureGenerationContext
+  validateArchitectureRequest
 } from "./generation/deterministic-architecture-generation.js";
 export {
   createTechSpecArtifact,

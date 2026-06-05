@@ -43,16 +43,17 @@ describe("DeliveryWorkflowService", () => {
 
     assert.equal(
       (discovery?.metadata.report as { affectedSystems: string[] }).affectedSystems.includes(
-        "payment-operations"
+        "skill-runtime"
       ),
       true
     );
-    assert.equal(
-      (discovery?.metadata.report as { recommendedNextSteps: string[] })
-        .recommendedNextSteps
-        .includes("Create a PRD from this discovery report."),
-      true
-    );
+    assert.deepEqual(discovery?.metadata.sourceSkillIds, [
+      "repo-router@1.0",
+      "knowledge@1.0",
+      "codebase-research@1.0"
+    ]);
+    const prd = result.artifacts.find((artifact) => artifact.type === ArtifactType.PRD);
+    assert.deepEqual(prd?.metadata.sourceSkillIds, ["prd-writer@1.0"]);
     const techSpec = result.artifacts.find((artifact) => artifact.type === ArtifactType.TECH_SPEC);
     const implementationPlan = result.artifacts.find(
       (artifact) => artifact.type === ArtifactType.IMPLEMENTATION_PLAN
@@ -60,10 +61,18 @@ describe("DeliveryWorkflowService", () => {
 
     assert.equal(techSpec?.createdBy, "apdos-test");
     assert.deepEqual(techSpec?.parentIds, ["workflow-delivery-1:prd"]);
+    assert.deepEqual(techSpec?.metadata.sourceSkillIds, [
+      "tech-spec-writer@1.0",
+      "implement-plan@1.0",
+      "design-system@1.0"
+    ]);
     assert.equal(typeof techSpec?.metadata.architectureOverview, "string");
     assert.ok(Array.isArray(techSpec?.metadata.apiContracts));
     assert.equal(implementationPlan?.createdBy, "apdos-test");
-    assert.deepEqual(implementationPlan?.parentIds, ["workflow-delivery-1:tech-spec"]);
+    assert.deepEqual(implementationPlan?.parentIds, [
+      "workflow-delivery-1:prd",
+      "workflow-delivery-1:tech-spec"
+    ]);
     assert.ok(Array.isArray(implementationPlan?.metadata.tasks));
   });
 

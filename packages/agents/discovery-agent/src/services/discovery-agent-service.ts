@@ -1,8 +1,11 @@
 import {
   ArtifactRegistry,
+  ArtifactType,
   type BaseArtifact
 } from "@apdos/artifacts";
 import { ContextRetrievalService } from "@apdos/context-engine";
+import { RuntimeSkillExecutor } from "@apdos/runtime-orchestrator";
+import { SkillGovernanceService } from "@apdos/skill-governance";
 import type {
   SkillExecutionRequest,
   SkillResult,
@@ -13,7 +16,6 @@ import {
   type WorkflowInstance
 } from "@apdos/workflow-engine";
 import {
-  analyzeGoalWithDeterministicRules,
   validateDiscoveryRequest
 } from "../analysis/deterministic-discovery-analysis.js";
 import type { DiscoveryRequest } from "../contracts/discovery-request.js";
@@ -25,7 +27,8 @@ import {
 export interface DiscoveryAgentServiceDependencies {
   artifacts?: ArtifactRegistry;
   context?: ContextRetrievalService;
-  skillRuntime?: Pick<SkillRuntimeService, "executeSkill">;
+  skillGovernance?: SkillGovernanceService;
+  skillRuntime?: SkillRuntimeService;
   workflows?: WorkflowExecutionService;
 }
 
@@ -58,7 +61,7 @@ export class DiscoveryAgentService {
   ) {}
 
   analyzeGoal(request: DiscoveryRequest): DiscoveryReport {
-    return analyzeGoalWithDeterministicRules(request);
+    return createAggregatedDiscoveryReport(request, [], []);
   }
 
   async executeSkill(
@@ -81,18 +84,27 @@ export class DiscoveryAgentService {
     await this.loadContext(input.request);
     this.assertWorkflowExists(input.request.workflowId);
 
-    const skillResults = await this.executeRequestedSkills(
-      input.skillExecutions ?? []
+    const inputArtifacts = await this.resolveInputArtifacts(input);
+    const skillResults = input.skillExecutions
+      ? await this.executeRequestedSkills(input.skillExecutions)
+      : await this.executeGovernedSkills(input, inputArtifacts);
+    const producedArtifacts = skillResults.flatMap((result) => result.artifacts);
+    const report = createAggregatedDiscoveryReport(
+      input.request,
+      skillResults,
+      producedArtifacts
     );
-    const report = this.analyzeGoal(input.request);
     const artifact = createDiscoveryReportArtifact({
       request: input.request,
       report,
-      parentIds: input.parentArtifactIds ?? input.request.contextIds,
+      parentIds: input.parentArtifactIds ?? inputArtifacts.map((artifact) => artifact.id),
       actorId: input.actorId ?? "discovery-agent",
       createdAt: input.createdAt,
       stageId: input.stageId
     });
+    artifact.metadata.sourceAgent = "agent:discovery";
+    artifact.metadata.sourceSkillIds = skillResults.map((result) => result.metadata.skillId);
+    artifact.metadata.sourceArtifactIds = producedArtifacts.map((producedArtifact) => producedArtifact.id);
 
     if (input.registerArtifact ?? true) {
       await this.dependencies.artifacts?.register(artifact);
@@ -117,6 +129,26 @@ export class DiscoveryAgentService {
     return results;
   }
 
+  private async executeGovernedSkills(
+    input: GenerateDiscoveryReportInput,
+    inputArtifacts: BaseArtifact[]
+  ): Promise<SkillResult[]> {
+    const skillRuntime = this.requireSkillRuntime();
+    const skillGovernance = this.dependencies.skillGovernance ?? new SkillGovernanceService();
+    const skills = skillGovernance.mapping.getSkillsForAgent("agent:discovery");
+    const executor = new RuntimeSkillExecutor(skillRuntime);
+    const executions = await executor.executeSkills({
+      workflowId: input.request.workflowId,
+      stageId: input.stageId ?? "discovery",
+      selectedAgent: "agent:discovery",
+      skills,
+      inputArtifacts,
+      requestedAt: input.createdAt
+    });
+
+    return executions.map((execution) => execution.result);
+  }
+
   private buildSkillExecutionRequest(
     input: AgentSkillExecutionRequest
   ): SkillExecutionRequest {
@@ -133,6 +165,51 @@ export class DiscoveryAgentService {
     };
   }
 
+  private async resolveInputArtifacts(input: GenerateDiscoveryReportInput): Promise<BaseArtifact[]> {
+    const artifacts: BaseArtifact[] = [];
+
+    if (this.dependencies.artifacts) {
+      for (const artifactId of input.parentArtifactIds ?? input.request.contextIds) {
+        const artifact = await this.dependencies.artifacts.retrieve(artifactId);
+
+        if (artifact) {
+          artifacts.push(artifact);
+        }
+      }
+    }
+
+    if (artifacts.length > 0) {
+      return artifacts;
+    }
+
+    return [
+      {
+        id: input.request.contextIds[0] ?? `${input.request.workflowId}:idea`,
+        type: ArtifactType.IDEA,
+        title: "Idea",
+        description: input.request.goal,
+        parentIds: [],
+        createdBy: input.actorId ?? "discovery-agent",
+        createdAt: input.createdAt ?? new Date().toISOString(),
+        version: 1,
+        status: "active",
+        metadata: {
+          workflowId: input.request.workflowId,
+          stageId: "idea",
+          goal: input.request.goal
+        }
+      }
+    ];
+  }
+
+  private requireSkillRuntime(): SkillRuntimeService {
+    if (!this.dependencies.skillRuntime) {
+      throw new Error("Skill Runtime dependency is required for governed Discovery Agent execution");
+    }
+
+    return this.dependencies.skillRuntime as SkillRuntimeService;
+  }
+
   private async loadContext(request: DiscoveryRequest): Promise<void> {
     if (!this.dependencies.context) {
       return;
@@ -142,7 +219,9 @@ export class DiscoveryAgentService {
       workflowId: request.workflowId,
       artifactIds: request.contextIds,
       agentId: "discovery-agent",
-      skillIds: ["codebase-research", "knowledge"]
+      skillIds: (this.dependencies.skillGovernance ?? new SkillGovernanceService())
+        .mapping.getSkillsForAgent("agent:discovery")
+        .map((skill) => skill.skillId)
     });
   }
 
@@ -158,4 +237,44 @@ export class DiscoveryAgentService {
       throw new Error(`Workflow not found for discovery request: ${workflowId}`);
     }
   }
+}
+
+function createAggregatedDiscoveryReport(
+  request: DiscoveryRequest,
+  skillResults: SkillResult[],
+  producedArtifacts: BaseArtifact[]
+): DiscoveryReport {
+  const executedSkillNames = skillResults.map((result) => result.metadata.skillName);
+  const findingMessages = skillResults.flatMap((result) =>
+    result.findings.map((finding) => finding.message)
+  );
+
+  return {
+    problemSummary: `Discovery for ${request.goal}.`,
+    affectedSystems: uniqueStrings([
+      "artifact-engine",
+      "workflow-engine",
+      "skill-runtime",
+      ...producedArtifacts.map((artifact) => String(artifact.metadata.stageId ?? artifact.type).toLowerCase())
+    ]),
+    repositories: uniqueStrings(
+      executedSkillNames.length > 0 ? executedSkillNames : ["skill-governance"]
+    ),
+    dependencies: uniqueStrings([
+      "skill governance metadata",
+      "skill runtime execution",
+      ...executedSkillNames
+    ]),
+    risks: uniqueStrings(
+      findingMessages.length > 0
+        ? findingMessages
+        : ["Discovery depends on governed skill output quality."]
+    ),
+    openQuestions: ["Confirm business approval thresholds and exception paths."],
+    recommendedNextSteps: ["Create PRD from governed discovery artifacts."]
+  };
+}
+
+function uniqueStrings(values: string[]): string[] {
+  return [...new Set(values.filter((value) => value.trim().length > 0))];
 }

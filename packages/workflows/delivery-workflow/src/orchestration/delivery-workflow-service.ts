@@ -11,6 +11,8 @@ import {
 } from "@apdos/artifacts";
 import { ContextRetrievalService } from "@apdos/context-engine";
 import { DiscoveryAgentService } from "@apdos/discovery-agent";
+import { ProductAgentService } from "@apdos/product-agent";
+import { SkillRuntimeService } from "@apdos/skill-runtime";
 import {
   ValidatorRegistry,
   createBuiltInValidators,
@@ -28,7 +30,6 @@ import {
 import {
   createCodeChangeArtifact,
   createIdeaArtifact,
-  createPrdArtifact,
   createReleasePackageArtifact,
   createTestResultArtifact,
   type StageOutputInput
@@ -45,6 +46,7 @@ export interface DeliveryWorkflowServiceDependencies {
   approvals?: ApprovalService;
   architectureAgent?: ArchitectureAgentService;
   discoveryAgent?: DiscoveryAgentService;
+  productAgent?: ProductAgentService;
   validators?: ValidatorRegistry;
 }
 
@@ -54,6 +56,7 @@ export class DeliveryWorkflowService {
   private readonly approvals: ApprovalService;
   private readonly architectureAgent: ArchitectureAgentService;
   private readonly discoveryAgent: DiscoveryAgentService;
+  private readonly productAgent: ProductAgentService;
   private readonly validators: ValidatorRegistry;
   private readonly context: ContextRetrievalService;
 
@@ -68,17 +71,27 @@ export class DeliveryWorkflowService {
       workflows: this.workflows,
       approvals: this.approvals
     });
+    const skillRuntime = new SkillRuntimeService();
     this.discoveryAgent = dependencies.discoveryAgent ??
       new DiscoveryAgentService({
         artifacts: this.artifacts,
         context: this.context,
-        workflows: this.workflows
+        workflows: this.workflows,
+        skillRuntime
+      });
+    this.productAgent = dependencies.productAgent ??
+      new ProductAgentService({
+        artifacts: this.artifacts,
+        context: this.context,
+        workflows: this.workflows,
+        skillRuntime
       });
     this.architectureAgent = dependencies.architectureAgent ??
       new ArchitectureAgentService({
         artifacts: this.artifacts,
         context: this.context,
-        workflows: this.workflows
+        workflows: this.workflows,
+        skillRuntime
       });
   }
 
@@ -125,13 +138,13 @@ export class DeliveryWorkflowService {
       contextPackages
     });
 
-    const prd = await this.runStage({
+    const prd = await this.runProductStage({
       workflowId,
-      stageId: DELIVERY_STAGE_IDS.prd,
-      artifact: createPrdArtifact(stageInput, idea, discovery),
+      actorId,
+      createdAt,
+      discovery,
       artifacts,
-      contextPackages,
-      contextArtifactIds: [discovery.id]
+      contextPackages
     });
     validationResults.push(this.validateRequiredArtifact(prd, artifacts));
 
@@ -303,6 +316,47 @@ export class DeliveryWorkflowService {
     });
 
     return artifact;
+  }
+
+  private async runProductStage(input: {
+    workflowId: string;
+    actorId: string;
+    createdAt: string;
+    discovery: BaseArtifact;
+    artifacts: BaseArtifact[];
+    contextPackages: DeliveryWorkflowRunResult["contextPackages"];
+  }): Promise<BaseArtifact> {
+    await this.captureContext({
+      workflowId: input.workflowId,
+      artifactIds: [input.discovery.id],
+      contextPackages: input.contextPackages
+    });
+
+    this.workflows.advanceStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.prd,
+      occurredAt: input.createdAt
+    });
+
+    const { prdArtifact } = await this.productAgent.createPrdArtifact({
+      request: {
+        workflowId: input.workflowId,
+        discoveryArtifactId: input.discovery.id
+      },
+      actorId: input.actorId,
+      createdAt: input.createdAt,
+      stageId: DELIVERY_STAGE_IDS.prd
+    });
+    input.artifacts.push(prdArtifact);
+
+    this.workflows.completeStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.prd,
+      artifactIds: [prdArtifact.id],
+      occurredAt: input.createdAt
+    });
+
+    return prdArtifact;
   }
 
   private async runArchitectureStage(input: {

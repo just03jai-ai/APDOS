@@ -11,6 +11,7 @@ import {
   RuntimeHealthService,
   RuntimeOrchestratorService,
   RuntimeSkillExecutor,
+  filterArtifactsForSkill,
   RuntimeStageResolver,
   RuntimeValidationError
 } from "../src/index.js";
@@ -154,7 +155,78 @@ describe("RuntimeSkillExecutor", () => {
       ["tech-spec-writer", "implement-plan", "design-system"]
     );
     assert.ok(designReviewArtifact.parentIds.includes(techSpecArtifact.id));
-    assert.ok(designReviewArtifact.parentIds.includes(implementationPlanArtifact.id));
+    assert.ok(!designReviewArtifact.parentIds.includes(implementationPlanArtifact.id));
+    assert.deepEqual(
+      executions[2].result.metadata.inputArtifactIds,
+      ["artifact:prd", techSpecArtifact.id]
+    );
+  });
+
+  it("filters a single artifact by skill contract", () => {
+    const governance = new SkillGovernanceService();
+    const [prdWriter] = governance.mapping.getSkillsForWorkflowStage("prd");
+
+    const filtered = filterArtifactsForSkill(
+      [
+        createArtifact("artifact:discovery", ArtifactType.DISCOVERY_REPORT),
+        createArtifact("artifact:task", ArtifactType.TASK)
+      ],
+      prdWriter
+    );
+
+    assert.deepEqual(filtered.map((artifact) => artifact.id), ["artifact:discovery"]);
+  });
+
+  it("filters multiple artifacts by skill contract", () => {
+    const governance = new SkillGovernanceService();
+    const implementPlan = governance.mapping.getSkill("implement-plan");
+
+    assert.ok(implementPlan);
+
+    const filtered = filterArtifactsForSkill(
+      [
+        createArtifact("artifact:prd", ArtifactType.PRD),
+        createArtifact("artifact:tech-spec", ArtifactType.TECH_SPEC),
+        createArtifact("artifact:task", ArtifactType.TASK)
+      ],
+      implementPlan
+    );
+
+    assert.deepEqual(
+      filtered.map((artifact) => artifact.id),
+      ["artifact:prd", "artifact:tech-spec"]
+    );
+  });
+
+  it("rejects missing required input artifacts", () => {
+    const governance = new SkillGovernanceService();
+    const [prdWriter] = governance.mapping.getSkillsForWorkflowStage("prd");
+
+    assert.throws(
+      () => filterArtifactsForSkill([createArtifact("artifact:task", ArtifactType.TASK)], prdWriter),
+      /Missing input artifacts for prd-writer: DISCOVERY_REPORT/
+    );
+  });
+
+  it("rejects contract mismatches during execution", async () => {
+    const governance = new SkillGovernanceService();
+    const executor = new RuntimeSkillExecutor(new SkillRuntimeService());
+
+    await assert.rejects(
+      () =>
+        executor.executeSkills({
+          workflowId: "workflow:contract-mismatch",
+          stageId: "prd",
+          selectedAgent: "agent:product",
+          skills: governance.mapping.getSkillsForWorkflowStage("prd"),
+          inputArtifacts: [createArtifact("artifact:task", ArtifactType.TASK)],
+          requestedAt: TEST_TIME
+        }),
+      (error) =>
+        error instanceof RuntimeExecutionError &&
+        error.cause instanceof RuntimeExecutionError &&
+        /Missing input artifacts for prd-writer: DISCOVERY_REPORT/.test(error.cause.message)
+    );
   });
 });
 
@@ -299,6 +371,7 @@ describe("RuntimeHealthService", () => {
     assert.equal(result.runtimeSkillNames.length, 17);
     assert.deepEqual(result.missingSkillNames, []);
     assert.deepEqual(result.extraSkillNames, []);
+    assert.deepEqual(result.metadataIssues, []);
   });
 
   it("reports missing governed runtime skills", () => {
@@ -331,6 +404,28 @@ describe("RuntimeHealthService", () => {
       (error) =>
         error instanceof RuntimeValidationError &&
         error.result?.extraSkillNames.includes("extra-skill") === true
+    );
+  });
+
+  it("reports governance and runtime metadata mismatches", () => {
+    const registry = createSeededSkillRegistry();
+    registry.unregisterSkill("prd-writer@1.0");
+    registry.registerSkill({
+      ...buildPrdWriterMismatch(),
+      inputArtifacts: [ArtifactType.IDEA]
+    });
+    const service = new RuntimeHealthService(
+      new SkillGovernanceService(),
+      new SkillRuntimeService({ registry })
+    );
+
+    assert.throws(
+      () => service.validate(),
+      (error) =>
+        error instanceof RuntimeValidationError &&
+        error.result?.metadataIssues.some((issue) =>
+          issue.includes("prd-writer@1.0:inputArtifacts")
+        ) === true
     );
   });
 });
@@ -379,6 +474,26 @@ function buildExtraSkill(): SkillDefinition {
     constraints: {
       requiresHumanApproval: false,
       maxInputArtifacts: 2
+    }
+  };
+}
+
+function buildPrdWriterMismatch(): SkillDefinition {
+  return {
+    id: "prd-writer@1.0",
+    name: "prd-writer",
+    description: "Mismatched PRD writer.",
+    version: "1.0",
+    dependencies: ["codebase-research"],
+    category: "product",
+    status: "available",
+    inputArtifacts: [ArtifactType.IDEA],
+    outputArtifacts: [ArtifactType.PRD],
+    templates: [],
+    rules: [],
+    constraints: {
+      requiresHumanApproval: false,
+      maxInputArtifacts: 5
     }
   };
 }

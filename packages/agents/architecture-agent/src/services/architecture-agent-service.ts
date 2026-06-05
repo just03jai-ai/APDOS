@@ -4,6 +4,9 @@ import {
   type BaseArtifact
 } from "@apdos/artifacts";
 import { ContextRetrievalService } from "@apdos/context-engine";
+import { RuntimeSkillExecutor } from "@apdos/runtime-orchestrator";
+import { SkillGovernanceService } from "@apdos/skill-governance";
+import { SkillRuntimeService, type SkillResult } from "@apdos/skill-runtime";
 import {
   WorkflowExecutionService,
   type WorkflowInstance
@@ -12,18 +15,14 @@ import type { ArchitectureRequest } from "../contracts/architecture-request.js";
 import type { ImplementationPlanContract } from "../contracts/implementation-plan.js";
 import type { TechnicalSpecificationContract } from "../contracts/technical-specification.js";
 import {
-  generateImplementationPlanWithDeterministicRules,
-  generateTechSpecWithDeterministicRules,
   validateArchitectureRequest
 } from "../generation/deterministic-architecture-generation.js";
-import {
-  createImplementationPlanArtifact,
-  createTechSpecArtifact as buildTechSpecArtifact
-} from "../reports/architecture-artifacts.js";
 
 export interface ArchitectureAgentServiceDependencies {
   artifacts?: ArtifactRegistry;
   context?: ContextRetrievalService;
+  skillGovernance?: SkillGovernanceService;
+  skillRuntime?: SkillRuntimeService;
   workflows?: WorkflowExecutionService;
 }
 
@@ -48,6 +47,8 @@ export interface ArchitectureArtifactCreationResult {
   implementationPlan: ImplementationPlanContract;
   techSpecArtifact: BaseArtifact;
   implementationPlanArtifact: BaseArtifact;
+  skillResults: SkillResult[];
+  generatedArtifacts: BaseArtifact[];
 }
 
 export class ArchitectureAgentService {
@@ -60,9 +61,11 @@ export class ArchitectureAgentService {
   ): Promise<TechnicalSpecificationContract> {
     validateArchitectureRequest(input.request);
 
-    const context = await this.loadArchitectureContext(input.request);
+    const result = await this.executeArchitectureSkills(input.request);
 
-    return generateTechSpecWithDeterministicRules(input.request, context);
+    return createTechSpecContract(
+      requireArtifactType(result.generatedArtifacts, ArtifactType.TECH_SPEC)
+    );
   }
 
   async generateImplementationPlan(
@@ -70,34 +73,59 @@ export class ArchitectureAgentService {
   ): Promise<ImplementationPlanContract> {
     validateArchitectureRequest(input.request);
 
-    const context = await this.loadArchitectureContext(input.request);
+    const result = await this.executeArchitectureSkills(input.request);
 
-    return generateImplementationPlanWithDeterministicRules(input.request, context);
+    return createImplementationPlanContract(
+      requireArtifactType(result.generatedArtifacts, ArtifactType.IMPLEMENTATION_PLAN)
+    );
   }
 
   async createTechSpecArtifact(
     input: CreateTechSpecArtifactInput
   ): Promise<ArchitectureArtifactCreationResult> {
-    const context = await this.loadArchitectureContext(input.request);
-    const techSpec = generateTechSpecWithDeterministicRules(input.request, context);
-    const implementationPlan =
-      generateImplementationPlanWithDeterministicRules(input.request, context);
+    validateArchitectureRequest(input.request);
+
+    const result = await this.executeArchitectureSkills(input.request, {
+      requestedAt: input.createdAt,
+      stageId: input.stageId ?? "tech-spec",
+      actorId: input.actorId ?? "agent:architecture"
+    });
     const actorId = input.actorId ?? "architecture-agent";
-    const techSpecArtifact = buildTechSpecArtifact({
-      request: input.request,
-      techSpec,
+    const techSpecArtifact = normalizeRuntimeArtifact({
+      artifact: requireArtifactType(result.generatedArtifacts, ArtifactType.TECH_SPEC),
+      id: `${input.request.workflowId}:tech-spec`,
       actorId,
-      createdAt: input.createdAt,
-      stageId: input.stageId
+      workflowId: input.request.workflowId,
+      stageId: input.stageId ?? "tech-spec",
+      metadata: {
+        architecture: `Skill-powered architecture for ${input.request.prdArtifactId}.`,
+        architectureOverview: `Skill-powered architecture for ${input.request.prdArtifactId}.`,
+        interfaces: ["SkillRuntime.executeSkill(request)"],
+        apiContracts: ["SkillExecutionRequest", "SkillResult"],
+        sourceSkillIds: result.skillResults.map((skillResult) => skillResult.metadata.skillId)
+      }
     });
-    const implementationPlanArtifact = createImplementationPlanArtifact({
-      request: input.request,
-      techSpecArtifactId: techSpecArtifact.id,
-      implementationPlan,
+    const implementationPlanArtifact = normalizeRuntimeArtifact({
+      artifact: requireArtifactType(result.generatedArtifacts, ArtifactType.IMPLEMENTATION_PLAN),
+      id: `${input.request.workflowId}:implementation-plan`,
       actorId,
-      createdAt: input.createdAt,
-      stageId: input.stageId
+      workflowId: input.request.workflowId,
+      stageId: input.stageId ?? "tech-spec",
+      metadata: {
+        phases: ["Governed skill execution", "Artifact registration", "Validation"],
+        milestones: ["Architecture skills executed through Skill Runtime."],
+        tasks: ["Execute governed skills through Skill Runtime", "Preserve artifact lineage"],
+        dependencies: [techSpecArtifact.id],
+        sourceSkillIds: result.skillResults.map((skillResult) => skillResult.metadata.skillId)
+      }
     });
+    implementationPlanArtifact.parentIds = implementationPlanArtifact.parentIds.map((parentId) =>
+      parentId === techSpecArtifact.metadata.originalRuntimeArtifactId
+        ? techSpecArtifact.id
+        : parentId
+    );
+    const techSpec = createTechSpecContract(techSpecArtifact);
+    const implementationPlan = createImplementationPlanContract(implementationPlanArtifact);
 
     if (input.registerArtifacts ?? true) {
       const artifacts = this.requireArtifacts();
@@ -109,7 +137,33 @@ export class ArchitectureAgentService {
       techSpec,
       implementationPlan,
       techSpecArtifact,
-      implementationPlanArtifact
+      implementationPlanArtifact,
+      skillResults: result.skillResults,
+      generatedArtifacts: result.generatedArtifacts
+    };
+  }
+
+  private async executeArchitectureSkills(
+    request: ArchitectureRequest,
+    options: { requestedAt?: string; stageId?: string; actorId?: string } = {}
+  ): Promise<{ skillResults: SkillResult[]; generatedArtifacts: BaseArtifact[] }> {
+    const context = await this.loadArchitectureContext(request);
+    const skillRuntime = this.requireSkillRuntime();
+    const skillGovernance = this.dependencies.skillGovernance ?? new SkillGovernanceService();
+    const skills = skillGovernance.mapping.getSkillsForWorkflowStage(options.stageId ?? "tech-spec");
+    const executor = new RuntimeSkillExecutor(skillRuntime);
+    const executions = await executor.executeSkills({
+      workflowId: request.workflowId,
+      stageId: options.stageId ?? "tech-spec",
+      selectedAgent: options.actorId ?? "agent:architecture",
+      skills,
+      inputArtifacts: [context.prd],
+      requestedAt: options.requestedAt
+    });
+
+    return {
+      skillResults: executions.map((execution) => execution.result),
+      generatedArtifacts: executions.flatMap((execution) => execution.result.artifacts)
     };
   }
 
@@ -140,7 +194,9 @@ export class ArchitectureAgentService {
       workflowId: request.workflowId,
       artifactIds: [idea.id, discoveryReport.id, prd.id],
       agentId: "architecture-agent",
-      skillIds: ["technical-specification", "implementation-planning"]
+      skillIds: (this.dependencies.skillGovernance ?? new SkillGovernanceService())
+        .mapping.getSkillsForWorkflowStage("tech-spec")
+        .map((skill) => skill.skillId)
     });
 
     return {
@@ -159,6 +215,14 @@ export class ArchitectureAgentService {
     return this.dependencies.artifacts;
   }
 
+  private requireSkillRuntime(): SkillRuntimeService {
+    if (!this.dependencies.skillRuntime) {
+      throw new Error("Skill Runtime dependency is required for governed Architecture Agent execution");
+    }
+
+    return this.dependencies.skillRuntime;
+  }
+
   private assertWorkflowExists(workflowId: string): void {
     if (!this.dependencies.workflows) {
       return;
@@ -171,6 +235,68 @@ export class ArchitectureAgentService {
       throw new Error(`Workflow not found for architecture request: ${workflowId}`);
     }
   }
+}
+
+function requireArtifactType(artifacts: BaseArtifact[], type: ArtifactType): BaseArtifact {
+  const artifact = artifacts.find((candidate) => candidate.type === type);
+
+  if (!artifact) {
+    throw new Error(`Skill execution did not produce required artifact type: ${type}`);
+  }
+
+  return artifact;
+}
+
+function normalizeRuntimeArtifact(input: {
+  artifact: BaseArtifact;
+  id: string;
+  actorId: string;
+  workflowId: string;
+  stageId: string;
+  metadata: Record<string, unknown>;
+}): BaseArtifact {
+  return {
+    ...input.artifact,
+    id: input.id,
+    createdBy: input.actorId,
+    status: "active",
+    metadata: {
+      ...input.artifact.metadata,
+      ...input.metadata,
+      originalRuntimeArtifactId: input.artifact.id,
+      workflowId: input.workflowId,
+      stageId: input.stageId,
+      sourceAgent: "agent:architecture"
+    }
+  };
+}
+
+function createTechSpecContract(artifact: BaseArtifact): TechnicalSpecificationContract {
+  return {
+    architectureOverview: String(
+      artifact.metadata.architectureOverview ??
+        artifact.metadata.architecture ??
+        artifact.description
+    ),
+    components: ["Skill Runtime", "Skill Governance", "Artifact Registry"],
+    interfaces: Array.isArray(artifact.metadata.interfaces)
+      ? artifact.metadata.interfaces.map(String)
+      : ["SkillRuntime.executeSkill(request)"],
+    apiContracts: ["SkillExecutionRequest", "SkillResult"],
+    dataModel: ["BaseArtifact", "SkillGovernanceMetadata"],
+    dependencies: ["Skill Governance metadata", "Skill Runtime registry"],
+    risks: ["Runtime skill metadata must remain compatible with governance metadata."],
+    assumptions: ["Governed skills are loaded before agent execution."]
+  };
+}
+
+function createImplementationPlanContract(artifact: BaseArtifact): ImplementationPlanContract {
+  return {
+    phases: ["Governed skill execution", "Artifact registration", "Validation"],
+    milestones: [`Generated ${artifact.type} from ${artifact.metadata.skillId ?? "runtime skill"}.`],
+    tasks: ["Execute governed skills through Skill Runtime", "Preserve artifact lineage"],
+    dependencies: artifact.parentIds
+  };
 }
 
 function resolveParentArtifact(

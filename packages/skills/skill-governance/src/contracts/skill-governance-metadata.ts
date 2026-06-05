@@ -6,6 +6,7 @@ export type WorkflowStageId = string;
 
 export interface SkillGovernanceMetadata {
   skillId: SkillId;
+  version?: string;
   ownerAgent: AgentId;
   workflowStage: WorkflowStageId;
   inputArtifacts: ArtifactType[];

@@ -15,6 +15,7 @@ import {
   ValidatorRegistry,
   createBuiltInValidators
 } from "@apdos/validation-engine";
+import { SkillRuntimeService } from "@apdos/skill-runtime";
 import { WorkflowExecutionService } from "@apdos/workflow-engine";
 import {
   ArchitectureAgentService,
@@ -24,41 +25,28 @@ import {
 const createdAt = "2026-01-01T00:00:00.000Z";
 
 describe("ArchitectureAgentService", () => {
-  it("generates deterministic technical specifications from PRD lineage and workflow context", async () => {
+  it("generates technical specifications through governed Skill Runtime execution", async () => {
     const { service, request } = await createFixture("architecture-generation-1");
 
     const techSpec = await service.generateTechSpec({ request });
 
-    assert.match(techSpec.architectureOverview, /supplier payment approval workflow/);
-    assert.ok(
-      techSpec.components.includes(
-        "ArtifactRegistry for TECH_SPEC and IMPLEMENTATION_PLAN persistence."
-      )
-    );
-    assert.ok(techSpec.interfaces.includes("ArchitectureAgentService.generateTechSpec(request)"));
-    assert.ok(techSpec.apiContracts.some((contract) => contract.includes("ArchitectureRequest")));
-    assert.ok(techSpec.dependencies.includes("payment approval policy"));
-    assert.ok(
-      techSpec.assumptions.some((assumption) => assumption.includes("workflow history"))
-    );
+    assert.match(techSpec.architectureOverview, /tech-spec-writer/);
+    assert.ok(techSpec.components.includes("Skill Runtime"));
+    assert.ok(techSpec.interfaces.includes("SkillRuntime.executeSkill(request)"));
+    assert.ok(techSpec.apiContracts.includes("SkillExecutionRequest"));
   });
 
-  it("generates deterministic implementation plans", async () => {
+  it("generates implementation plans through governed Skill Runtime execution", async () => {
     const { service, request } = await createFixture("architecture-plan-1");
 
     const plan = await service.generateImplementationPlan({ request });
 
     assert.deepEqual(plan.phases, [
-      "Architecture setup",
-      "Service implementation",
-      "Workflow integration",
-      "Validation and release evidence"
+      "Governed skill execution",
+      "Artifact registration",
+      "Validation"
     ]);
-    assert.ok(
-      plan.milestones.includes("TECH_SPEC validation passes before validation stage progression.")
-    );
-    assert.ok(plan.tasks.includes("Register TECH_SPEC and IMPLEMENTATION_PLAN artifacts with lineage."));
-    assert.ok(plan.dependencies.includes("Validated PRD"));
+    assert.ok(plan.tasks.includes("Execute governed skills through Skill Runtime"));
   });
 
   it("creates and registers TECH_SPEC and IMPLEMENTATION_PLAN artifacts", async () => {
@@ -74,10 +62,16 @@ describe("ArchitectureAgentService", () => {
     assert.equal(result.techSpecArtifact.id, "architecture-artifact-1:tech-spec");
     assert.equal(result.techSpecArtifact.type, ArtifactType.TECH_SPEC);
     assert.deepEqual(result.techSpecArtifact.parentIds, ["architecture-artifact-1:prd"]);
-    assert.equal(result.techSpecArtifact.metadata.architecture, result.techSpec.architectureOverview);
+    assert.equal(result.techSpecArtifact.metadata.sourceAgent, "agent:architecture");
+    assert.deepEqual(result.skillResults.map((skillResult) => skillResult.metadata.skillName), [
+      "tech-spec-writer",
+      "implement-plan",
+      "design-system"
+    ]);
     assert.equal(result.implementationPlanArtifact.id, "architecture-artifact-1:implementation-plan");
     assert.equal(result.implementationPlanArtifact.type, ArtifactType.IMPLEMENTATION_PLAN);
     assert.deepEqual(result.implementationPlanArtifact.parentIds, [
+      "architecture-artifact-1:prd",
       "architecture-artifact-1:tech-spec"
     ]);
     assert.equal(
@@ -167,7 +161,8 @@ async function createFixture(workflowId: string): Promise<{
   const service = new ArchitectureAgentService({
     artifacts,
     workflows,
-    context
+    context,
+    skillRuntime: new SkillRuntimeService()
   });
 
   return {

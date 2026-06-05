@@ -1,7 +1,7 @@
 {
-  "name": "@apdos/discovery-agent",
+  "name": "@apdos/product-agent",
   "version": "0.1.0",
-  "description": "Skill-powered Discovery Agent for APDOS.",
+  "description": "Skill-powered Product Agent for APDOS.",
   "type": "module",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",

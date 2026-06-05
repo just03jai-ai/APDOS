@@ -1,4 +1,5 @@
 import type { BaseArtifact } from "@apdos/artifacts";
+import type { ArtifactType } from "@apdos/artifacts";
 import type { SkillGovernanceMetadata } from "@apdos/skill-governance";
 import { type SkillRuntimeService } from "@apdos/skill-runtime";
 import {
@@ -22,10 +23,11 @@ export class RuntimeSkillExecutor {
 
     for (const skill of input.skills) {
       try {
+        const skillInputArtifacts = filterArtifactsForSkill(currentArtifacts, skill);
         const result = await this.skillRuntime.executeSkill({
           skillId: skill.skillId,
-          version: "1.0",
-          inputArtifacts: currentArtifacts.map(cloneArtifact),
+          version: skill.version ?? "1.0",
+          inputArtifacts: skillInputArtifacts.map(cloneArtifact),
           context: {
             workflowId: input.workflowId,
             stageId: input.stageId,
@@ -34,7 +36,8 @@ export class RuntimeSkillExecutor {
             metadata: {
               runtimeOrchestrated: true,
               executionOrder: skill.executionOrder,
-              availableArtifactIds: currentArtifacts.map((artifact) => artifact.id)
+              availableArtifactIds: currentArtifacts.map((artifact) => artifact.id),
+              selectedInputArtifactIds: skillInputArtifacts.map((artifact) => artifact.id)
             }
           }
         });
@@ -51,6 +54,33 @@ export class RuntimeSkillExecutor {
 
     return executions;
   }
+}
+
+export function filterArtifactsForSkill(
+  availableArtifacts: BaseArtifact[],
+  skill: SkillGovernanceMetadata
+): BaseArtifact[] {
+  const requiredArtifactTypes = uniqueArtifactTypes(skill.inputArtifacts);
+
+  if (requiredArtifactTypes.length === 0) {
+    return [];
+  }
+
+  const missingArtifactTypes = requiredArtifactTypes.filter(
+    (artifactType) => !availableArtifacts.some((artifact) => artifact.type === artifactType)
+  );
+
+  if (missingArtifactTypes.length > 0) {
+    throw new RuntimeExecutionError(
+      `Missing input artifacts for ${skill.skillId}: ${missingArtifactTypes.join(", ")}`
+    );
+  }
+
+  return availableArtifacts.filter((artifact) => requiredArtifactTypes.includes(artifact.type));
+}
+
+function uniqueArtifactTypes(artifactTypes: ArtifactType[]): ArtifactType[] {
+  return [...new Set(artifactTypes)];
 }
 
 function cloneArtifact(artifact: BaseArtifact): BaseArtifact {

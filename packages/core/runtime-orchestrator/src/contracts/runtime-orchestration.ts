@@ -22,6 +22,7 @@ export interface RuntimeHealthCheckResult {
   missingSkillNames: string[];
   extraSkillNames: string[];
   dependencyIssues: string[];
+  metadataIssues: string[];
   executableSkillNames: string[];
 }
 

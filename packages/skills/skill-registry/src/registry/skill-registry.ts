@@ -90,6 +90,7 @@ function validateSkillDefinition(skill: SkillDefinition): void {
 function cloneSkillDefinition(skill: SkillDefinition): SkillDefinition {
   return {
     ...skill,
+    dependencies: skill.dependencies ? [...skill.dependencies] : undefined,
     inputArtifacts: [...skill.inputArtifacts],
     outputArtifacts: [...skill.outputArtifacts],
     templates: skill.templates.map((template) => ({ ...template })),

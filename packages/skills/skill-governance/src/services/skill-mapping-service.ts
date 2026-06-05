@@ -74,6 +74,7 @@ function compareExecutionOrder(left: SkillGovernanceMetadata, right: SkillGovern
 function cloneMetadata(metadata: SkillGovernanceMetadata): SkillGovernanceMetadata {
   return {
     ...metadata,
+    version: metadata.version,
     inputArtifacts: [...metadata.inputArtifacts],
     outputArtifacts: [...metadata.outputArtifacts],
     dependencies: [...metadata.dependencies]

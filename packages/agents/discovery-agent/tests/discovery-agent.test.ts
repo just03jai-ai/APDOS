@@ -41,7 +41,7 @@ describe("DiscoveryAgentService", () => {
     );
   });
 
-  it("generates deterministic discovery reports", () => {
+  it("aggregates discovery reports from governed skill output", async () => {
     const service = new DiscoveryAgentService();
 
     const report = service.analyzeGoal({
@@ -51,23 +51,14 @@ describe("DiscoveryAgentService", () => {
     });
 
     assert.match(report.problemSummary, /supplier payment approval workflow/);
-    assert.deepEqual(report.affectedSystems, [
-      "artifact-engine",
-      "workflow-engine",
-      "validation-engine",
-      "approval-engine",
-      "supplier-management",
-      "payment-operations",
-      "governance-controls"
-    ]);
-    assert.ok(report.repositories.includes("payment-services"));
-    assert.ok(report.dependencies.includes("payment approval policy"));
-    assert.ok(report.risks.includes("Payment policy errors can create financial or compliance exposure."));
-    assert.ok(report.openQuestions.includes("Which supplier payment thresholds require additional approval?"));
+    assert.ok(report.affectedSystems.includes("skill-runtime"));
+    assert.ok(report.dependencies.includes("skill runtime execution"));
   });
 
   it("creates DISCOVERY_REPORT artifacts", async () => {
-    const service = new DiscoveryAgentService();
+    const service = new DiscoveryAgentService({
+      skillRuntime: new SkillRuntimeService()
+    });
 
     const result = await service.generateDiscoveryReport({
       request: {
@@ -90,7 +81,15 @@ describe("DiscoveryAgentService", () => {
       (result.artifact.metadata.report as { problemSummary: string }).problemSummary,
       result.report.problemSummary
     );
-    assert.deepEqual(result.skillResults, []);
+    assert.deepEqual(
+      result.skillResults.map((skillResult) => skillResult.metadata.skillName),
+      ["repo-router", "knowledge", "codebase-research"]
+    );
+    assert.deepEqual(result.artifact.metadata.sourceSkillIds, [
+      "repo-router@1.0",
+      "knowledge@1.0",
+      "codebase-research@1.0"
+    ]);
   });
 
   it("requests skill execution through the Skill Runtime", async () => {
@@ -144,7 +143,8 @@ describe("DiscoveryAgentService", () => {
     const service = new DiscoveryAgentService({
       artifacts,
       context,
-      workflows
+      workflows,
+      skillRuntime: new SkillRuntimeService()
     });
 
     const result = await service.generateDiscoveryReport({
@@ -161,7 +161,10 @@ describe("DiscoveryAgentService", () => {
 
     assert.equal(stored?.type, ArtifactType.DISCOVERY_REPORT);
     assert.deepEqual(stored?.parentIds, ["workflow-1:idea"]);
-    assert.deepEqual(result.skillResults, []);
+    assert.deepEqual(
+      result.skillResults.map((skillResult) => skillResult.metadata.skillName),
+      ["repo-router", "knowledge", "codebase-research"]
+    );
   });
 });
 
