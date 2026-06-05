@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The Artifact Event Bus allows APDOS Artifact Engine events to be emitted and consumed without coupling artifact producers to artifact consumers. It is part of `packages/artifacts/src/events`.
+The Artifact Event Bus allows APDOS Artifact Engine events to be emitted and consumed without coupling artifact producers to artifact consumers. It is part of `packages/core/artifacts/src/events`.
 
 ## Event Contracts
 

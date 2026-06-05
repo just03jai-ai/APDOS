@@ -5,21 +5,15 @@
   "description": "AI Product Delivery Operating System.",
   "type": "module",
   "workspaces": [
-    "packages/artifacts",
-    "packages/orchestrator",
-    "packages/workflow-engine",
-    "packages/approval-engine",
-    "packages/validation-engine",
-    "packages/context-engine",
-    "packages/knowledge-engine",
-    "packages/architecture-agent",
-    "packages/discovery-agent",
-    "packages/delivery-workflow",
-    "packages/agent-registry",
-    "packages/skill-registry",
-    "packages/skill-runtime"
+    "apps/*",
+    "packages/core/*",
+    "packages/governance/*",
+    "packages/agents/*",
+    "packages/skills/*",
+    "packages/workflows/*"
   ],
   "scripts": {
-    "test": "npm --workspaces test"
+    "test": "npm --workspaces test",
+    "skills:sync": "tsc -p packages/skills/skill-adapter/tsconfig.json && node packages/skills/skill-adapter/dist/src/bootstrap/skills-sync-cli.js"
   }
 }

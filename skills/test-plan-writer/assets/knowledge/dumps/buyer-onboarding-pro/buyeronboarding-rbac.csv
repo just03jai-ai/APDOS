@@ -1,0 +1,66 @@
+TC ID,Role,Scenario Description,Assigned Policy,Inverse,Expected Result
+PRO Buyer Route Access,,,,,
+BKYC-01,SA,Access PRO Buyer module route,P1 (PRO Buyer Route Access: view:pro.buyer.list),✖,✅ Able to view PRO Buyer module
+BKYC-01-INV,HR,Try to access PRO Buyer module route,P1 (PRO Buyer Route Access: view:pro.buyer.list),✔,❌ Access Denied
+PRO Buyer Status List Views,,,,,
+BKYC-02,SA,View PRO Buyer List - In Review tab,P2 (view:pro.buyer.list.in_review),✖,✅ Able to view In Review buyers
+BKYC-02-INV,Product_Analyst,Try to view PRO Buyer List - In Review tab,P2 (view:pro.buyer.list.in_review),✔,❌ Access Denied
+BKYC-03,SA,View PRO Buyer List - Approved tab,P3 (view:pro.buyer.list.approved),✖,✅ Able to view Approved buyers
+BKYC-03-INV,HR,Try to view PRO Buyer List - Approved tab,P3 (view:pro.buyer.list.approved),✔,❌ Access Denied
+BKYC-04,SA,View PRO Buyer List - Rejected tab,P4 (view:pro.buyer.list.rejected),✖,✅ Able to view Rejected buyers
+BKYC-04-INV,HR,Try to view PRO Buyer List - Rejected tab,P4 (view:pro.buyer.list.rejected),✔,❌ Access Denied
+BKYC-05,SA,View PRO Buyer List - All tab,P5 (view:pro.buyer.list.all),✖,✅ Able to view all buyers in All tab
+BKYC-05-INV,HR,Try to view PRO Buyer List - All tab,P5 (view:pro.buyer.list.all),✔,❌ Access Denied
+PRO Buyer Create & Details,,,,,
+BKYC-06,SA,Create a new buyer - initiate buyer onboarding on PRO,P6 (create:pro.buyer),✖,✅ Able to create buyer; Add Buyer button visible and functional
+BKYC-06-INV,FC,Try to create a new buyer on PRO,P6 (create:pro.buyer),✔,❌ Access Denied / Add Buyer button not visible for FC role
+BKYC-07,SA,View PRO Buyer details page,P7 (view:pro.buyer.details),✖,✅ Able to view buyer details on PRO
+BKYC-07-INV,HR,Try to view PRO Buyer details page,P7 (view:pro.buyer.details),✔,❌ Access Denied
+OS Buyer Group Route & Views,,,,,
+BKYC-08,Sales,Access OS Buyer Group module route,P8 (view:route.buyer_group),✖,✅ Able to view Buyer Group module on OS
+BKYC-08-INV,Unloading_Associate,Try to access OS Buyer Group module route,P8 (view:route.buyer_group),✔,❌ Access Denied
+BKYC-09,Sales,View OS Buyer Group list,P9 (view:buyer_group.list),✖,✅ Able to view Buyer Group list
+BKYC-09-INV,HR,Try to view OS Buyer Group list,P9 (view:buyer_group.list),✔,❌ Access Denied
+BKYC-10,Sales,View OS Buyer Group details,P10 (view:buyer_group.details),✖,✅ Able to view Buyer Group details including credit and member buyers
+BKYC-10-INV,Product_Analyst,Try to view OS Buyer Group details,P10 (view:buyer_group.details),✔,❌ Access Denied
+BKYC-11,Risk,Edit Buyer Group credit details (Credit Limit and Insurance Limit),P11 (edit:buyer_group.credit_details),✖,✅ Able to edit Credit Limit and Insurance Limit for Buyer Group
+BKYC-11-INV,Sales,Try to edit Buyer Group credit details,P11 (edit:buyer_group.credit_details),✔,❌ Access Denied / Edit credit option not visible or actionable for Sales
+OS Buyer List Status Views,,,,,
+BKYC-12,Sales,View OS Buyer list,P12 (view:buyer.list),✖,✅ Able to view Buyer list on OS
+BKYC-12-INV,HR,Try to view OS Buyer list,P12 (view:buyer.list),✔,❌ Access Denied
+BKYC-13,Sales,View OS Buyer List - Sales Review tab,P13 (view:buyer.list.sa),✖,✅ Able to view buyers in Sales Review tab
+BKYC-13-INV,FC,Try to view OS Buyer List - Sales Review tab,P13 (view:buyer.list.sa),✔,❌ Access Denied / Sales Review tab not visible for FC
+BKYC-14,Sales,View OS Buyer List - Risk Review tab,P14 (view:buyer.list.risk_review),✖,✅ Able to view buyers in Risk Review tab
+BKYC-14-INV,HR,Try to view OS Buyer List - Risk Review tab,P14 (view:buyer.list.risk_review),✔,❌ Access Denied
+BKYC-15,Sales,View OS Buyer List - Approved tab,P15 (view:buyer.list.approved),✖,✅ Able to view Approved buyers on OS
+BKYC-15-INV,HR,Try to view OS Buyer List - Approved tab,P15 (view:buyer.list.approved),✔,❌ Access Denied
+BKYC-16,Sales,View OS Buyer List - Rejected tab,P16 (view:buyer.list.rejected),✖,✅ Able to view Rejected buyers on OS
+BKYC-16-INV,HR,Try to view OS Buyer List - Rejected tab,P16 (view:buyer.list.rejected),✔,❌ Access Denied
+BKYC-17,Sales,View OS Buyer List - All tab,P17 (view:buyer.list.all),✖,✅ Able to view buyers across all statuses in All tab
+BKYC-17-INV,HR,Try to view OS Buyer List - All tab,P17 (view:buyer.list.all),✔,❌ Access Denied
+OS Buyer Details,,,,,
+BKYC-18,Sales,View Overview Page,P18 (view:buyer.details),✖,✅ Able to view full Buyer details including PoC and KYC sections
+BKYC-18-INV,HR,Try to view Overview Page,P18 (view:buyer.details),✔,❌ Access Denied
+Buyer Approval Actions,,,,,
+BKYC-19,Sales,Approve buyer at Sales Review stage,P19 (review:buyer.sales),✖,✅ Able to approve buyer; buyer moves to Risk Review state
+BKYC-19-INV,FC,Try to approve buyer at Sales Review stage,P19 (review:buyer.sales),✔,❌ Access Denied / Approve and Reject buttons not visible for FC
+BKYC-20,Sales,Reject buyer at Sales Review stage with reason and remarks,P19 (review:buyer.sales),✖,✅ Able to reject buyer with reason and free-text remarks
+BKYC-20-INV,Risk,Try to approve buyer at Sales Review stage (bypassing Sales),P19 (review:buyer.sales),✔,❌ Access Denied / Risk cannot perform Sales Review stage approval
+BKYC-21,Risk,Approve buyer at Risk Review stage with Credit Limit and Insurance Limit,P20 (review:buyer.risk),✖,✅ Able to approve buyer at Risk stage; buyer moves to Approved state
+BKYC-21-INV,Sales,Try to approve buyer at Risk Review stage,P20 (review:buyer.risk),✔,❌ Access Denied / Sales cannot perform Risk Review stage approval
+BKYC-22,Risk,Reject buyer at Risk Review stage with reason and remarks,P20 (review:buyer.risk),✖,✅ Able to reject buyer with reason and free-text remarks at Risk stage
+BKYC-22-INV,FC,Try to approve or reject buyer at Risk Review stage,P20 (review:buyer.risk),✔,❌ Access Denied / Risk-stage Approve and Reject buttons not visible for FC
+Buyer Edit Actions,,,,,
+BKYC-23,Sales,Edit Buyer PoC details (Name and Mobile Number and Email),P21 (edit:buyer.poc),✖,✅ Able to edit and save Buyer PoC details from Overview Page
+BKYC-23-INV,HR,Try to edit Buyer PoC details,P21 (edit:buyer.poc),✔,❌ Access Denied / PoC edit option not available for HR
+BKYC-24,Risk,Edit Buyer bank account for invoices,P22 (edit:buyer.bank_account),✖,✅ Able to edit FarMart bank account mapped to buyer invoices
+BKYC-24-INV,Product_Analyst,Try to edit Buyer bank account,P22 (edit:buyer.bank_account),✔,❌ Access Denied / Bank edit option not available for Product_Analyst
+BKYC-25,Risk,Push Buyer to Zoho - manual sync trigger,P23 (create:buyer.push_to_zoho),✖,✅ Able to trigger Zoho sync; Sync with Zoho button visible and functional for Risk
+BKYC-25-INV,HR,Try to push Buyer to Zoho,P23 (create:buyer.push_to_zoho),✔,❌ Access Denied / Sync with Zoho button not visible for HR
+Core Identifier Protection (PAN / GST / CIN),,,,,
+BKYC-26,Sales,View PAN field in OS Buyer details (read-only),P24 (PAN read-only: no edit for non-onboarding roles),✖,✅ PAN field visible in Buyer details; no edit option present
+BKYC-26-INV,FC,Try to edit PAN field in OS Buyer details,P24 (PAN read-only: no edit for non-onboarding roles),✔,❌ No edit option for PAN field; field is read-only for FC as per PRD Q&A
+BKYC-27,Risk,View GST field in OS Buyer details (read-only),P25 (GST read-only: no edit for non-onboarding roles),✖,✅ GST field visible in Buyer details; no edit option present
+BKYC-27-INV,FC,Try to edit GST field in OS Buyer details,P25 (GST read-only: no edit for non-onboarding roles),✔,❌ No edit option for GST field; field is read-only for FC as per PRD Q&A
+BKYC-28,Sales,View CIN field in OS Buyer details (read-only),P26 (CIN read-only: no edit for non-onboarding roles),✖,✅ CIN field visible in Buyer details for company buyers; no edit option present
+BKYC-28-INV,FC,Try to edit CIN field in OS Buyer details,P26 (CIN read-only: no edit for non-onboarding roles),✔,❌ No edit option for CIN field; field is read-only for FC as per PRD Q&A

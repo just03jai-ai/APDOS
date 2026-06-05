@@ -1,0 +1,184 @@
+Module,Scenario combinations,,,,,Expected Result,,,DEV - PASS/FAIL,
+,Order type,Platform,Role,DO Status,Action,Remarks,DO Status change to,Unloading doc status,,
+Unloading,GMV,Fmt Pro,SA,Dispatched,Add Unloading - Fully Accepted,,Dispatched,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Arrived at Buyer,Add Unloading - Fully Accepted,,Arrived at Buyer,Approval Pending,✅
+Unloading,GMV,OS,SHP,Dispatched,Approve Unloading - Fully Accepted,,Delivered,Approved,✅
+Unloading,GMV,Fmt Pro,SA,Dispatched,Add Unloading - Fully Rejected,,Dispatched,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Arrived at Buyer,Add Unloading - Fully Rejected,,Arrived at Buyer,Approval Pending,✅
+Unloading,GMV,OS,SHP,Dispatched,Approve Unloading - Fully Rejected,,Cancelled,Rejected,✅
+Unloading,GMV,Fmt Pro,SA,Dispatched,Add Unloading - Partial Accepted,,Dispatched,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Arrived at Buyer,Add Unloading - Partial Accepted,,Arrived at Buyer,Approval Pending,✅
+Unloading,GMV,,SHP,Arrived at Buyer,Approve Unloading - Partial Accepted,,Partial Delivered,Approved,✅
+Unloading,GMV,FarMart App,Supplier,Dispatched,Add Unloading,,Dispatched,Approval Pending,✅
+Unloading,GMV,FarMart App,Supplier,Arrived at Buyer,Add Unloading,,Arrived at Buyer,Approval Pending,✅
+Unloading,GMV,OS,SHP - Unloading added by supplier,Dispatched,Approve Unloading - Fully Accepted,,Delivered,Approved,✅
+Unloading,GMV,OS,SHP - Unloading added by supplier,Dispatched,Approve Unloading - Fully Rejected,,Cancelled,Rejected,✅
+Unloading,GMV,OS,SHP - Unloading added by supplier,Dispatched,Add Unloading - Partial Accepted,,Partial Delivered,Approved,✅
+Unloading,GMV,OS,SHP - Unloading added by supplier,Arrived at Buyer,Approve Unloading - Fully Accepted,,Delivered,Approved,✅
+Unloading,GMV,OS,SHP - Unloading added by supplier,Arrived at Buyer,Approve Unloading - Fully Rejected,,Cancelled,Rejected,✅
+Unloading,GMV,OS,SHP - Unloading added by supplier,Arrived at Buyer,Add Unloading - Partial Accepted,,Partial Delivered,Approved,✅
+Unloading,GMV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to fully rejected",,Dispatched,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to Partial Accepted",,Dispatched,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully rejected to fully accepted",,Dispatched,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully rejected to Partial Accepted",,Dispatched,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the Partial Accepted to fully rejected",,Dispatched,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the Partial Accepted to fully Accepted",,Dispatched,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to fully rejected",,Arrived at Buyer,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to Partial Accepted",,Arrived at Buyer,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully rejected to fully accepted",,Arrived at Buyer,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully rejected to Partial Accepted",,Arrived at Buyer,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the Partial Accepted to fully rejected",,Arrived at Buyer,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the Partial Accepted to fully Accepted",,Arrived at Buyer,Approval Pending,✅
+Unloading,GMV,OS,SHP,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to fully rejected",,Delivered,Approved,✅
+Unloading,GMV,OS,SHP,Dispatched,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully accepted to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GMV,OS,SHP,Dispatched,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully rejected to fully accepted",,Cancelled,Approved,✅
+Unloading,GMV,OS,SHP,Dispatched,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully rejected to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GMV,OS,SHP,Dispatched,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the Partial Accepted to fully rejected",,Cancelled,Approved,✅
+Unloading,GMV,OS,SHP,Dispatched,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the Partial Accepted to fully Accepted",,Delivered,Approved,✅
+Unloading,GMV,OS,SHP,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to fully rejected",,Cancelled,Approved,✅
+Unloading,GMV,OS,SHP,Arrived at Buyer,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully accepted to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GMV,OS,SHP,Arrived at Buyer,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully rejected to fully accepted",,Delivered,Approved,✅
+Unloading,GMV,OS,SHP,Arrived at Buyer,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully rejected to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GMV,OS,SHP,Arrived at Buyer,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the Partial Accepted to fully rejected",,Cancelled,Approved,✅
+Unloading,GMV,OS,SHP,Arrived at Buyer,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the Partial Accepted to fully Accepted",,Delivered,Approved,✅
+Unloading,GMV,OS,ZH/SVP,Delivered,"Edit Unloading after unloading is approved -  
+Modify the fully accepted to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GMV,OS,ZH/SVP,Cancelled,"Edit Unloading after unloading is approved  -  
+Modify the fully rejected to fully accepted",,Delivered,Approved,✅
+Unloading,GMV,OS,ZH/SVP,Cancelled,"Edit Unloading after unloading is approved -  
+Modify the fully rejected to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GMV,OS,ZH/SVP,Partial Delivered,"Edit Unloading after unloading is approved  -  
+Modify the Partial Accepted to fully rejected",,Cancelled,Approved,✅
+Unloading,GMV,OS,ZH/SVP,Partial Delivered,"Edit Unloading after unloading is approved -  
+Modify the Partial Accepted to fully Accepted",,Delivered,Approved,✅
+Unloading,GMV,Fmt Pro,SA,Dispatched,Edit : Unloading added by supplier,Not allow to edit,Dispatched,Approval Pending,✅
+Unloading,GMV,Fmt Pro,SA,Arrived at Buyer,Edit : Unloading added by supplier,Not allow to edit,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Dispatched,Add Unloading - Fully Accepted,,Dispatched,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Arrived at Buyer,Add Unloading - Fully Accepted,,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,OS,SHP,Dispatched,Approve Unloading - Fully Accepted,,Delivered,Approved,✅
+Unloading,GTV,Fmt Pro,SA,Dispatched,Add Unloading - Fully Rejected,,Dispatched,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Arrived at Buyer,Add Unloading - Fully Rejected,,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,OS,SHP,Dispatched,Approve Unloading - Fully Rejected,,Cancelled,Rejected,✅
+Unloading,GTV,Fmt Pro,SA,Dispatched,Add Unloading - Partial Accepted,,Dispatched,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Arrived at Buyer,Add Unloading - Partial Accepted,,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,,SHP,Arrived at Buyer,Approve Unloading - Partial Accepted,,Partial Delivered,Approved,✅
+Unloading,GTV,FarMart App,Supplier,Dispatched,Add Unloading,,Dispatched,Approval Pending,✅
+Unloading,GTV,FarMart App,Supplier,Arrived at Buyer,Add Unloading,,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,OS,SHP - Unloading added by supplier,Dispatched,Approve Unloading - Fully Accepted,,Delivered,Approved,✅
+Unloading,GTV,OS,SHP - Unloading added by supplier,Dispatched,Approve Unloading - Fully Rejected,,Cancelled,Rejected,✅
+Unloading,GTV,OS,SHP - Unloading added by supplier,Dispatched,Add Unloading - Partial Accepted,,Partial Delivered,Approved,✅
+Unloading,GTV,OS,SHP - Unloading added by supplier,Arrived at Buyer,Approve Unloading - Fully Accepted,,Delivered,Approved,✅
+Unloading,GTV,OS,SHP - Unloading added by supplier,Arrived at Buyer,Approve Unloading - Fully Rejected,,Cancelled,Rejected,✅
+Unloading,GTV,OS,SHP - Unloading added by supplier,Arrived at Buyer,Add Unloading - Partial Accepted,,Partial Delivered,Approved,✅
+Unloading,GTV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to fully rejected",,Dispatched,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to Partial Accepted",,Dispatched,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully rejected to fully accepted",,Dispatched,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully rejected to Partial Accepted",,Dispatched,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the Partial Accepted to fully rejected",,Dispatched,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the Partial Accepted to fully Accepted",,Dispatched,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to fully rejected",,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to Partial Accepted",,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully rejected to fully accepted",,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully rejected to Partial Accepted",,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the Partial Accepted to fully rejected",,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the Partial Accepted to fully Accepted",,Arrived at Buyer,Approval Pending,✅
+Unloading,GTV,OS,SHP,Dispatched,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to fully rejected",,Delivered,Approved,✅
+Unloading,GTV,OS,SHP,Dispatched,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully accepted to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GTV,OS,SHP,Dispatched,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully rejected to fully accepted",,Cancelled,Approved,✅
+Unloading,GTV,OS,SHP,Dispatched,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully rejected to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GTV,OS,SHP,Dispatched,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the Partial Accepted to fully rejected",,Cancelled,Approved,✅
+Unloading,GTV,OS,SHP,Dispatched,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the Partial Accepted to fully Accepted",,Delivered,Approved,✅
+Unloading,GTV,OS,SHP,Arrived at Buyer,"Edit Unloading before approval of unloading submitted by SA -  
+Modify the fully accepted to fully rejected",,Cancelled,Approved,✅
+Unloading,GTV,OS,SHP,Arrived at Buyer,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully accepted to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GTV,OS,SHP,Arrived at Buyer,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully rejected to fully accepted",,Delivered,Approved,✅
+Unloading,GTV,OS,SHP,Arrived at Buyer,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the fully rejected to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GTV,OS,SHP,Arrived at Buyer,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the Partial Accepted to fully rejected",,Cancelled,Approved,✅
+Unloading,GTV,OS,SHP,Arrived at Buyer,"Edit Unloading while approving the unloading submitted by SA -  
+Modify the Partial Accepted to fully Accepted",,Delivered,Approved,✅
+Unloading,GTV,OS,ZH/SVP,Delivered,"Edit Unloading after unloading is approved -  
+Modify the fully accepted to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GTV,OS,ZH/SVP,Cancelled,"Edit Unloading after unloading is approved  -  
+Modify the fully rejected to fully accepted",,Delivered,Approved,✅
+Unloading,GTV,OS,ZH/SVP,Cancelled,"Edit Unloading after unloading is approved -  
+Modify the fully rejected to Partial Accepted",,Partial Delivered,Approved,✅
+Unloading,GTV,OS,ZH/SVP,Partial Delivered,"Edit Unloading after unloading is approved  -  
+Modify the Partial Accepted to fully rejected",,Cancelled,Approved,✅
+Unloading,GTV,OS,ZH/SVP,Partial Delivered,"Edit Unloading after unloading is approved -  
+Modify the Partial Accepted to fully Accepted",,Delivered,Approved,✅
+Unloading,GTV,Fmt Pro,SA,Dispatched,Edit : Unloading added by supplier,Not allow to edit,Dispatched,Approval Pending,✅
+Unloading,GTV,Fmt Pro,SA,Arrived at Buyer,Edit : Unloading added by supplier,Not allow to edit,Arrived at Buyer,Approval Pending,✅
+Unloading,CO,Fmt Pro,SA,Dispatched,Add Unloading - Fully Accepted,"Auto-approved, no approval flow",Delivered,Approved,✅
+Unloading,CO,Fmt Pro,SA,Arrived at Buyer,Add Unloading - Fully Accepted,"Auto-approved, no approval flow",Delivered,Approved,✅
+Unloading,CO,Fmt Pro,SA,Dispatched,Add Unloading - Fully Rejected,"Auto-approved, no approval flow",Cancelled,Approval Pending,✅
+Unloading,CO,Fmt Pro,SA,Arrived at Buyer,Add Unloading - Fully Rejected,"Auto-approved, no approval flow",Cancelled,Approval Pending,✅
+Unloading,CO,Fmt Pro,SA,Dispatched,Add Unloading - Partial Accepted,"Auto-approved, no approval flow",Partial Delivered,Approval Pending,✅
+Unloading,CO,Fmt Pro,SA,Arrived at Buyer,Add Unloading - Partial Accepted,"Auto-approved, no approval flow",Partial Delivered,Approval Pending,✅
+Add Deduction,GMV,Fmt Pro,SA,Delivered,Add Deduction - X amount,,Delivered,Approval Pending,✅
+Add Deduction,GMV,Fmt Pro,SHP,Delivered,Approve Deduction of X amount,If Invoice mark as completed system should move to back to the CN/DN tab,Deduction Submitted,Approved,✅
+Add Deduction,GMV,Fmt Pro,SHP,Delivered,Approve Deduction of 0(Zero) amount,If Invoice mark as completed system should not move to back to the CN/DN tab,Deduction Submitted,Approved,✅
+Add Deduction,GMV,Fmt Pro,SHP,Delivered,Reject Deduction of X amount,,Delivered,Rejected,✅
+Add Deduction,GMV,Fmt Pro,SA,Partial Delivered,Add Deduction - X amount,,Delivered,Approval Pending,✅
+Add Deduction,GMV,Fmt Pro,SHP,Partial Delivered,Approve Deduction of X amount,If Invoice mark as completed system should move to back to the CN/DN tab,Deduction Submitted,Approved,✅
+Add Deduction,GMV,Fmt Pro,SHP,Partial Delivered,Approve Deduction of 0(Zero) amount,If Invoice mark as completed system should not move to back to the CN/DN tab,Deduction Submitted,Approved,✅
+Add Deduction,GMV,Fmt Pro,SHP,Partial Delivered,Reject Deduction of X amount,,Delivered,Rejected,✅
+Add Deduction,GMV,Fmt Pro,SA,Cancelled,Add Deduction - X amount,Not allow to add deduction,Cancelled,Approval Pending,
+Add Deduction,GMV,OS,SHP,Cancelled,Approve Deduction of X amount,Not allow to add deduction,Cancelled,Approved,
+Add Deduction,GMV,OS,SHP,Cancelled,Reject Deduction of X amount,Not allow to add deduction,Cancelled,Rejected,
+Add Deduction,GTV,Fmt Pro,SA,Delivered,Add Deduction - X amount,,Delivered,Approval Pending,
+Add Deduction,GTV,Fmt Pro,SHP,Delivered,Approve Deduction of X amount,If Invoice mark as completed system should move to back to the CN/DN tab,Deduction Submitted,Approved,
+Add Deduction,GTV,Fmt Pro,SHP,Delivered,Approve Deduction of 0(Zero) amount,If Invoice mark as completed system should not move to back to the CN/DN tab,Deduction Submitted,Approved,
+Add Deduction,GTV,Fmt Pro,SHP,Delivered,Reject Deduction of X amount,,Delivered,Rejected,
+Add Deduction,GTV,Fmt Pro,SA,Partial Delivered,Add Deduction - X amount,,Delivered,Approval Pending,
+Add Deduction,GTV,Fmt Pro,SHP,Partial Delivered,Approve Deduction of X amount,If Invoice mark as completed system should move to back to the CN/DN tab,Deduction Submitted,Approved,
+Add Deduction,GTV,Fmt Pro,SHP,Partial Delivered,Approve Deduction of 0(Zero) amount,If Invoice mark as completed system should not move to back to the CN/DN tab,Deduction Submitted,Approved,
+Add Deduction,GTV,Fmt Pro,SHP,Partial Delivered,Reject Deduction of X amount,,Delivered,Rejected,
+Add Deduction,GTV,Fmt Pro,SA,Cancelled,Add Deduction - X amount,Not allow to add deduction,Cancelled,Approval Pending,
+Add Deduction,GTV,Fmt Pro,SHP,Cancelled,Approve Deduction of X amount,Not allow to add deduction,Cancelled,Approved,
+Add Deduction,GTV,Fmt Pro,SHP,Cancelled,Reject Deduction of X amount,Not allow to add deduction,Cancelled,Rejected,

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Artifact lineage connects APDOS work products into a traceable delivery chain. The initial lineage model lives in `packages/artifacts/src/lineage` and is intentionally limited to artifact relationships, graph traversal, and graph serialization. It does not orchestrate agents, workflows, approvals, or execution.
+Artifact lineage connects APDOS work products into a traceable delivery chain. The initial lineage model lives in `packages/core/artifacts/src/lineage` and is intentionally limited to artifact relationships, graph traversal, and graph serialization. It does not orchestrate agents, workflows, approvals, or execution.
 
 ## Model
 

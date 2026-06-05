@@ -1,0 +1,18 @@
+{
+  "name": "python-repo-hook-tooling",
+  "private": true,
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "prepare": "husky install",
+    "check:security": "./scripts/conventions/check-forbidden-files.sh && node ./scripts/conventions/check-forbidden-patterns.mjs && ./scripts/conventions/scan-staged-secrets.sh",
+    "check:duplication": "node ./scripts/conventions/check-duplication.mjs",
+    "check:similarity": "node ./scripts/conventions/check-staged-similarity.mjs",
+    "check:guardrails": "pnpm run check:security && pnpm run check:duplication && pnpm run check:similarity",
+    "suggest:style-drift": "node ./scripts/conventions/suggest-staged-style-drift.mjs"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "husky": "^9.1.7"
+  }
+}

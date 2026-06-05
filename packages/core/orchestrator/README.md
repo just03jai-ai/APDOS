@@ -7,7 +7,7 @@ This package does not implement AI reasoning, workflow execution, or actual agen
 ## Structure
 
 ```text
-packages/orchestrator/
+packages/core/orchestrator/
   src/
     planner/     Deterministic workflow planner
     workflows/   Workflow definitions

@@ -1,0 +1,138 @@
+name: Deploy to ECS
+
+on:
+  push:
+    branches:
+      - dev
+      - stage
+      - prod
+    paths:
+      - 'Dockerfile'
+      - 'task_definition.json'
+      - '.github/workflows/ecs-deploy.yml'
+      - 'src/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+
+permissions:
+  contents: read
+  id-token: write
+  packages: read
+
+env:
+  SERVICE: __SERVICE_NAME__
+  AWS_REGION: ap-south-1
+  ECR_REPOSITORY: __SERVICE_NAME__
+  PATH_TO_DOCKERFILE: Dockerfile
+  PATH_TO_TASK_DEFINITION: task_definition.json
+
+jobs:
+  deploy:
+    runs-on: blacksmith-2vcpu-ubuntu-2204
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Normalize branch to environment
+        id: env
+        run: |
+          case "${GITHUB_REF_NAME}" in
+            prod)
+              echo "app_env=prod" >> "$GITHUB_OUTPUT"
+              echo "aws_account_id=__PROD_AWS_ACCOUNT_ID__" >> "$GITHUB_OUTPUT"
+              echo "cluster_name=__PROD_CLUSTER_NAME__" >> "$GITHUB_OUTPUT"
+              echo "service_name=__PROD_SERVICE_NAME__" >> "$GITHUB_OUTPUT"
+              ;;
+            stage)
+              echo "app_env=stage" >> "$GITHUB_OUTPUT"
+              echo "aws_account_id=__STAGE_AWS_ACCOUNT_ID__" >> "$GITHUB_OUTPUT"
+              echo "cluster_name=__STAGE_CLUSTER_NAME__" >> "$GITHUB_OUTPUT"
+              echo "service_name=__STAGE_SERVICE_NAME__" >> "$GITHUB_OUTPUT"
+              ;;
+            dev)
+              echo "app_env=dev" >> "$GITHUB_OUTPUT"
+              echo "aws_account_id=__DEV_AWS_ACCOUNT_ID__" >> "$GITHUB_OUTPUT"
+              echo "cluster_name=__DEV_CLUSTER_NAME__" >> "$GITHUB_OUTPUT"
+              echo "service_name=__DEV_SERVICE_NAME__" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "Unsupported branch: ${GITHUB_REF_NAME}" >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ steps.env.outputs.aws_account_id }}:role/GithubActionsRole
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Ensure ECR repository exists
+        run: |
+          aws ecr describe-repositories --repository-names "${ECR_REPOSITORY}" --region "${AWS_REGION}" >/dev/null 2>&1 \
+            || aws ecr create-repository --repository-name "${ECR_REPOSITORY}" --region "${AWS_REGION}"
+
+      - name: Compute immutable image tags
+        id: image
+        run: |
+          echo "sha_tag=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+          echo "image_uri=${{ steps.login-ecr.outputs.registry }}/${ECR_REPOSITORY}:${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+          echo "latest_uri=${{ steps.login-ecr.outputs.registry }}/${ECR_REPOSITORY}:latest" >> "$GITHUB_OUTPUT"
+
+      - name: Write temporary .npmrc for private packages
+        if: ${{ secrets.NPMRC_CONTENT != '' }}
+        run: |
+          printf '%s\n' '${{ secrets.NPMRC_CONTENT }}' > .npmrc.ci
+
+      - name: Build and push image with BuildKit
+        env:
+          DOCKER_BUILDKIT: '1'
+          IMAGE_URI: ${{ steps.image.outputs.image_uri }}
+          LATEST_URI: ${{ steps.image.outputs.latest_uri }}
+          APP_ENV: ${{ steps.env.outputs.app_env }}
+        run: |
+          SECRET_ARGS=''
+          if [ -f .npmrc.ci ]; then
+            SECRET_ARGS='--secret id=npmrc,src=.npmrc.ci'
+          fi
+
+          docker build \
+            ${SECRET_ARGS} \
+            --build-arg APP_ENV_FILE=${APP_ENV} \
+            -t "${IMAGE_URI}" \
+            -t "${LATEST_URI}" \
+            -f "${PATH_TO_DOCKERFILE}" \
+            .
+
+          docker push "${IMAGE_URI}"
+          docker push "${LATEST_URI}"
+
+      - name: Render task definition placeholders
+        run: |
+          sed -i "s#__APP_ENV__#${{ steps.env.outputs.app_env }}#g" "${PATH_TO_TASK_DEFINITION}"
+          sed -i "s#__IMAGE__#${{ steps.image.outputs.image_uri }}#g" "${PATH_TO_TASK_DEFINITION}"
+          sed -i "s#__SERVICE_NAME__#${SERVICE}#g" "${PATH_TO_TASK_DEFINITION}"
+          sed -i "s#__TASK_EXECUTION_ROLE_ARN__#arn:aws:iam::${{ steps.env.outputs.aws_account_id }}:role/__TASK_EXECUTION_ROLE_NAME__#g" "${PATH_TO_TASK_DEFINITION}"
+          sed -i "s#__TASK_ROLE_ARN__#arn:aws:iam::${{ steps.env.outputs.aws_account_id }}:role/__TASK_ROLE_NAME__#g" "${PATH_TO_TASK_DEFINITION}"
+          sed -i "s#__OTEL_COLLECTOR_IMAGE__#__SET_OTEL_COLLECTOR_IMAGE__#g" "${PATH_TO_TASK_DEFINITION}"
+
+      - name: Render Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.PATH_TO_TASK_DEFINITION }}
+          container-name: ${{ env.SERVICE }}
+          image: ${{ steps.image.outputs.image_uri }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ steps.env.outputs.service_name }}
+          cluster: ${{ steps.env.outputs.cluster_name }}
+          wait-for-service-stability: true
