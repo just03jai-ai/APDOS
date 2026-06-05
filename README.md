@@ -8,6 +8,7 @@ The current implementation is a TypeScript monorepo focused on deterministic run
 
 - Artifact Engine for typed delivery artifacts, registry operations, lineage, and event history
 - Workflow Engine for deterministic workflow definitions, instances, transitions, and stage history
+- Runtime Orchestrator for connecting workflow stages to governed skill execution
 - Approval Engine for human approval gates and workflow blocking
 - Validation Engine for artifact validation rules and governance findings
 - Context Engine for retrieving workflow, artifact, approval, agent, and skill context
@@ -47,6 +48,7 @@ packages/core/artifacts
 packages/core/context-engine
 packages/core/knowledge-engine
 packages/core/orchestrator
+packages/core/runtime-orchestrator
 packages/core/workflow-engine
 ```
 

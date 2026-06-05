@@ -1,0 +1,29 @@
+{
+  "name": "@apdos/runtime-orchestrator",
+  "version": "0.1.0",
+  "description": "Runtime Skill Orchestration for connecting APDOS workflow execution to skill governance and runtime execution.",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.json && node --test dist/tests/**/*.test.js"
+  },
+  "dependencies": {
+    "@apdos/artifacts": "0.1.0",
+    "@apdos/skill-governance": "0.1.0",
+    "@apdos/skill-runtime": "0.1.0",
+    "@apdos/workflow-engine": "0.1.0"
+  },
+  "devDependencies": {
+    "@apdos/skill-registry": "0.1.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}
