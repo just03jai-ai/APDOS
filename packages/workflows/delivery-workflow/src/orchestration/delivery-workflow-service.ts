@@ -12,6 +12,8 @@ import {
 import { ContextRetrievalService } from "@apdos/context-engine";
 import { DiscoveryAgentService } from "@apdos/discovery-agent";
 import { EngineeringAgentService } from "@apdos/engineering-agent";
+import { GovernanceAgentService } from "@apdos/governance-agent";
+import type { GovernanceDecision } from "@apdos/governance-agent";
 import { ProductAgentService } from "@apdos/product-agent";
 import { QaAgentService } from "@apdos/qa-agent";
 import { SkillRuntimeService } from "@apdos/skill-runtime";
@@ -47,6 +49,7 @@ export interface DeliveryWorkflowServiceDependencies {
   architectureAgent?: ArchitectureAgentService;
   discoveryAgent?: DiscoveryAgentService;
   engineeringAgent?: EngineeringAgentService;
+  governanceAgent?: GovernanceAgentService;
   productAgent?: ProductAgentService;
   qaAgent?: QaAgentService;
   validators?: ValidatorRegistry;
@@ -59,6 +62,7 @@ export class DeliveryWorkflowService {
   private readonly architectureAgent: ArchitectureAgentService;
   private readonly discoveryAgent: DiscoveryAgentService;
   private readonly engineeringAgent: EngineeringAgentService;
+  private readonly governanceAgent: GovernanceAgentService;
   private readonly productAgent: ProductAgentService;
   private readonly qaAgent: QaAgentService;
   private readonly validators: ValidatorRegistry;
@@ -99,6 +103,13 @@ export class DeliveryWorkflowService {
       });
     this.engineeringAgent = dependencies.engineeringAgent ??
       new EngineeringAgentService({
+        artifacts: this.artifacts,
+        context: this.context,
+        workflows: this.workflows,
+        skillRuntime
+      });
+    this.governanceAgent = dependencies.governanceAgent ??
+      new GovernanceAgentService({
         artifacts: this.artifacts,
         context: this.context,
         workflows: this.workflows,
@@ -216,12 +227,28 @@ export class DeliveryWorkflowService {
     });
     const testResult = testResults[0];
 
+    const { governancePackage, governanceFindings: governanceStageFindings } =
+      await this.runGovernanceStage({
+        workflowId,
+        actorId,
+        createdAt,
+        prd,
+        techSpec,
+        implementationPlan,
+        engineeringPackage,
+        qaPackage,
+        artifacts,
+        contextPackages
+      });
+    const governanceDecision = requireGovernanceDecision(governancePackage);
+
     await this.captureContext({
       workflowId,
       artifactIds: [
-        qaPackage.id,
+        governancePackage.id,
         ...testResults.map((artifact) => artifact.id),
-        ...governanceFindings.map((artifact) => artifact.id)
+        ...governanceFindings.map((artifact) => artifact.id),
+        ...governanceStageFindings.map((artifact) => artifact.id)
       ],
       contextPackages
     });
@@ -233,20 +260,21 @@ export class DeliveryWorkflowService {
     this.workflows.completeStage({
       workflowId,
       stageId: DELIVERY_STAGE_IDS.validation,
-      artifactIds: [qaPackage.id, testResult.id],
+      artifactIds: [governancePackage.id, testResult.id],
       occurredAt: createdAt
     });
 
     await this.captureContext({
       workflowId,
-      artifactIds: [qaPackage.id, testResult.id],
+      artifactIds: [governancePackage.id, testResult.id],
       contextPackages
     });
 
     await this.runApprovalStage({
       workflowId,
       actorId,
-      artifactIds: [qaPackage.id, testResult.id],
+      artifactIds: [governancePackage.id, testResult.id],
+      governanceDecision,
       contextPackages
     });
 
@@ -254,7 +282,7 @@ export class DeliveryWorkflowService {
       stageInput,
       codeChange,
       testResult,
-      qaPackage
+      governancePackage
     );
     const releaseValidation = this.validateRequiredArtifact(
       releasePackage,
@@ -279,6 +307,7 @@ export class DeliveryWorkflowService {
       artifacts,
       engineeringPackage,
       qaPackage,
+      governancePackage,
       releasePackage: registeredReleasePackage,
       approvals: this.approvals.listApprovals(),
       validationResults,
@@ -580,6 +609,113 @@ export class DeliveryWorkflowService {
     };
   }
 
+  private async runGovernanceStage(input: {
+    workflowId: string;
+    actorId: string;
+    createdAt: string;
+    prd: BaseArtifact;
+    techSpec: BaseArtifact;
+    implementationPlan: BaseArtifact;
+    engineeringPackage: BaseArtifact;
+    qaPackage: BaseArtifact;
+    artifacts: BaseArtifact[];
+    contextPackages: DeliveryWorkflowRunResult["contextPackages"];
+  }): Promise<{
+    governancePackage: BaseArtifact;
+    governanceFindings: BaseArtifact[];
+  }> {
+    await this.captureContext({
+      workflowId: input.workflowId,
+      artifactIds: [
+        input.prd.id,
+        input.techSpec.id,
+        input.implementationPlan.id,
+        input.engineeringPackage.id,
+        input.qaPackage.id
+      ],
+      contextPackages: input.contextPackages
+    });
+
+    this.workflows.advanceStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.governance,
+      occurredAt: input.createdAt
+    });
+
+    let governancePackageArtifact: BaseArtifact;
+    let governanceFindingArtifacts: BaseArtifact[];
+
+    try {
+      const result = await this.governanceAgent.createGovernancePackage({
+        request: {
+          workflowId: input.workflowId,
+          prdArtifactId: input.prd.id,
+          techSpecArtifactId: input.techSpec.id,
+          implementationPlanArtifactId: input.implementationPlan.id,
+          engineeringPackageArtifactId: input.engineeringPackage.id,
+          qaPackageArtifactId: input.qaPackage.id
+        },
+        actorId: input.actorId,
+        createdAt: input.createdAt,
+        stageId: DELIVERY_STAGE_IDS.governance
+      });
+      governancePackageArtifact = result.governancePackageArtifact;
+      governanceFindingArtifacts = result.governanceFindingArtifacts;
+    } catch (error) {
+      this.workflows.failStage({
+        workflowId: input.workflowId,
+        stageId: DELIVERY_STAGE_IDS.governance,
+        reason: error instanceof Error ? error.message : "Governance execution failed",
+        occurredAt: input.createdAt
+      });
+      throw error;
+    }
+    input.artifacts.push(...governanceFindingArtifacts, governancePackageArtifact);
+
+    const decision = requireGovernanceDecision(governancePackageArtifact);
+    if (decision === "NO_GO") {
+      this.workflows.failStage({
+        workflowId: input.workflowId,
+        stageId: DELIVERY_STAGE_IDS.governance,
+        reason: "Governance decision is NO_GO",
+        occurredAt: input.createdAt
+      });
+      throw new Error("Governance decision blocked delivery workflow: NO_GO");
+    }
+    if (decision === "CONDITIONAL_GO") {
+      this.approvals.createApprovalRequest({
+        workflowId: input.workflowId,
+        stageId: DELIVERY_STAGE_IDS.governance,
+        approvalType: ApprovalType.PRODUCTION_APPROVAL,
+        requestedBy: input.actorId,
+        requestedAt: input.createdAt,
+        comments: "Conditional governance decision requires explicit approval before workflow progression."
+      });
+      this.workflows.blockStage({
+        workflowId: input.workflowId,
+        stageId: DELIVERY_STAGE_IDS.governance,
+        reason: "Governance decision is CONDITIONAL_GO and requires approval",
+        occurredAt: input.createdAt
+      });
+      throw new Error("Governance decision blocked delivery workflow pending approval: CONDITIONAL_GO");
+    }
+
+    this.workflows.completeStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.governance,
+      artifactIds: [
+        ...governanceFindingArtifacts.map((artifact) => artifact.id),
+        governancePackageArtifact.id
+      ],
+      occurredAt: input.createdAt
+    });
+
+    return {
+      governancePackage: governancePackageArtifact,
+      governanceFindings: governanceFindingArtifacts
+    };
+  }
+
   private async registerArtifact(input: {
     artifact: BaseArtifact;
     artifacts: BaseArtifact[];
@@ -593,6 +729,7 @@ export class DeliveryWorkflowService {
     workflowId: string;
     actorId: string;
     artifactIds: string[];
+    governanceDecision: GovernanceDecision;
     contextPackages: DeliveryWorkflowRunResult["contextPackages"];
   }): Promise<void> {
     await this.captureContext({
@@ -611,13 +748,16 @@ export class DeliveryWorkflowService {
       stageId: DELIVERY_STAGE_IDS.releasePackage,
       approvalType: ApprovalType.PRODUCTION_APPROVAL,
       requestedBy: input.actorId,
-      comments: "Release package creation requires production approval."
+      comments:
+        input.governanceDecision === "CONDITIONAL_GO"
+          ? "Conditional governance decision requires explicit production approval."
+          : "Release package creation requires production approval."
     });
 
     this.approvals.approve({
       approvalId: productionApproval.id,
       actorId: input.actorId,
-      comments: "Production release approved for deterministic workflow V1."
+      comments: `Production release approved after governance decision: ${input.governanceDecision}.`
     });
 
     this.workflows.completeStage({
@@ -656,6 +796,8 @@ export class DeliveryWorkflowService {
           "backend-contributor",
           "frontend-contributor",
           "test-plan-writer",
+          "git-guardian",
+          "conventions",
           "ai-data-analyst",
           "release"
         ]
@@ -692,6 +834,16 @@ function assertValidValidationResult(result: ValidationResult): void {
         .join("; ")}`
     );
   }
+}
+
+function requireGovernanceDecision(artifact: BaseArtifact): GovernanceDecision {
+  const decision = artifact.metadata.decision;
+
+  if (decision !== "GO" && decision !== "CONDITIONAL_GO" && decision !== "NO_GO") {
+    throw new Error(`Invalid governance decision on artifact: ${artifact.id}`);
+  }
+
+  return decision;
 }
 
 function createTraceability(

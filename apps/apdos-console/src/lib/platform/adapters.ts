@@ -107,7 +107,7 @@ export async function getPlatformSnapshot(): Promise<PlatformSnapshot> {
 
 export async function getWorkflow(id: string) {
   const snapshot = await getPlatformSnapshot();
-  return snapshot.workflows.find((workflow) => workflow.id === id);
+  return snapshot.workflows.find((workflow) => workflow.id === decodeURIComponent(id));
 }
 
 export async function getAgent(id: string) {
@@ -133,7 +133,7 @@ function toConsoleWorkflowStage(
   const stageArtifacts = artifacts.filter((artifact) => stage.artifactIds.includes(artifact.id));
   const governedSkills = governance.mapping.getSkillsForWorkflowStage(stage.id);
   const assignedAgent = governedSkills[0]?.ownerAgent ?? resolveOperationalAgent(stage.id);
-  const executedSkills = stageArtifacts.flatMap(readSourceSkillIds);
+  const executedSkills = [...new Set(stageArtifacts.flatMap(readSourceSkillIds))];
 
   return {
     id: stage.id,

@@ -26,7 +26,9 @@ export function StageList({ stages }: { stages: ConsoleWorkflowStage[] }) {
                 <div className="text-xs font-medium uppercase text-muted-foreground">Executed Skills</div>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {stage.executedSkills.length > 0 ? (
-                    stage.executedSkills.map((skill) => <Badge key={skill}>{skill}</Badge>)
+                    stage.executedSkills.map((skill, index) => (
+                      <Badge key={`${stage.id}:${skill}:${index}`}>{skill}</Badge>
+                    ))
                   ) : (
                     <span className="text-sm text-muted-foreground">No skill execution recorded</span>
                   )}

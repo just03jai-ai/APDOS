@@ -1,8 +1,14 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { ApprovalStatus, ApprovalType } from "@apdos/approval-engine";
-import { ArtifactType } from "@apdos/artifacts";
-import { WorkflowStatus } from "@apdos/workflow-engine";
+import { ApprovalService, ApprovalStatus, ApprovalType } from "@apdos/approval-engine";
+import { ArtifactRegistry, ArtifactType } from "@apdos/artifacts";
+import { GovernanceAgentService } from "@apdos/governance-agent";
+import {
+  DeterministicSkillExecutor,
+  SkillRuntimeService,
+  type SkillExecutor
+} from "@apdos/skill-runtime";
+import { WorkflowExecutionService, WorkflowStatus } from "@apdos/workflow-engine";
 import {
   DELIVERY_STAGE_IDS,
   DeliveryWorkflowService
@@ -20,12 +26,14 @@ describe("DeliveryWorkflowService", () => {
     });
 
     assert.equal(result.workflow.status, WorkflowStatus.COMPLETED);
-    assert.equal(result.workflow.stages.length, 9);
+    assert.equal(result.workflow.stages.length, 10);
     assert.equal(result.workflow.stages.every((stage) => stage.status === "COMPLETED"), true);
     assert.equal(result.engineeringPackage.type, ArtifactType.ENGINEERING_PACKAGE);
     assert.equal(result.engineeringPackage.id, "workflow-delivery-1:engineering-package");
     assert.equal(result.qaPackage.type, ArtifactType.QA_PACKAGE);
     assert.equal(result.qaPackage.id, "workflow-delivery-1:qa-package");
+    assert.equal(result.governancePackage.type, ArtifactType.GOVERNANCE_PACKAGE);
+    assert.equal(result.governancePackage.id, "workflow-delivery-1:governance-package");
     assert.equal(result.releasePackage.type, ArtifactType.RELEASE_PACKAGE);
     assert.equal(result.releasePackage.id, "workflow-delivery-1:release-package");
     assert.deepEqual(
@@ -43,8 +51,11 @@ describe("DeliveryWorkflowService", () => {
         ArtifactType.CODE_CHANGE,
         ArtifactType.ENGINEERING_PACKAGE,
         ArtifactType.TEST_RESULT,
-        ArtifactType.GOVERNANCE_FINDING,
         ArtifactType.QA_PACKAGE,
+        ArtifactType.GOVERNANCE_FINDING,
+        ArtifactType.GOVERNANCE_FINDING,
+        ArtifactType.GOVERNANCE_FINDING,
+        ArtifactType.GOVERNANCE_PACKAGE,
         ArtifactType.RELEASE_PACKAGE
       ]
     );
@@ -104,8 +115,7 @@ describe("DeliveryWorkflowService", () => {
     assert.equal(result.engineeringPackage.metadata.storyPoints, 34);
     assert.ok(Array.isArray(result.engineeringPackage.metadata.risks));
     assert.deepEqual(result.qaPackage.metadata.sourceSkillIds, [
-      "test-plan-writer@1.0",
-      "ai-data-analyst@1.0"
+      "test-plan-writer@1.0"
     ]);
     assert.ok(Array.isArray(result.qaPackage.metadata.testCases));
     assert.ok(Array.isArray(result.qaPackage.metadata.regressionCoverage));
@@ -116,6 +126,16 @@ describe("DeliveryWorkflowService", () => {
     assert.ok(Array.isArray(result.qaPackage.metadata.uatChecklist));
     assert.ok(Array.isArray(result.qaPackage.metadata.releaseValidationChecklist));
     assert.ok(Array.isArray(result.qaPackage.metadata.riskAreas));
+    assert.deepEqual(result.governancePackage.metadata.sourceSkillIds, [
+      "git-guardian@1.0",
+      "conventions@1.0",
+      "ai-data-analyst@1.0"
+    ]);
+    assert.equal(result.governancePackage.metadata.decision, "GO");
+    assert.ok(Array.isArray(result.governancePackage.metadata.riskAssessment));
+    assert.ok(Array.isArray(result.governancePackage.metadata.securityReview));
+    assert.ok(Array.isArray(result.governancePackage.metadata.complianceReview));
+    assert.ok(Array.isArray(result.governancePackage.metadata.approvalChecklist));
   });
 
   it("validates PRD, TECH_SPEC, and RELEASE_PACKAGE before completion", async () => {
@@ -166,6 +186,115 @@ describe("DeliveryWorkflowService", () => {
     assert.ok(approvalStageCompletedIndex > approvalStageStartedIndex);
   });
 
+  it("fails Governance and prevents release when decision is NO_GO", async () => {
+    const artifacts = new ArtifactRegistry();
+    const workflows = new WorkflowExecutionService();
+    const approvals = new ApprovalService();
+    const governanceAgent = new GovernanceAgentService({
+      artifacts,
+      workflows,
+      skillRuntime: new SkillRuntimeService({ executor: new EvidenceGovernanceExecutor("no-go") })
+    });
+    const service = new DeliveryWorkflowService({
+      artifacts,
+      workflows,
+      approvals,
+      governanceAgent
+    });
+
+    await assert.rejects(
+      () =>
+        service.run({
+          workflowId: "workflow-no-go-1",
+          goal: "Build supplier payment approval workflow",
+          createdAt: "2026-01-01T00:00:00.000Z"
+        }),
+      /Governance decision blocked delivery workflow: NO_GO/
+    );
+
+    const workflow = workflows.getWorkflow("workflow-no-go-1");
+    assert.equal(workflow?.status, WorkflowStatus.FAILED);
+    assert.equal(
+      workflow?.stages.find((stage) => stage.id === DELIVERY_STAGE_IDS.governance)?.status,
+      "FAILED"
+    );
+    assert.deepEqual(
+      approvals.listApprovals().map((approval) => approval.approvalType),
+      [ApprovalType.ARCHITECTURE_APPROVAL]
+    );
+    assert.equal(
+      (await artifacts.retrieve("workflow-no-go-1:release-package")),
+      undefined
+    );
+  });
+
+  it("requires explicit production approval for CONDITIONAL_GO", async () => {
+    const artifacts = new ArtifactRegistry();
+    const workflows = new WorkflowExecutionService();
+    const approvals = new ApprovalService();
+    const governanceAgent = new GovernanceAgentService({
+      artifacts,
+      workflows,
+      skillRuntime: new SkillRuntimeService({
+        executor: new EvidenceGovernanceExecutor("conditional")
+      })
+    });
+    const service = new DeliveryWorkflowService({
+      artifacts,
+      workflows,
+      approvals,
+      governanceAgent
+    });
+
+    await assert.rejects(
+      () =>
+        service.run({
+          workflowId: "workflow-conditional-go-1",
+          goal: "Build supplier payment approval workflow",
+          createdAt: "2026-01-01T00:00:00.000Z"
+        }),
+      /Governance decision blocked delivery workflow pending approval: CONDITIONAL_GO/
+    );
+
+    const workflow = workflows.getWorkflow("workflow-conditional-go-1");
+    assert.equal(workflow?.status, WorkflowStatus.BLOCKED);
+    assert.equal(
+      workflow?.stages.find((stage) => stage.id === DELIVERY_STAGE_IDS.governance)?.status,
+      "BLOCKED"
+    );
+    assert.equal(
+      approvals.listApprovals().find(
+        (approval) => approval.approvalType === ApprovalType.PRODUCTION_APPROVAL
+      )?.status,
+      ApprovalStatus.PENDING
+    );
+    assert.equal(await artifacts.retrieve("workflow-conditional-go-1:release-package"), undefined);
+  });
+
+  it("fails Governance when required governance inputs are unavailable", async () => {
+    const workflows = new WorkflowExecutionService();
+    const service = new DeliveryWorkflowService({
+      workflows,
+      governanceAgent: new GovernanceAgentService({
+        artifacts: new ArtifactRegistry(),
+        workflows,
+        skillRuntime: new SkillRuntimeService()
+      })
+    });
+
+    await assert.rejects(
+      () =>
+        service.run({
+          workflowId: "workflow-missing-governance-input-1",
+          goal: "Build supplier payment approval workflow",
+          createdAt: "2026-01-01T00:00:00.000Z"
+        }),
+      /Governance artifact not found/
+    );
+
+    assert.equal(workflows.getWorkflow("workflow-missing-governance-input-1")?.status, WorkflowStatus.FAILED);
+  });
+
   it("maintains complete artifact traceability for the release package", async () => {
     const service = new DeliveryWorkflowService();
 
@@ -181,7 +310,7 @@ describe("DeliveryWorkflowService", () => {
 
     assert.equal(result.traceability.releasePackageId, "workflow-traceability-1:release-package");
     assert.deepEqual(releaseTrace?.parentIds, [
-      "workflow-traceability-1:qa-package",
+      "workflow-traceability-1:governance-package",
       "workflow-traceability-1:code-change:1",
       "workflow-traceability-1:qa-test-result:1"
     ]);
@@ -195,10 +324,13 @@ describe("DeliveryWorkflowService", () => {
         "workflow-traceability-1:code-change:5",
         "workflow-traceability-1:discovery",
         "workflow-traceability-1:engineering-package",
+        "workflow-traceability-1:governance-finding:1",
+        "workflow-traceability-1:governance-finding:2",
+        "workflow-traceability-1:governance-finding:3",
+        "workflow-traceability-1:governance-package",
         "workflow-traceability-1:idea",
         "workflow-traceability-1:implementation-plan",
         "workflow-traceability-1:prd",
-        "workflow-traceability-1:qa-finding:1",
         "workflow-traceability-1:qa-package",
         "workflow-traceability-1:qa-test-result:1",
         "workflow-traceability-1:tech-spec",
@@ -247,11 +379,11 @@ describe("DeliveryWorkflowService", () => {
 
     assert.equal(
       result.workflow.history.filter((event) => event.type === "STAGE_STARTED").length,
-      9
+      10
     );
     assert.equal(
       result.workflow.history.filter((event) => event.type === "STAGE_COMPLETED").length,
-      9
+      10
     );
     assert.equal(
       result.workflow.history.at(-1)?.type,
@@ -270,3 +402,35 @@ describe("DeliveryWorkflowService", () => {
     );
   });
 });
+
+class EvidenceGovernanceExecutor implements SkillExecutor {
+  constructor(private readonly mode: "conditional" | "no-go") {}
+
+  async execute(
+    skill: Parameters<SkillExecutor["execute"]>[0],
+    request: Parameters<SkillExecutor["execute"]>[1]
+  ): ReturnType<SkillExecutor["execute"]> {
+    const result = await new DeterministicSkillExecutor().execute(skill, request);
+
+    if (skill.name === "git-guardian" && this.mode === "no-go") {
+      result.findings[0] = {
+        ...result.findings[0],
+        message: "Blocking governance evidence.",
+        metadata: { blocking: true }
+      };
+    }
+
+    if (skill.name === "ai-data-analyst" && this.mode === "conditional") {
+      result.findings[0] = {
+        ...result.findings[0],
+        message: "Governance review required.",
+        metadata: {
+          requiresReview: true,
+          openQuestion: "Confirm governance exception owner."
+        }
+      };
+    }
+
+    return result;
+  }
+}

@@ -153,34 +153,38 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
   {
     skillId: "ai-data-analyst",
     version: "1.0",
-    ownerAgent: "agent:qa",
-    workflowStage: "qa",
-    inputArtifacts: [ArtifactType.ENGINEERING_PACKAGE, ArtifactType.TEST_RESULT],
+    ownerAgent: "agent:governance",
+    workflowStage: "governance",
+    inputArtifacts: [
+      ArtifactType.ENGINEERING_PACKAGE,
+      ArtifactType.QA_PACKAGE,
+      ArtifactType.GOVERNANCE_FINDING
+    ],
     outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
-    dependencies: ["test-plan-writer"],
-    executionOrder: 110,
+    dependencies: ["conventions"],
+    executionOrder: 130,
     enabled: true
   },
   {
     skillId: "git-guardian",
     version: "1.0",
     ownerAgent: "agent:governance",
-    workflowStage: "approval",
-    inputArtifacts: [ArtifactType.CODE_CHANGE, ArtifactType.TEST_RESULT],
+    workflowStage: "governance",
+    inputArtifacts: [ArtifactType.QA_PACKAGE],
     outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
     dependencies: ["test-plan-writer"],
-    executionOrder: 120,
+    executionOrder: 110,
     enabled: true
   },
   {
     skillId: "conventions",
     version: "1.0",
     ownerAgent: "agent:governance",
-    workflowStage: "approval",
-    inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.CODE_CHANGE],
+    workflowStage: "governance",
+    inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.GOVERNANCE_FINDING],
     outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
     dependencies: ["git-guardian"],
-    executionOrder: 130,
+    executionOrder: 120,
     enabled: true
   },
   {

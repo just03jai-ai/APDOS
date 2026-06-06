@@ -98,7 +98,7 @@ export const qaAgent: AgentDefinition = {
     ArtifactType.ENGINEERING_PACKAGE
   ],
   outputArtifacts: [ArtifactType.QA_PACKAGE],
-  requiredSkills: ["test-plan-writer", "ai-data-analyst"],
+  requiredSkills: ["test-plan-writer"],
   executionConstraints: {
     maxConcurrentRuns: 1,
     requiresHumanApproval: false,
@@ -109,17 +109,23 @@ export const qaAgent: AgentDefinition = {
 export const governanceAgent: AgentDefinition = {
   id: "agent:governance",
   name: "GovernanceAgent",
-  description: "Reviews delivery artifacts and records governance findings.",
+  description: "Creates approval-ready governance packages from delivery artifacts.",
   version: "0.1.0",
   status: "available",
   capabilities: [governanceReviewCapability],
-  inputArtifacts: [ArtifactType.PRD, ArtifactType.TECH_SPEC, ArtifactType.IMPLEMENTATION_PLAN],
-  outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
-  requiredSkills: ["governance-review", "quality-assurance", "policy-analysis"],
+  inputArtifacts: [
+    ArtifactType.PRD,
+    ArtifactType.TECH_SPEC,
+    ArtifactType.IMPLEMENTATION_PLAN,
+    ArtifactType.ENGINEERING_PACKAGE,
+    ArtifactType.QA_PACKAGE
+  ],
+  outputArtifacts: [ArtifactType.GOVERNANCE_PACKAGE],
+  requiredSkills: ["git-guardian", "conventions", "ai-data-analyst"],
   executionConstraints: {
     maxConcurrentRuns: 1,
     requiresHumanApproval: true,
-    allowedWorkflowStages: ["GovernanceReview"]
+    allowedWorkflowStages: ["Governance"]
   }
 };
 

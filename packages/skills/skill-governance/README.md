@@ -73,7 +73,7 @@ prd
 tech-spec
 engineering
 qa
-approval
+governance
 release-package
 ```
 

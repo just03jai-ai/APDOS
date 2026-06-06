@@ -7,6 +7,7 @@ export const DELIVERY_STAGE_IDS = {
   techSpec: "tech-spec",
   engineering: "engineering",
   qa: "qa",
+  governance: "governance",
   validation: "validation",
   approval: "approval",
   releasePackage: "release-package"
@@ -40,6 +41,10 @@ export const DELIVERY_WORKFLOW_DEFINITION = {
     {
       id: DELIVERY_STAGE_IDS.qa,
       name: "QA"
+    },
+    {
+      id: DELIVERY_STAGE_IDS.governance,
+      name: "Governance"
     },
     {
       id: DELIVERY_STAGE_IDS.validation,

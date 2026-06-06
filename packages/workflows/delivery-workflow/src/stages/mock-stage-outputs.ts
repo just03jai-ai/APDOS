@@ -85,15 +85,15 @@ export function createReleasePackageArtifact(
   input: StageOutputInput,
   codeChange: BaseArtifact,
   testResult: BaseArtifact,
-  qaPackage?: BaseArtifact
+  governancePackage?: BaseArtifact
 ): BaseArtifact {
   return createArtifact(input, {
     id: `${input.workflowId}:release-package`,
     type: ArtifactType.RELEASE_PACKAGE,
     title: "Governed Release Package",
     description: `Governed release package for ${input.goal}.`,
-    parentIds: qaPackage
-      ? [qaPackage.id, codeChange.id, testResult.id]
+    parentIds: governancePackage
+      ? [governancePackage.id, codeChange.id, testResult.id]
       : [codeChange.id, testResult.id],
     stageId: DELIVERY_STAGE_IDS.releasePackage,
     metadata: {

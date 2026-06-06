@@ -44,5 +44,9 @@ export default async function AgentDetailPage({ params }: { params: Promise<{ id
 }
 
 function renderBadges(values: string[]) {
-  return <div className="flex flex-wrap gap-2">{values.map((value) => <Badge key={value}>{value}</Badge>)}</div>;
+  return (
+    <div className="flex flex-wrap gap-2">
+      {values.map((value, index) => <Badge key={`${value}:${index}`}>{value}</Badge>)}
+    </div>
+  );
 }
