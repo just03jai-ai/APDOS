@@ -33,6 +33,7 @@ The `ArtifactType` enum currently supports:
 - `QA_PACKAGE`
 - `TEST_RESULT`
 - `GOVERNANCE_FINDING`
+- `GOVERNANCE_PACKAGE`
 - `RELEASE_PACKAGE`
 
 ## Base Artifact

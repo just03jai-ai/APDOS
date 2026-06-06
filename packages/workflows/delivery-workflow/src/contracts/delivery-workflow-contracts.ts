@@ -27,6 +27,7 @@ export interface DeliveryWorkflowRunResult {
   artifacts: BaseArtifact[];
   engineeringPackage: BaseArtifact;
   qaPackage: BaseArtifact;
+  governancePackage: BaseArtifact;
   releasePackage: BaseArtifact;
   approvals: ApprovalRequest[];
   validationResults: ValidationResult[];

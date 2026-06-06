@@ -16,7 +16,6 @@ The APDOS QA Agent owns QA-stage execution. It consumes product, architecture, a
 The default governance map resolves these QA-stage skills:
 
 - `test-plan-writer`
-- `ai-data-analyst`
 
 ## Non-Goals
 

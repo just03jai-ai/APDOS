@@ -103,6 +103,15 @@ describe("AgentRegistry", () => {
     );
   });
 
+  it("registers Governance Agent as a GOVERNANCE_PACKAGE producer", () => {
+    const registry = createSeededAgentRegistry();
+
+    assert.deepEqual(
+      registry.findAgentsByOutputArtifact(ArtifactType.GOVERNANCE_PACKAGE).map((agent) => agent.name),
+      ["GovernanceAgent"]
+    );
+  });
+
   it("seeds the initial APDOS agent definitions", () => {
     const registry = createSeededAgentRegistry();
 

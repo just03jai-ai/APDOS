@@ -55,16 +55,14 @@ describe("QaAgentService", () => {
     });
 
     assert.deepEqual(result.skillResults.map((skillResult) => skillResult.metadata.skillName), [
-      "test-plan-writer",
-      "ai-data-analyst"
+      "test-plan-writer"
     ]);
     assert.equal(result.testResultArtifacts.length, 1);
-    assert.equal(result.governanceFindingArtifacts.length, 1);
+    assert.equal(result.governanceFindingArtifacts.length, 0);
     assert.equal(result.qaPackageArtifact.type, ArtifactType.QA_PACKAGE);
     assert.equal(result.qaPackageArtifact.id, "qa-agent-1:qa-package");
     assert.ok(result.qaPackageArtifact.parentIds.includes("qa-agent-1:engineering-package"));
     assert.ok(result.qaPackageArtifact.parentIds.includes("qa-agent-1:qa-test-result:1"));
-    assert.ok(result.qaPackageArtifact.parentIds.includes("qa-agent-1:qa-finding:1"));
     assert.equal(result.qaPackageArtifact.metadata.sourceAgent, "agent:qa");
     assert.ok(Array.isArray(result.qaPackageArtifact.metadata.testCases));
     assert.ok(Array.isArray(result.qaPackageArtifact.metadata.regressionCoverage));

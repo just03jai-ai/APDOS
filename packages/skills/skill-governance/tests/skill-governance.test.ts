@@ -57,7 +57,16 @@ describe("SkillMappingService", () => {
 
     assert.deepEqual(
       qaSkills.map((skill) => skill.skillId),
-      ["test-plan-writer", "ai-data-analyst"]
+      ["test-plan-writer"]
+    );
+  });
+
+  it("maps governance skills to Governance Agent", () => {
+    const service = new SkillMappingService();
+
+    assert.deepEqual(
+      service.getSkillsForAgent("agent:governance").map((skill) => skill.skillId),
+      ["git-guardian", "conventions", "ai-data-analyst"]
     );
   });
 
@@ -212,6 +221,17 @@ describe("SkillRecommendationService", () => {
 
     assert.equal(service.recommendNextAgent(context), "agent:qa");
     assert.equal(service.recommendWorkflowStage(context), "qa");
+  });
+
+  it("recommends the Governance Agent when QA package is available", () => {
+    const service = new SkillRecommendationService();
+    const context = {
+      availableArtifacts: [ArtifactType.QA_PACKAGE],
+      completedSkills: ["test-plan-writer"]
+    };
+
+    assert.equal(service.recommendNextAgent(context), "agent:governance");
+    assert.equal(service.recommendWorkflowStage(context), "governance");
   });
 
   it("does not recommend skills with incomplete dependencies", () => {

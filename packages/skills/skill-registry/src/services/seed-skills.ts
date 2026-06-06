@@ -349,10 +349,14 @@ export const aiDataAnalystSkill: SkillDefinition = {
   name: "ai-data-analyst",
   description: "Analyzes delivery artifacts and data outputs for validation findings.",
   version: "1.0",
-  dependencies: ["test-plan-writer"],
+  dependencies: ["conventions"],
   category: "quality",
   status: "available",
-  inputArtifacts: [ArtifactType.ENGINEERING_PACKAGE, ArtifactType.TEST_RESULT],
+  inputArtifacts: [
+    ArtifactType.ENGINEERING_PACKAGE,
+    ArtifactType.QA_PACKAGE,
+    ArtifactType.GOVERNANCE_FINDING
+  ],
   outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
   templates: [],
   rules: [
@@ -376,7 +380,7 @@ export const gitGuardianSkill: SkillDefinition = {
   dependencies: ["test-plan-writer"],
   category: "governance",
   status: "available",
-  inputArtifacts: [ArtifactType.CODE_CHANGE, ArtifactType.TEST_RESULT],
+  inputArtifacts: [ArtifactType.QA_PACKAGE],
   outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
   templates: [governanceTemplate],
   rules: [
@@ -400,7 +404,7 @@ export const conventionsSkill: SkillDefinition = {
   dependencies: ["git-guardian"],
   category: "governance",
   status: "available",
-  inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.CODE_CHANGE],
+  inputArtifacts: [ArtifactType.TECH_SPEC, ArtifactType.GOVERNANCE_FINDING],
   outputArtifacts: [ArtifactType.GOVERNANCE_FINDING],
   templates: [governanceTemplate],
   rules: [
