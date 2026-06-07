@@ -11,6 +11,8 @@ Discovery
 ↓
 PRD
 ↓
+Design
+↓
 Tech Spec
 ↓
 Engineering
@@ -35,6 +37,7 @@ The workflow uses:
 - Context Engine to retrieve relevant context between stages
 - Discovery Agent to generate the `DISCOVERY_REPORT` artifact
 - Product Agent to generate the `PRD` artifact
+- Design Agent to generate the `DESIGN_PACKAGE` artifact
 - Architecture Agent to generate `TECH_SPEC` and `IMPLEMENTATION_PLAN` artifacts
 - Engineering Agent to generate `CODE_CHANGE` and `ENGINEERING_PACKAGE` artifacts
 - QA Agent to generate `TEST_RESULT` and `QA_PACKAGE` artifacts
@@ -44,15 +47,16 @@ The workflow uses:
 
 ## Execution Model
 
-`DeliveryWorkflowService.run()` starts a workflow, captures the idea, calls the Discovery Agent, Product Agent, Architecture Agent, Engineering Agent, QA Agent, and Governance Agent, validates required artifacts, creates required approvals, and completes the workflow when the release package is created.
+`DeliveryWorkflowService.run()` starts a workflow, captures the idea, calls the Discovery Agent, Product Agent, Design Agent, Architecture Agent, Engineering Agent, QA Agent, and Governance Agent, validates required artifacts, creates required approvals, and completes the workflow when the release package is created.
 
-The package intentionally uses deterministic Skill Runtime execution. Discovery is handled by `@apdos/discovery-agent`; product requirements are handled by `@apdos/product-agent`; architecture is handled by `@apdos/architecture-agent`; engineering packaging is handled by `@apdos/engineering-agent`; QA packaging is handled by `@apdos/qa-agent`; governance packaging is handled by `@apdos/governance-agent`. It does not implement LLM generation or AI reasoning.
+The package intentionally uses deterministic Skill Runtime execution. Discovery is handled by `@apdos/discovery-agent`; product requirements are handled by `@apdos/product-agent`; design packaging is handled by `@apdos/design-agent`; architecture is handled by `@apdos/architecture-agent`; engineering packaging is handled by `@apdos/engineering-agent`; QA packaging is handled by `@apdos/qa-agent`; governance packaging is handled by `@apdos/governance-agent`. It does not implement LLM generation or AI reasoning.
 
 ## Stage Responsibilities
 
 - Idea: captures the original business goal as an `IDEA` artifact.
 - Discovery: calls `DiscoveryAgentService` to analyze the goal and create a `DISCOVERY_REPORT` from the idea.
 - PRD: calls `ProductAgentService` to create and validate a `PRD` with required product metadata.
+- Design: calls `DesignAgentService` to execute governed design skills and create a prototype-ready `DESIGN_PACKAGE`.
 - Tech Spec: calls `ArchitectureAgentService` to create `TECH_SPEC` and `IMPLEMENTATION_PLAN` artifacts, grants deterministic architecture approval, and validates the Tech Spec.
 - Engineering: calls `EngineeringAgentService` to execute governed engineering skills and create `CODE_CHANGE` plus `ENGINEERING_PACKAGE` artifacts.
 - QA: calls `QaAgentService` to execute governed QA skills and create `TEST_RESULT` and `QA_PACKAGE` artifacts.
@@ -70,6 +74,7 @@ The delivery workflow composes APDOS systems directly:
 - `ContextRetrievalService` retrieves workflow context before stage work.
 - `DiscoveryAgentService` owns deterministic discovery analysis and report artifact creation.
 - `ProductAgentService` owns PRD artifact creation.
+- `DesignAgentService` owns prototype-ready design package creation through governed design skills.
 - `ArchitectureAgentService` owns technical specification and implementation plan artifact creation.
 - `EngineeringAgentService` owns engineering package creation from governed implementation skills.
 - `QaAgentService` owns QA package creation from governed QA skills.
@@ -86,6 +91,7 @@ The V1 workflow creates:
 - `IDEA`
 - `DISCOVERY_REPORT`
 - `PRD`
+- `DESIGN_PACKAGE`
 - `TECH_SPEC`
 - `IMPLEMENTATION_PLAN`
 - `CODE_CHANGE`

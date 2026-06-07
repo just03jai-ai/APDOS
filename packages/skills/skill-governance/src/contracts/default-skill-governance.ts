@@ -47,13 +47,79 @@ export const DEFAULT_SKILL_GOVERNANCE_METADATA: SkillGovernanceMetadata[] = [
     enabled: true
   },
   {
+    skillId: "user-journey-designer",
+    version: "1.0",
+    ownerAgent: "agent:design",
+    workflowStage: "design",
+    inputArtifacts: [ArtifactType.DISCOVERY_REPORT, ArtifactType.PRD],
+    outputArtifacts: [ArtifactType.DESIGN_PACKAGE],
+    dependencies: ["prd-writer"],
+    executionOrder: 42,
+    enabled: true
+  },
+  {
+    skillId: "user-flow-designer",
+    version: "1.0",
+    ownerAgent: "agent:design",
+    workflowStage: "design",
+    inputArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+    outputArtifacts: [ArtifactType.DESIGN_PACKAGE],
+    dependencies: ["user-journey-designer"],
+    executionOrder: 43,
+    enabled: true
+  },
+  {
+    skillId: "ia-designer",
+    version: "1.0",
+    ownerAgent: "agent:design",
+    workflowStage: "design",
+    inputArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+    outputArtifacts: [ArtifactType.DESIGN_PACKAGE],
+    dependencies: ["user-flow-designer"],
+    executionOrder: 44,
+    enabled: true
+  },
+  {
+    skillId: "wireframe-planner",
+    version: "1.0",
+    ownerAgent: "agent:design",
+    workflowStage: "design",
+    inputArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+    outputArtifacts: [ArtifactType.DESIGN_PACKAGE],
+    dependencies: ["ia-designer"],
+    executionOrder: 45,
+    enabled: true
+  },
+  {
+    skillId: "component-mapper",
+    version: "1.0",
+    ownerAgent: "agent:design",
+    workflowStage: "design",
+    inputArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+    outputArtifacts: [ArtifactType.DESIGN_PACKAGE],
+    dependencies: ["wireframe-planner"],
+    executionOrder: 46,
+    enabled: true
+  },
+  {
+    skillId: "prototype-planner",
+    version: "1.0",
+    ownerAgent: "agent:design",
+    workflowStage: "design",
+    inputArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+    outputArtifacts: [ArtifactType.DESIGN_PACKAGE],
+    dependencies: ["component-mapper"],
+    executionOrder: 47,
+    enabled: true
+  },
+  {
     skillId: "tech-spec-writer",
     version: "1.0",
     ownerAgent: "agent:architecture",
     workflowStage: "tech-spec",
     inputArtifacts: [ArtifactType.PRD],
     outputArtifacts: [ArtifactType.TECH_SPEC],
-    dependencies: ["prd-writer"],
+    dependencies: ["prototype-planner"],
     executionOrder: 50,
     enabled: true
   },

@@ -4,6 +4,7 @@ import {
   discoveryAnalysisCapability,
   engineeringDeliveryCapability,
   governanceReviewCapability,
+  productDesignCapability,
   productRequirementsCapability,
   qaValidationCapability,
   releasePackagingCapability,
@@ -58,6 +59,30 @@ export const architectureAgent: AgentDefinition = {
     maxConcurrentRuns: 1,
     requiresHumanApproval: true,
     allowedWorkflowStages: ["TechSpec"]
+  }
+};
+
+export const designAgent: AgentDefinition = {
+  id: "agent:design",
+  name: "DesignAgent",
+  description: "Creates prototype-ready design packages from discovery and product artifacts.",
+  version: "0.1.0",
+  status: "available",
+  capabilities: [productDesignCapability],
+  inputArtifacts: [ArtifactType.DISCOVERY_REPORT, ArtifactType.PRD, ArtifactType.TECH_SPEC],
+  outputArtifacts: [ArtifactType.DESIGN_PACKAGE],
+  requiredSkills: [
+    "user-journey-designer",
+    "user-flow-designer",
+    "ia-designer",
+    "wireframe-planner",
+    "component-mapper",
+    "prototype-planner"
+  ],
+  executionConstraints: {
+    maxConcurrentRuns: 1,
+    requiresHumanApproval: false,
+    allowedWorkflowStages: ["Design"]
   }
 };
 
@@ -149,6 +174,7 @@ export const releaseAgent: AgentDefinition = {
 export const INITIAL_AGENT_DEFINITIONS = [
   discoveryAgent,
   productAgent,
+  designAgent,
   architectureAgent,
   engineeringAgent,
   qaAgent,

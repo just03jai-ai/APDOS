@@ -122,12 +122,60 @@ export const prdWriterV2Skill: SkillDefinition = {
   ]
 };
 
+export const userJourneyDesignerSkill: SkillDefinition = createDesignSkill({
+  name: "user-journey-designer",
+  description: "Defines personas and end-to-end user journeys from discovery and product context.",
+  dependencies: ["prd-writer"],
+  inputArtifacts: [ArtifactType.DISCOVERY_REPORT, ArtifactType.PRD],
+  rule: "Design journeys must identify actors, goals, steps, and outcomes."
+});
+
+export const userFlowDesignerSkill: SkillDefinition = createDesignSkill({
+  name: "user-flow-designer",
+  description: "Transforms user journeys into task and decision flows.",
+  dependencies: ["user-journey-designer"],
+  inputArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+  rule: "User flows must identify decisions, alternate paths, and completion states."
+});
+
+export const iaDesignerSkill: SkillDefinition = createDesignSkill({
+  name: "ia-designer",
+  description: "Defines information architecture for the product experience.",
+  dependencies: ["user-flow-designer"],
+  inputArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+  rule: "Information architecture must define navigation and content relationships."
+});
+
+export const wireframePlannerSkill: SkillDefinition = createDesignSkill({
+  name: "wireframe-planner",
+  description: "Plans screen inventory and wireframe blueprints from product flows.",
+  dependencies: ["ia-designer"],
+  inputArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+  rule: "Wireframe plans must cover primary screens and operational states."
+});
+
+export const componentMapperSkill: SkillDefinition = createDesignSkill({
+  name: "component-mapper",
+  description: "Maps wireframe blueprints to reusable interface components.",
+  dependencies: ["wireframe-planner"],
+  inputArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+  rule: "Component mappings must identify reusable controls and state variants."
+});
+
+export const prototypePlannerSkill: SkillDefinition = createDesignSkill({
+  name: "prototype-planner",
+  description: "Creates a prototype blueprint from design package evidence.",
+  dependencies: ["component-mapper"],
+  inputArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+  rule: "Prototype plans must identify validation paths and interaction states."
+});
+
 export const techSpecWriterSkill: SkillDefinition = {
   id: "tech-spec-writer@1.0",
   name: "tech-spec-writer",
   description: "Writes technical specifications from product requirements.",
   version: "1.0",
-  dependencies: ["prd-writer"],
+  dependencies: ["prototype-planner"],
   category: "architecture",
   status: "available",
   inputArtifacts: [ArtifactType.PRD],
@@ -498,6 +546,12 @@ export const INITIAL_SKILL_DEFINITIONS = [
   codebaseResearchSkill,
   prdWriterV1Skill,
   prdWriterV2Skill,
+  userJourneyDesignerSkill,
+  userFlowDesignerSkill,
+  iaDesignerSkill,
+  wireframePlannerSkill,
+  componentMapperSkill,
+  prototypePlannerSkill,
   techSpecWriterSkill,
   implementPlanSkill,
   designSystemSkill,
@@ -512,3 +566,36 @@ export const INITIAL_SKILL_DEFINITIONS = [
   conventionsSkill,
   chronologLoggingSkill
 ] as const;
+
+function createDesignSkill(input: {
+  name: string;
+  description: string;
+  dependencies: string[];
+  inputArtifacts: ArtifactType[];
+  rule: string;
+}): SkillDefinition {
+  return {
+    id: `${input.name}@1.0`,
+    name: input.name,
+    description: input.description,
+    version: "1.0",
+    dependencies: input.dependencies,
+    category: "design",
+    status: "available",
+    inputArtifacts: input.inputArtifacts,
+    outputArtifacts: [ArtifactType.DESIGN_PACKAGE],
+    templates: [],
+    rules: [
+      {
+        id: `rule:${input.name}-completeness-required`,
+        description: input.rule,
+        severity: "warning"
+      }
+    ],
+    constraints: {
+      requiresHumanApproval: false,
+      maxInputArtifacts: 12,
+      allowedWorkflowStages: ["Design"]
+    }
+  };
+}

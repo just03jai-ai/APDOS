@@ -25,6 +25,7 @@ The `ArtifactType` enum currently supports:
 - `IDEA`
 - `DISCOVERY_REPORT`
 - `PRD`
+- `DESIGN_PACKAGE`
 - `TECH_SPEC`
 - `IMPLEMENTATION_PLAN`
 - `TASK`
@@ -113,6 +114,7 @@ The graph model is directional from parent to child:
 Idea
   -> Discovery Report
   -> PRD
+  -> Design Package
   -> Tech Spec
   -> Release Package
 ```

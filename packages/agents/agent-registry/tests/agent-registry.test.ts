@@ -88,7 +88,7 @@ describe("AgentRegistry", () => {
 
     assert.deepEqual(
       agents.map((agent) => agent.name),
-      ["ArchitectureAgent", "EngineeringAgent", "QaAgent", "GovernanceAgent", "ReleaseAgent"]
+      ["DesignAgent", "ArchitectureAgent", "EngineeringAgent", "QaAgent", "GovernanceAgent", "ReleaseAgent"]
     );
   });
 
@@ -112,6 +112,15 @@ describe("AgentRegistry", () => {
     );
   });
 
+  it("registers Design Agent as a DESIGN_PACKAGE producer", () => {
+    const registry = createSeededAgentRegistry();
+
+    assert.deepEqual(
+      registry.findAgentsByOutputArtifact(ArtifactType.DESIGN_PACKAGE).map((agent) => agent.name),
+      ["DesignAgent"]
+    );
+  });
+
   it("seeds the initial APDOS agent definitions", () => {
     const registry = createSeededAgentRegistry();
 
@@ -120,6 +129,7 @@ describe("AgentRegistry", () => {
       [
         "DiscoveryAgent",
         "ProductAgent",
+        "DesignAgent",
         "ArchitectureAgent",
         "EngineeringAgent",
         "QaAgent",

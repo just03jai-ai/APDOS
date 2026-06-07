@@ -50,6 +50,22 @@ describe("SkillMappingService", () => {
     );
   });
 
+  it("maps design skills to Design Agent in execution order", () => {
+    const service = new SkillMappingService();
+
+    assert.deepEqual(
+      service.getSkillsForAgent("agent:design").map((skill) => skill.skillId),
+      [
+        "user-journey-designer",
+        "user-flow-designer",
+        "ia-designer",
+        "wireframe-planner",
+        "component-mapper",
+        "prototype-planner"
+      ]
+    );
+  });
+
   it("maps QA skills to QA Agent", () => {
     const service = new SkillMappingService();
 
@@ -88,10 +104,10 @@ describe("SkillDependencyGraphService", () => {
 
     const graph = service.buildSkillGraph();
 
-    assert.equal(graph.nodes.length, 17);
+    assert.equal(graph.nodes.length, 23);
     assert.ok(
       graph.edges.some(
-        (edge) => edge.fromSkillId === "prd-writer" && edge.toSkillId === "tech-spec-writer"
+        (edge) => edge.fromSkillId === "prototype-planner" && edge.toSkillId === "tech-spec-writer"
       )
     );
   });
@@ -179,15 +195,15 @@ describe("SkillRecommendationService", () => {
     assert.equal(recommendation?.skillId, "prd-writer");
   });
 
-  it("recommends the next agent and workflow stage from available artifacts", () => {
+  it("recommends the Design Agent after product requirements", () => {
     const service = new SkillRecommendationService();
     const context = {
       availableArtifacts: [ArtifactType.PRD],
       completedSkills: ["repo-router", "knowledge", "codebase-research", "prd-writer"]
     };
 
-    assert.equal(service.recommendNextAgent(context), "agent:architecture");
-    assert.equal(service.recommendWorkflowStage(context), "tech-spec");
+    assert.equal(service.recommendNextAgent(context), "agent:design");
+    assert.equal(service.recommendWorkflowStage(context), "design");
   });
 
   it("recommends the Engineering Agent when architecture outputs are available", () => {
@@ -199,6 +215,28 @@ describe("SkillRecommendationService", () => {
 
     assert.equal(service.recommendNextAgent(context), "agent:engineering");
     assert.equal(service.recommendWorkflowStage(context), "engineering");
+  });
+
+  it("recommends the Architecture Agent when design outputs are available", () => {
+    const service = new SkillRecommendationService();
+    const context = {
+      availableArtifacts: [ArtifactType.PRD, ArtifactType.DESIGN_PACKAGE],
+      completedSkills: [
+        "repo-router",
+        "knowledge",
+        "codebase-research",
+        "prd-writer",
+        "user-journey-designer",
+        "user-flow-designer",
+        "ia-designer",
+        "wireframe-planner",
+        "component-mapper",
+        "prototype-planner"
+      ]
+    };
+
+    assert.equal(service.recommendNextAgent(context), "agent:architecture");
+    assert.equal(service.recommendWorkflowStage(context), "tech-spec");
   });
 
   it("recommends the QA Agent when engineering package is available", () => {
@@ -251,7 +289,7 @@ describe("SkillGovernanceService", () => {
   it("exposes mapping, graph, and recommendation services together", () => {
     const service = new SkillGovernanceService();
 
-    assert.equal(service.mapping.listSkills().length, 17);
+    assert.equal(service.mapping.listSkills().length, 23);
     assert.equal(service.graph.validateDependencies().valid, true);
     assert.equal(
       service.recommendations.recommendNextSkill({

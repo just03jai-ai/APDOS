@@ -4,6 +4,7 @@ export const DELIVERY_STAGE_IDS = {
   idea: "idea",
   discovery: "discovery",
   prd: "prd",
+  design: "design",
   techSpec: "tech-spec",
   engineering: "engineering",
   qa: "qa",
@@ -29,6 +30,10 @@ export const DELIVERY_WORKFLOW_DEFINITION = {
     {
       id: DELIVERY_STAGE_IDS.prd,
       name: "PRD"
+    },
+    {
+      id: DELIVERY_STAGE_IDS.design,
+      name: "Design"
     },
     {
       id: DELIVERY_STAGE_IDS.techSpec,

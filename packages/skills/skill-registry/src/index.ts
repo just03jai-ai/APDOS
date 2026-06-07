@@ -25,6 +25,7 @@ export {
   backendContributorSkill,
   chronologLoggingSkill,
   codebaseResearchSkill,
+  componentMapperSkill,
   conventionsSkill,
   cronsContributorSkill,
   dataScienceMonorepoContributorSkill,
@@ -32,6 +33,7 @@ export {
   frontendContributorSkill,
   gitGuardianSkill,
   governanceSkill,
+  iaDesignerSkill,
   implementPlanSkill,
   knowledgeSkill,
   monoWebContributorSkill,
@@ -40,5 +42,9 @@ export {
   releaseSkill,
   repoRouterSkill,
   techSpecWriterSkill,
-  testPlanWriterSkill
+  testPlanWriterSkill,
+  prototypePlannerSkill,
+  userFlowDesignerSkill,
+  userJourneyDesignerSkill,
+  wireframePlannerSkill
 } from "./services/seed-skills.js";

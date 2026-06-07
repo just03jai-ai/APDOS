@@ -10,6 +10,7 @@ export {
   AGENT_CAPABILITIES,
   discoveryAnalysisCapability,
   governanceReviewCapability,
+  productDesignCapability,
   productRequirementsCapability,
   releasePackagingCapability,
   technicalArchitectureCapability
@@ -23,6 +24,7 @@ export {
 export {
   INITIAL_AGENT_DEFINITIONS,
   architectureAgent,
+  designAgent,
   discoveryAgent,
   governanceAgent,
   productAgent,

@@ -367,8 +367,8 @@ describe("RuntimeHealthService", () => {
     const result = service.validate();
 
     assert.equal(result.valid, true);
-    assert.equal(result.governedSkillNames.length, 17);
-    assert.equal(result.runtimeSkillNames.length, 17);
+    assert.equal(result.governedSkillNames.length, 23);
+    assert.equal(result.runtimeSkillNames.length, 23);
     assert.deepEqual(result.missingSkillNames, []);
     assert.deepEqual(result.extraSkillNames, []);
     assert.deepEqual(result.metadataIssues, []);

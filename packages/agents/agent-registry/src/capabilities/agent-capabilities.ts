@@ -12,6 +12,12 @@ export const productRequirementsCapability: AgentCapability = {
   description: "Translates validated discovery findings into product requirements."
 };
 
+export const productDesignCapability: AgentCapability = {
+  id: "capability:product-design",
+  name: "Product Design",
+  description: "Transforms product context into prototype-ready design packages."
+};
+
 export const technicalArchitectureCapability: AgentCapability = {
   id: "capability:technical-architecture",
   name: "Technical Architecture",
@@ -45,6 +51,7 @@ export const releasePackagingCapability: AgentCapability = {
 export const AGENT_CAPABILITIES = [
   discoveryAnalysisCapability,
   productRequirementsCapability,
+  productDesignCapability,
   technicalArchitectureCapability,
   engineeringDeliveryCapability,
   qaValidationCapability,
