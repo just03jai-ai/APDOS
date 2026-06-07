@@ -30,13 +30,19 @@ This keeps governance separate from skill loading. A skill can exist in the regi
 
 ## Workflow Ownership
 
-Default APDOS mappings cover the 17 imported skills:
+Default APDOS mappings cover 23 governed skills:
 
 ```text
 repo-router
 knowledge
 codebase-research
 prd-writer
+user-journey-designer
+user-flow-designer
+ia-designer
+wireframe-planner
+component-mapper
+prototype-planner
 tech-spec-writer
 implement-plan
 design-system

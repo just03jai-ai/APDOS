@@ -89,6 +89,12 @@ describe("SkillRegistry", () => {
     assert.deepEqual(
       skills.map((skill) => skill.name),
       [
+        "user-journey-designer",
+        "user-flow-designer",
+        "ia-designer",
+        "wireframe-planner",
+        "component-mapper",
+        "prototype-planner",
         "tech-spec-writer",
         "implement-plan",
         "design-system",
@@ -122,6 +128,22 @@ describe("SkillRegistry", () => {
     );
   });
 
+  it("registers the governed design skill chain", () => {
+    const registry = createSeededSkillRegistry();
+
+    assert.deepEqual(
+      registry.findSkillsByOutputArtifact(ArtifactType.DESIGN_PACKAGE).map((skill) => skill.name),
+      [
+        "user-journey-designer",
+        "user-flow-designer",
+        "ia-designer",
+        "wireframe-planner",
+        "component-mapper",
+        "prototype-planner"
+      ]
+    );
+  });
+
   it("seeds the initial APDOS skill definitions", () => {
     const registry = createSeededSkillRegistry();
 
@@ -133,6 +155,12 @@ describe("SkillRegistry", () => {
         "codebase-research",
         "prd-writer",
         "prd-writer",
+        "user-journey-designer",
+        "user-flow-designer",
+        "ia-designer",
+        "wireframe-planner",
+        "component-mapper",
+        "prototype-planner",
         "tech-spec-writer",
         "implement-plan",
         "design-system",

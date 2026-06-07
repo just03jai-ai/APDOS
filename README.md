@@ -14,7 +14,7 @@ The current implementation is a TypeScript monorepo focused on deterministic run
 - Context Engine for retrieving workflow, artifact, approval, agent, and skill context
 - Knowledge Engine for deterministic graph memory, decisions, outcomes, and project history
 - Agent Registry for APDOS agent definitions and capabilities
-- Discovery Agent and Architecture Agent deterministic services
+- Discovery, Product, Design, Architecture, Engineering, QA, and Governance Agents
 - Skill Registry, Skill Runtime, Skill Adapter, and Skill Governance for loading, executing, mapping, and recommending registered skills
 - Delivery Workflow for end-to-end APDOS delivery orchestration
 

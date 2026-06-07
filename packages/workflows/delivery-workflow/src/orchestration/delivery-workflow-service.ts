@@ -11,6 +11,7 @@ import {
 } from "@apdos/artifacts";
 import { ContextRetrievalService } from "@apdos/context-engine";
 import { DiscoveryAgentService } from "@apdos/discovery-agent";
+import { DesignAgentService } from "@apdos/design-agent";
 import { EngineeringAgentService } from "@apdos/engineering-agent";
 import { GovernanceAgentService } from "@apdos/governance-agent";
 import type { GovernanceDecision } from "@apdos/governance-agent";
@@ -48,6 +49,7 @@ export interface DeliveryWorkflowServiceDependencies {
   approvals?: ApprovalService;
   architectureAgent?: ArchitectureAgentService;
   discoveryAgent?: DiscoveryAgentService;
+  designAgent?: DesignAgentService;
   engineeringAgent?: EngineeringAgentService;
   governanceAgent?: GovernanceAgentService;
   productAgent?: ProductAgentService;
@@ -61,6 +63,7 @@ export class DeliveryWorkflowService {
   private readonly approvals: ApprovalService;
   private readonly architectureAgent: ArchitectureAgentService;
   private readonly discoveryAgent: DiscoveryAgentService;
+  private readonly designAgent: DesignAgentService;
   private readonly engineeringAgent: EngineeringAgentService;
   private readonly governanceAgent: GovernanceAgentService;
   private readonly productAgent: ProductAgentService;
@@ -89,6 +92,13 @@ export class DeliveryWorkflowService {
       });
     this.productAgent = dependencies.productAgent ??
       new ProductAgentService({
+        artifacts: this.artifacts,
+        context: this.context,
+        workflows: this.workflows,
+        skillRuntime
+      });
+    this.designAgent = dependencies.designAgent ??
+      new DesignAgentService({
         artifacts: this.artifacts,
         context: this.context,
         workflows: this.workflows,
@@ -176,6 +186,16 @@ export class DeliveryWorkflowService {
       contextPackages
     });
     validationResults.push(this.validateRequiredArtifact(prd, artifacts));
+
+    const designPackage = await this.runDesignStage({
+      workflowId,
+      actorId,
+      createdAt,
+      discovery,
+      prd,
+      artifacts,
+      contextPackages
+    });
 
     const { techSpec, implementationPlan } = await this.runArchitectureStage({
       workflowId,
@@ -305,6 +325,7 @@ export class DeliveryWorkflowService {
     return {
       workflow,
       artifacts,
+      designPackage,
       engineeringPackage,
       qaPackage,
       governancePackage,
@@ -480,6 +501,49 @@ export class DeliveryWorkflowService {
       techSpec: techSpecArtifact,
       implementationPlan: implementationPlanArtifact
     };
+  }
+
+  private async runDesignStage(input: {
+    workflowId: string;
+    actorId: string;
+    createdAt: string;
+    discovery: BaseArtifact;
+    prd: BaseArtifact;
+    artifacts: BaseArtifact[];
+    contextPackages: DeliveryWorkflowRunResult["contextPackages"];
+  }): Promise<BaseArtifact> {
+    await this.captureContext({
+      workflowId: input.workflowId,
+      artifactIds: [input.discovery.id, input.prd.id],
+      contextPackages: input.contextPackages
+    });
+
+    this.workflows.advanceStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.design,
+      occurredAt: input.createdAt
+    });
+
+    const { designPackageArtifact } = await this.designAgent.createDesignPackage({
+      request: {
+        workflowId: input.workflowId,
+        discoveryArtifactId: input.discovery.id,
+        prdArtifactId: input.prd.id
+      },
+      actorId: input.actorId,
+      createdAt: input.createdAt,
+      stageId: DELIVERY_STAGE_IDS.design
+    });
+    input.artifacts.push(designPackageArtifact);
+
+    this.workflows.completeStage({
+      workflowId: input.workflowId,
+      stageId: DELIVERY_STAGE_IDS.design,
+      artifactIds: [designPackageArtifact.id],
+      occurredAt: input.createdAt
+    });
+
+    return designPackageArtifact;
   }
 
   private async runEngineeringStage(input: {

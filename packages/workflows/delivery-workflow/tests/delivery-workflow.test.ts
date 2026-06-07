@@ -26,8 +26,10 @@ describe("DeliveryWorkflowService", () => {
     });
 
     assert.equal(result.workflow.status, WorkflowStatus.COMPLETED);
-    assert.equal(result.workflow.stages.length, 10);
+    assert.equal(result.workflow.stages.length, 11);
     assert.equal(result.workflow.stages.every((stage) => stage.status === "COMPLETED"), true);
+    assert.equal(result.designPackage.type, ArtifactType.DESIGN_PACKAGE);
+    assert.equal(result.designPackage.id, "workflow-delivery-1:design-package");
     assert.equal(result.engineeringPackage.type, ArtifactType.ENGINEERING_PACKAGE);
     assert.equal(result.engineeringPackage.id, "workflow-delivery-1:engineering-package");
     assert.equal(result.qaPackage.type, ArtifactType.QA_PACKAGE);
@@ -42,6 +44,7 @@ describe("DeliveryWorkflowService", () => {
         ArtifactType.IDEA,
         ArtifactType.DISCOVERY_REPORT,
         ArtifactType.PRD,
+        ArtifactType.DESIGN_PACKAGE,
         ArtifactType.TECH_SPEC,
         ArtifactType.IMPLEMENTATION_PLAN,
         ArtifactType.CODE_CHANGE,
@@ -76,6 +79,28 @@ describe("DeliveryWorkflowService", () => {
     ]);
     const prd = result.artifacts.find((artifact) => artifact.type === ArtifactType.PRD);
     assert.deepEqual(prd?.metadata.sourceSkillIds, ["prd-writer@1.0"]);
+    assert.deepEqual(result.designPackage.metadata.sourceSkillIds, [
+      "user-journey-designer@1.0",
+      "user-flow-designer@1.0",
+      "ia-designer@1.0",
+      "wireframe-planner@1.0",
+      "component-mapper@1.0",
+      "prototype-planner@1.0"
+    ]);
+    assert.deepEqual(result.designPackage.parentIds, [
+      "workflow-delivery-1:discovery",
+      "workflow-delivery-1:prd"
+    ]);
+    assert.ok(Array.isArray(result.designPackage.metadata.personas));
+    assert.ok(Array.isArray(result.designPackage.metadata.userJourneys));
+    assert.ok(Array.isArray(result.designPackage.metadata.userFlows));
+    assert.ok(Array.isArray(result.designPackage.metadata.informationArchitecture));
+    assert.ok(Array.isArray(result.designPackage.metadata.screenInventory));
+    assert.ok(Array.isArray(result.designPackage.metadata.wireframeBlueprints));
+    assert.ok(Array.isArray(result.designPackage.metadata.componentInventory));
+    assert.ok(Array.isArray(result.designPackage.metadata.stateDefinitions));
+    assert.ok(Array.isArray(result.designPackage.metadata.navigationModel));
+    assert.ok(Array.isArray(result.designPackage.metadata.prototypeBlueprint));
     const techSpec = result.artifacts.find((artifact) => artifact.type === ArtifactType.TECH_SPEC);
     const implementationPlan = result.artifacts.find(
       (artifact) => artifact.type === ArtifactType.IMPLEMENTATION_PLAN
@@ -347,7 +372,7 @@ describe("DeliveryWorkflowService", () => {
       createdAt: "2026-01-01T00:00:00.000Z"
     });
 
-    assert.ok(result.contextPackages.length >= 7);
+    assert.ok(result.contextPackages.length >= 8);
     assert.equal(
       result.contextPackages.every(
         (contextPackage) => contextPackage.metadata.workflowId === "workflow-context-1"
@@ -379,15 +404,27 @@ describe("DeliveryWorkflowService", () => {
 
     assert.equal(
       result.workflow.history.filter((event) => event.type === "STAGE_STARTED").length,
-      10
+      11
     );
     assert.equal(
       result.workflow.history.filter((event) => event.type === "STAGE_COMPLETED").length,
-      10
+      11
     );
     assert.equal(
       result.workflow.history.at(-1)?.type,
       "WORKFLOW_COMPLETED"
+    );
+    assert.deepEqual(
+      result.workflow.stages.slice(1, 8).map((stage) => stage.id),
+      [
+        DELIVERY_STAGE_IDS.discovery,
+        DELIVERY_STAGE_IDS.prd,
+        DELIVERY_STAGE_IDS.design,
+        DELIVERY_STAGE_IDS.techSpec,
+        DELIVERY_STAGE_IDS.engineering,
+        DELIVERY_STAGE_IDS.qa,
+        DELIVERY_STAGE_IDS.governance
+      ]
     );
   });
 

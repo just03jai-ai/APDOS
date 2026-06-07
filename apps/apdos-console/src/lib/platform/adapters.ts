@@ -205,6 +205,7 @@ function buildLineage(artifacts: ConsoleArtifact[]): { nodes: ConsoleLineageNode
     ArtifactType.IDEA,
     ArtifactType.DISCOVERY_REPORT,
     ArtifactType.PRD,
+    ArtifactType.DESIGN_PACKAGE,
     ArtifactType.TECH_SPEC,
     ArtifactType.IMPLEMENTATION_PLAN
   ]);
